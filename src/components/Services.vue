@@ -1,7 +1,7 @@
 <template>
 <div class="d-flex flex-column mt-5">
-<h1>Services</h1>
- <footerSection></footerSection>
+<!-- <h1>Services</h1>
+ <footerSection></footerSection> -->
 </div>
 
 </template>
