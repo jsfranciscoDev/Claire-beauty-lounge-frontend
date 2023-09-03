@@ -8,7 +8,7 @@ import footerSection from '../components/footer.vue';
 	      <div class="slider-item js-fullheight">
 	      	<div class="overlay"></div>
 	        <div class="container-fluid p-0">
-			<div class="row d-md-flex no-gutters slider-text align-items-end justify-content-end" data-scrollax-parent="true">
+			      <div class="row d-md-flex no-gutters slider-text align-items-end justify-content-end" data-scrollax-parent="true">
 	          	<img class="one-third align-self-end order-md-last img-fluid" src="../assets/images/bg_2.png" alt="">
 		          <div class="one-forth d-flex align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
 		          	<div class="text mt-5">
