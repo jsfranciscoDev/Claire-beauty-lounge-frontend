@@ -1,5 +1,6 @@
 import user from "../api/component/user.js";
 import { defineStore } from 'pinia';
+import { useRouter } from 'vue-router'; // Import route-related functions
 
 export const store = defineStore({
   id: 'store',
@@ -11,12 +12,16 @@ export const store = defineStore({
     isAuthenticated: false,
   }),
   actions: {
-    async login() {
+    async login(payload) {
       try {
-        await user.login().then((response) => {
-          console.log(response);
-        });
-      } catch (error) {}
+        const response = await user.login(payload);
+        this.isAuthenticated = true;
+        if (response.data.message == 'success') {
+          this.isAuthenticated = true;
+        }
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
 });

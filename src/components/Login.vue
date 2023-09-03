@@ -1,19 +1,40 @@
 <script setup>
+import { reactive } from "vue";
+import { store } from "../store/index";
+import { useRouter } from 'vue-router';
 
+const userLogin = store();
+
+const user = reactive({
+  email: null,
+  password: null,
+});
+
+const router = useRouter(); // Move this line here
+
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  await userLogin.login(user); // Wait for login to complete
+
+  console.log('auth' + userLogin.isAuthenticated);
+  if (userLogin.isAuthenticated) {
+    router.push('/admin');
+  }
+};
 </script>
 
 <template>
  <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        <form @submit.prevent="login">
+        <form @submit.prevent="handleSubmit" >
           <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+            <input type="text" class="form-control" v-model="user.email" placeholder="Enter username">
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+            <input type="password" class="form-control" v-model="user.password" placeholder="Enter password">
           </div>
           <button type="submit" class="btn btn-primary">Login</button>
         </form>
@@ -23,43 +44,6 @@
 </template>
 
 <style>
-.login-container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    width: 300px;
-}
 
-.login-container h2 {
-    text-align: center;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    font-weight: bold;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    font-size: 16px;
-}
-
-.form-group input[type="submit"] {
-    background-color: #007BFF;
-    color: #fff;
-    cursor: pointer;
-}
-
-.form-group input[type="submit"]:hover {
-    background-color: #0056b3;
-}
 </style>
 

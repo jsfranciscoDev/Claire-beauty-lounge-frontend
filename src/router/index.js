@@ -18,13 +18,14 @@ const routes = [
     component: Admin,
     beforeEnter: (to, from, next) => {
       const authStore = store();
-      console.log(authStore.isAuthenticated);
+      console.log(authStore.isAuthenticated + 'LOGIN');
       // Check if the user is authenticated
       if (authStore.isAuthenticated) {
         // User is authenticated, allow access to the Admin route
         next();
       } else {
         // User is not authenticated, redirect to the Login page
+        console.log('User is not authenticated. Redirecting to /login.');
         next('/login');
         
       }
