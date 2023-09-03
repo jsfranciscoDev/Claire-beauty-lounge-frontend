@@ -1,6 +1,6 @@
 <template>
-    <h1> staff</h1>
- 
+   
+    <navBar/>
     <footerSection></footerSection>
 </template>
 
@@ -9,4 +9,5 @@ import { store } from "../store/index";
 const staff = store();
 
 import footerSection from '../components/footer.vue';
+import navBar from '../components/nav.vue'
 </script>

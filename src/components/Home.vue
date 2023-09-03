@@ -1,8 +1,10 @@
 <script setup>
 import footerSection from '../components/footer.vue';
+import navBar from '../components/nav.vue'
 </script>
  
 <template>
+  <navBar/>
   <section id="home-section" class="hero" style="background-image: url(images/natolord.jpg);" data-stellar-background-ratio="0.5">
 		  <div class="home-slider owl-carousel">
 	      <div class="slider-item js-fullheight">
