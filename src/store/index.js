@@ -1,17 +1,22 @@
-// src/stores/counter.js
+import user from "../api/component/user.js";
 import { defineStore } from 'pinia';
 
-export const useCounterStore = defineStore({
-  id: 'counter',
+export const store = defineStore({
+  id: 'store',
   state: () => ({
-    count: 10,
+    user: [],
+    services: [],
+    products: [],
+    staff: [],
+    isAuthenticated: false,
   }),
   actions: {
-    increment() {
-      this.count++;
-    },
-    decrement() {
-      this.count--;
+    async login() {
+      try {
+        await user.login().then((response) => {
+          console.log(response);
+        });
+      } catch (error) {}
     },
   },
 });

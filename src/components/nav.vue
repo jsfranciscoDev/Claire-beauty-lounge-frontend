@@ -14,6 +14,9 @@
             <li class="nav-item" :class="{ 'active': $route.path === '/services' }">
               <router-link to="/services" class="nav-link">Services</router-link>
             </li>
+            <li class="nav-item" :class="{ 'active': $route.path === '/admin' }">
+              <router-link to="/admin" class="nav-link">Admin</router-link>
+            </li>
             <!-- Add other navigation links here with similar logic -->
           </ul>
         </div>
