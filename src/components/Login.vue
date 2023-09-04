@@ -15,6 +15,7 @@ const user = reactive({
 });
 
 const resgisterAction = ref(true);
+const accountCreated = ref(false);
 
 const toggleAction = () => {
   resgisterAction.value = !resgisterAction.value;
@@ -28,7 +29,7 @@ const LoginAccount = async (event) => {
  
  clearErrorMessage();
   await userData.login(user); 
-  const auth = localStorage.getItem('authenticated');
+  const auth = localStorage.getItem('session');
   if (auth) {
     router.push('/admin');
   }
@@ -38,16 +39,17 @@ const LoginAccount = async (event) => {
 const registerAccount = async (event) => {
   event.preventDefault();
   clearErrorMessage();
-  await userData.register(user); 
-  const auth = localStorage.getItem('authenticated');
-  if (auth) {
-    router.push('/');
+  await userData.register(user);  
+  if(userData.registerMessage == 'success'){
+    toggleAction();
+    accountCreated.value = true 
   }
 };
 
 const clearErrorMessage = () => {
   userData.user.error = ''
   userData.user.errorWarning = ''
+  accountCreated.value = false;
 }
 
 </script>
@@ -64,6 +66,9 @@ const clearErrorMessage = () => {
            
               <div class="alert alert-danger" role="alert" v-if="userData.user.errorWarning">
                 {{ userData.user.errorWarning }}
+              </div>
+              <div class="alert alert-info" role="info" v-if="accountCreated">
+                Account has been successfully created.
               </div>
               <h2>Claire Beauty Lounge</h2>
                 <form @submit.prevent="LoginAccount">

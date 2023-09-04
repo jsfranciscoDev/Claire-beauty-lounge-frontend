@@ -13,7 +13,6 @@ const pinia = createPinia();
 const user = store(pinia);
 
 user.userRole();
-const secretKey = 'authenticated';
 
 const routes = [
   { path: '/', component: Home },
@@ -24,18 +23,35 @@ const routes = [
     path: '/admin',
     component: Admin,
     beforeEnter: (to, from, next) => {
-      const auth = localStorage.getItem('authenticated') ?? false;
+      const auth = localStorage.getItem('session');
+      const role = localStorage.getItem('role');
 
-      if (auth) {
-        // next();
-        const encryptedValue = localStorage.getItem('authenticated');
-        
+      if (!auth || !role) {
         next('/login');
+        return false;
+      }
+
+      const bytes = CryptoJS.AES.decrypt(auth, 'session');
+      const decryptedSessionValue = bytes.toString(CryptoJS.enc.Utf8);
+      const roleBytes = CryptoJS.AES.decrypt(role, 'role');
+      const decryptedRoleValue = roleBytes.toString(CryptoJS.enc.Utf8);
+    
+      if (decryptedSessionValue == 'true') {
+        if(decryptedRoleValue == 'admin' || decryptedRoleValue == 'staff'){
+          next();
+        }else{
+          next('/');
+        }
       } else {
         // User is not authenticated, redirect to the Login page
         next('/login');
       }
     },
+  },
+  {
+    // Catch-all route for non-existent routes
+    path: '/:catchAll(.*)',
+    redirect: '/',
   },
 ];
 

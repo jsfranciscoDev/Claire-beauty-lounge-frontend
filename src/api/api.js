@@ -7,7 +7,7 @@ const instance = axios.create({
     withCredentials: false
 });
 
-const storedToken = localStorage.getItem('access_token');
+const storedToken = localStorage.getItem('token');
 instance.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
 
 

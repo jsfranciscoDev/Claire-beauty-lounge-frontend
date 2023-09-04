@@ -8,6 +8,7 @@ export const store = defineStore({
     user: [{
       error: [],
       errorWarning:[],
+      registerMessage: '',
     }],
     services: [],
     products: [],
@@ -21,14 +22,22 @@ export const store = defineStore({
       
         if (response.data.message == 'success') {
             localStorage.setItem("token", response.data.token);
-            localStorage.setItem('authenticated', true)
-            const secretKey = 'authenticated';
-            const authValue =  response.data.token;
+           
+            const authValue =  'true';
+            const roleValue =   response.data.role;
 
-            const encryptedValue = CryptoJS.AES.encrypt(authValue, secretKey).toString();
-            console.log(encryptedValue);
-            localStorage.setItem(secretKey, encryptedValue);
+            const encryptedRoleValue = CryptoJS.AES.encrypt(roleValue, 'role').toString();
+            localStorage.setItem('role', encryptedRoleValue);
 
+            const encryptedValue = CryptoJS.AES.encrypt(authValue, 'session').toString();
+        
+            localStorage.setItem('session', encryptedValue);
+
+            const test = localStorage.getItem('session');
+            const bytes = CryptoJS.AES.decrypt(test, 'session');
+            const decryptedValue = bytes.toString(CryptoJS.enc.Utf8);
+            
+          
             
         }
        
@@ -45,6 +54,7 @@ export const store = defineStore({
       try {
         const response = await user.register(payload);
         if (response.data.message == 'success') {
+            this.registerMessage = response.data.message
             localStorage.setItem("token", response.data.token);
             localStorage.setItem('authenticated', true)
         }
@@ -55,7 +65,8 @@ export const store = defineStore({
     async userRole(payload) {
       try {
         await user.userRole(payload).then(response => {
-          this.role = response.data;
+          console.log(response.data);
+          // this.role = response.data;
         });
     
       } catch (error) {
