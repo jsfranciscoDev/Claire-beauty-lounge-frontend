@@ -660,23 +660,41 @@ h1, h2, h3, h4, h5,
 		min-width: 350px;
 	}
 
+	.form-input h2{
+		color: $primary;
+		font-family: $font-tertiary;
+	}
+
 	.form-input label{
 		color: #000000;
 		font-size: 14px;
 	}
 
 	.login-btn{
-		height: 54px;
+		height: 44px;
 		padding-left: 30px;
 		padding-right: 30px;
 		background-color: $primary;
 		width: 100%;
 		font-weight: bold;
+		transition: 1s ease-out;
+		border: none !important; 
 	}
 	.login-btn:hover{
 		 border: none !important; 
+		 border-radius: 20px;
+		 transition: 1s ease-in;
+		 color: $primary;
+		 background-color: $darken;
 	}
-
+	.register-btn{
+		cursor: pointer;
+		transition: 1s ease-out;
+	}
+	.register-btn:hover{
+		color: $secondary;
+		transition: 1s ease-in;
+	}
 	
 }
 

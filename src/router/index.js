@@ -5,6 +5,15 @@ import Services from '../components/Services.vue';
 import Staff from '../components/Staff.vue';
 import Login from '../components/Login.vue';
 import Admin from '../components/Admin.vue';
+import { createPinia } from 'pinia';
+import { store } from "../store/index";
+import CryptoJS from 'crypto-js';
+
+const pinia = createPinia();
+const user = store(pinia);
+
+user.userRole();
+const secretKey = 'authenticated';
 
 const routes = [
   { path: '/', component: Home },
@@ -16,10 +25,12 @@ const routes = [
     component: Admin,
     beforeEnter: (to, from, next) => {
       const auth = localStorage.getItem('authenticated') ?? false;
-      // Check if the user is authenticated
+
       if (auth) {
-        // User is authenticated, allow access to the Admin route
-        next();
+        // next();
+        const encryptedValue = localStorage.getItem('authenticated');
+        
+        next('/login');
       } else {
         // User is not authenticated, redirect to the Login page
         next('/login');
