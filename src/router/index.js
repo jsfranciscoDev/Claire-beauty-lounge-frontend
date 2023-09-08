@@ -12,8 +12,6 @@ import CryptoJS from 'crypto-js';
 const pinia = createPinia();
 const user = store(pinia);
 
-user.userRole();
-
 const routes = [
   { path: '/', component: Home },
   { path: '/services', component: Services },
@@ -25,31 +23,30 @@ const routes = [
     beforeEnter: (to, from, next) => {
       const auth = localStorage.getItem('session');
       const role = localStorage.getItem('role');
-
+      
       if (!auth || !role) {
         next('/login');
         return false;
       }
 
-      const bytes = CryptoJS.AES.decrypt(auth, 'session');
-      const decryptedSessionValue = bytes.toString(CryptoJS.enc.Utf8);
-      const roleBytes = CryptoJS.AES.decrypt(role, 'role');
-      const decryptedRoleValue = roleBytes.toString(CryptoJS.enc.Utf8);
-    
-      if (decryptedSessionValue == 'true') {
-        if(decryptedRoleValue == 'admin' || decryptedRoleValue == 'staff'){
+      try {
+        const bytes = CryptoJS.AES.decrypt(auth, 'session');
+        const decryptedSessionValue = bytes.toString(CryptoJS.enc.Utf8);
+        const roleBytes = CryptoJS.AES.decrypt(role, 'role');
+        const decryptedRoleValue = roleBytes.toString(CryptoJS.enc.Utf8);
+
+        if (decryptedSessionValue === 'true' && (decryptedRoleValue === 'admin' || decryptedRoleValue === 'staff')) {
           next();
-        }else{
-          next('/');
+        } else {
+          window.location = '/'
         }
-      } else {
-        // User is not authenticated, redirect to the Login page
-        next('/login');
+      } catch (error) {
+        console.error('Error decrypting data:', error);
+        next('/login'); // Redirect to login page in case of decryption error
       }
     },
   },
   {
-    // Catch-all route for non-existent routes
     path: '/:catchAll(.*)',
     redirect: '/',
   },

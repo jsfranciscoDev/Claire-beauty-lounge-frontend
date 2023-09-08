@@ -14,6 +14,7 @@ export const store = defineStore({
     products: [],
     staff: [],
     role: null,
+    session: true,
   }),
   actions: {
     async login(payload) {
@@ -22,7 +23,7 @@ export const store = defineStore({
       
         if (response.data.message == 'success') {
             localStorage.setItem("token", response.data.token);
-           
+            this.session = true;
             const authValue =  'true';
             const roleValue =   response.data.role;
 
@@ -36,9 +37,7 @@ export const store = defineStore({
             const test = localStorage.getItem('session');
             const bytes = CryptoJS.AES.decrypt(test, 'session');
             const decryptedValue = bytes.toString(CryptoJS.enc.Utf8);
-            
-          
-            
+            this.userRole();
         }
        
       } catch (error) {
@@ -62,11 +61,24 @@ export const store = defineStore({
         this.user.error = error.response.data.errors;
       }
     },
+    async logout() {
+      try {
+        const response = await user.logout();
+          if(response.data = 'Logged Out!'){
+            localStorage.removeItem('role');
+            localStorage.removeItem('authenticated');
+            localStorage.removeItem('token');
+            localStorage.removeItem('session');
+            this.role = null;
+          }
+      } catch (error) {
+        this.user.error = error.response.data.errors;
+      }
+    },
     async userRole(payload) {
       try {
         await user.userRole(payload).then(response => {
-          console.log(response.data);
-          // this.role = response.data;
+          this.role = response.data
         });
     
       } catch (error) {

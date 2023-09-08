@@ -10,4 +10,7 @@ export default {
     userRole(){
         return api.get('/api/user-role');
     },
+    logout(){
+        return api.post('/api/logout');
+    },
 }
