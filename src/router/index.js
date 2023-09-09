@@ -4,7 +4,7 @@ import Home from '../components/Home.vue';
 import Services from '../components/Services.vue';
 import Staff from '../components/Staff.vue';
 import Login from '../components/Login.vue';
-import Admin from '../components/Admin.vue';
+import Admin from '../components/admin/Admin.vue';
 import { createPinia } from 'pinia';
 import { store } from "../store/index";
 import CryptoJS from 'crypto-js';
