@@ -8,7 +8,7 @@
             
           <ul id="side-menu">
             <li>
-              <a href="dashboard.php"><i class="fa fa-home nav_icon"></i>Dashboard</a>
+              <a href="dashboard.php"><i class="fa fa-home nav_icon"></i>Dashboard asd</a>
             </li>
             <li>
               <a href="add-services.php"><i class="fa fa-cogs nav_icon"></i>Services<span class="fa arrow"></span> </a>
