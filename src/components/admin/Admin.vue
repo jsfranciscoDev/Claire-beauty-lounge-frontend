@@ -2,12 +2,18 @@
   import { store } from "../../store/index";
   import headerNav from './header.vue';
   import sidebar from './sidebar.vue';
+  import staff from './staff.vue';
+  import { useRouter } from 'vue-router';
+
+// Use the router
+const router = useRouter();
 
   const userData = store();
 
   const fetchData = () => {
       userData.userRole();
   }
+  
 </script>
 
 <template>
@@ -19,7 +25,7 @@
       <div class="main-content">
         <div id="page-wrapper">
           <div class="main-page">
-           
+            <router-view></router-view>
           </div>
         </div>
       </div>

@@ -115,7 +115,7 @@ const clearErrorMessage = () => {
                 <button type="submit" class="btn login-btn mb-2">Login</button>
                 <span class="">Do you already have an account?</span> <span class="register-btn" @click="toggleAction">Sign in here!</span>
               </form>
-        </div>
+            </div>
         </div>
 
       </div>

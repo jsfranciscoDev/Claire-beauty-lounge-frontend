@@ -5,12 +5,16 @@ import Services from '../components/Services.vue';
 import Staff from '../components/Staff.vue';
 import Login from '../components/Login.vue';
 import Admin from '../components/admin/Admin.vue';
+import AdminStaff from '../components/admin/staff.vue';
+
 import { createPinia } from 'pinia';
 import { store } from "../store/index";
 import CryptoJS from 'crypto-js';
 
 const pinia = createPinia();
 const user = store(pinia);
+
+
 
 const routes = [
   { path: '/', component: Home },
@@ -45,11 +49,19 @@ const routes = [
         next('/login'); // Redirect to login page in case of decryption error
       }
     },
+    children: [
+      {
+        path: '/admin/staff',
+        component: AdminStaff,
+      },
+    ]
   },
   {
     path: '/:catchAll(.*)',
     redirect: '/',
-  },
+  }
+  
+ 
 ];
 
 const router = createRouter({

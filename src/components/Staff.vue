@@ -16,8 +16,8 @@ import footerSection from '../components/footer.vue';
 import navBar from '../components/nav.vue';
 
 // Use onMounted to perform actions when the component is mounted
-onMounted(() => {
-  // Your code here
-    staff.userRole()
-});
+// onMounted(() => {
+//   // Your code here
+//     staff.userRole()
+// });
 </script>

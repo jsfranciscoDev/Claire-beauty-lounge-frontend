@@ -1,4 +1,5 @@
 import user from "../api/component/user.js";
+import staff from "../api/component/staff.js"
 import { defineStore } from 'pinia';
 import CryptoJS from 'crypto-js';
 
@@ -13,8 +14,10 @@ export const store = defineStore({
     services: [],
     products: [],
     staff: [],
+    staffValidation: [],
     role: null,
     session: true,
+    
   }),
   actions: {
     async login(payload) {
@@ -84,6 +87,32 @@ export const store = defineStore({
       } catch (error) {
         this.user.error = error.response.data.errors;
       }
+    },
+    async createStaff(payload) {
+      try {
+        const response = await staff.createStaff(payload);
+          if(response.data.message == 'success'){
+            return response;
+          }
+      } catch (error) {
+        this.staffValidation.error = error.response.data.errors;
+      }
+    },
+    async getUserStaff(page) {
+      try {
+        const response = await staff.getUserStaff(page);
+          if(response.data.message == 'success'){
+            this.staff = response.data.user;
+            // this.staffValidation.message = response.data.message;
+          }
+       
+      } catch (error) {
+        this.staffValidation.error = error.response.data.errors;
+      }
+    },
+    async deleteUserStaff(payload) {
+      const response = await staff.deleteUserStaff(payload);
+      return response;
     },
 
   },
