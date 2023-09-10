@@ -242,7 +242,7 @@ onMounted(() => {
     padding: 0.55rem !important;
 }
 .table-container td, .table-container th{
-    font-size: 14px;
+    font-size: 12px;
 }
 .table-container .fa-edit:hover {
     color: #00D100;
@@ -270,4 +270,9 @@ onMounted(() => {
     margin: 0px 20px;
 }
 
+.table-responsive{
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
 </style>
