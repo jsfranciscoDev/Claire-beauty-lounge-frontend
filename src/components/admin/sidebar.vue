@@ -1,3 +1,13 @@
+
+<script setup>
+import { store } from "../../store/index";
+const user = store();
+
+const logoutUser = () => {
+  user.logout();
+}
+
+</script>
 <template>
       <div class=" sidebar" role="navigation">
         <div class="navbar-collapse">
@@ -12,6 +22,9 @@
             </li>
             <li>
                <i class="fa fa-home nav_icon"><span><router-link to="/admin/staff" class="sidebar-link">Staff</router-link></span></i>
+            </li>
+            <li>
+               <i class="fa fa-sign-out"  @click="logoutUser"><span><router-link to="/" class="sidebar-link">Logout</router-link></span></i>
             </li>
         
           </ul>

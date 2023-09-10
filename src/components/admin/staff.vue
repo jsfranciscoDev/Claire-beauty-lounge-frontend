@@ -65,7 +65,7 @@ onMounted(() => {
 
 <template>
     <div class="admin-component-header">
-        <h2>Manage Staff</h2>
+        <h2><i class="fa fa-tasks"></i> Manage Staff</h2>
         <button type="button" @click="staffDialog = true"><i class="fa-solid fa-plus"></i>Add</button>
     </div>
    
@@ -183,11 +183,11 @@ onMounted(() => {
 }
 
 .form-container h2{
-    font-weight: 500;
-    text-align: left;
-    margin: 0px 0px 10px 0px;
-    font-size: 24px;
+    font-weight: bold;
+    font-size: 20px;
     text-transform: uppercase;
+    color: #6F6F6F;
+    margin: 10px 0px;
 }
 
 .staff-form{
@@ -215,6 +215,7 @@ onMounted(() => {
     font-weight: bold;
     font-size: 20px;
     text-transform: uppercase;
+    color: #6F6F6F;
 }
 
 .admin-component-header button{
