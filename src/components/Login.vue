@@ -46,6 +46,12 @@ const registerAccount = async (event) => {
   }
 };
 
+const login = () => {
+  setTimeout(() => {
+    window.location.reload();
+  }, 1000); 
+}
+
 const clearErrorMessage = () => {
   userData.user.error = ''
   userData.user.errorWarning = ''
@@ -82,7 +88,7 @@ const clearErrorMessage = () => {
                     <input type="password" class="form-control" v-model="user.password" placeholder="Enter password">
                     <span v-if="userData.user.error" v-html="userData.user.error.password" class="text-danger fs-12"></span>
                 </div>
-                <button type="submit" class="btn login-btn mb-2">Login</button>
+                <button type="submit" class="btn login-btn mb-2" @click="login">Login</button>
                 <span class="">Doesn't have an account yet?</span> <span class="register-btn" @click="toggleAction">Register here!</span>
               </form>
         </div>

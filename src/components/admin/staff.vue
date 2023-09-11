@@ -76,6 +76,7 @@ onMounted(() => {
                   <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Contact</th>
                     <th scope="col">Position</th>
                     <th scope="col">Action</th>
                   </tr>
@@ -85,8 +86,11 @@ onMounted(() => {
                     <!-- {{ data }} -->
                     <td>{{ data.name }}</td>
                     <td>{{ data.email }}</td>
+                    <td>{{ data.contact }}</td>
                     <td>{{ data.role }}</td>
-                    <td><span @click="editStaff(data,index)"><i class="fa-solid fa-edit"></i></span><span @click="deleteStaff(data.id)"><i class="fa-solid fa-trash"></i></span></td>
+                    <td>
+                        <!-- <span @click="editStaff(data,index)"><i class="fa-solid fa-edit"></i></span> -->
+                        <span @click="deleteStaff(data.id)"><i class="fa-solid fa-trash"></i></span></td>
                   </tr>
                 </tbody>
 
@@ -242,7 +246,7 @@ onMounted(() => {
     padding: 0.55rem !important;
 }
 .table-container td, .table-container th{
-    font-size: 12px;
+    font-size: 14px;
 }
 .table-container .fa-edit:hover {
     color: #00D100;
@@ -266,7 +270,7 @@ onMounted(() => {
 }
 
 .table-pagination span{
-    font-size: 12px;
+    font-size: 14px;
     margin: 0px 20px;
 }
 

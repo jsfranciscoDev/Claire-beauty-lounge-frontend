@@ -6,6 +6,7 @@ import Staff from '../components/Staff.vue';
 import Login from '../components/Login.vue';
 import Admin from '../components/admin/Admin.vue';
 import AdminStaff from '../components/admin/staff.vue';
+import ManageAccount from '../components/admin/ManageAccount.vue';
 
 import { createPinia } from 'pinia';
 import { store } from "../store/index";
@@ -52,8 +53,23 @@ const routes = [
     children: [
       {
         path: '/admin/staff',
+        beforeEnter: (to, from, next) => {
+          const role = localStorage.getItem('role');
+          const roleBytes = CryptoJS.AES.decrypt(role, 'role');
+          const decryptedRoleValue = roleBytes.toString(CryptoJS.enc.Utf8);
+    
+          if (decryptedRoleValue === 'admin') {
+            next(); // Allow access for 'admin' role
+          } else {
+            window.location = '/admin'; // Redirect to home page for unauthorized users
+          }
+        },
         component: AdminStaff,
       },
+      {
+        path: '/admin/manage-account',
+        component: ManageAccount,
+      }
     ]
   },
   {

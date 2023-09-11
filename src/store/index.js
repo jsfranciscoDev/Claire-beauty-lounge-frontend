@@ -40,7 +40,7 @@ export const store = defineStore({
             const test = localStorage.getItem('session');
             const bytes = CryptoJS.AES.decrypt(test, 'session');
             const decryptedValue = bytes.toString(CryptoJS.enc.Utf8);
-            this.userRole();
+           
         }
        
       } catch (error) {
@@ -67,13 +67,12 @@ export const store = defineStore({
     async logout() {
       try {
         const response = await user.logout();
-          if(response.data = 'Logged Out!'){
-            localStorage.removeItem('role');
-            localStorage.removeItem('authenticated');
-            localStorage.removeItem('token');
-            localStorage.removeItem('session');
-            this.role = null;
-          }
+          localStorage.setItem('role', '');
+          localStorage.setItem('authenticated', '');
+          localStorage.setItem('token', '');
+          localStorage.setItem('session', '');
+          this.role = null;       
+          window.location.reload();
       } catch (error) {
         this.user.error = error.response.data.errors;
       }

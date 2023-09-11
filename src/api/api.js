@@ -4,7 +4,7 @@ const baseURL = import.meta.env.VITE_APP_BASE_URL;
 
 const instance = axios.create({
     baseURL: baseURL,
-    withCredentials: false
+    withCredentials: false,
 });
 
 const storedToken = localStorage.getItem('token');
