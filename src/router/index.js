@@ -7,7 +7,7 @@ import Login from '../components/Login.vue';
 import Admin from '../components/admin/Admin.vue';
 import AdminStaff from '../components/admin/staff.vue';
 import ManageAccount from '../components/admin/ManageAccount.vue';
-
+import ItemComponent from '../components/items/ItemComponent.vue';
 import { createPinia } from 'pinia';
 import { store } from "../store/index";
 import CryptoJS from 'crypto-js';
@@ -69,6 +69,10 @@ const routes = [
       {
         path: '/admin/manage-account',
         component: ManageAccount,
+      },
+      {
+        path: '/items',
+        component: ItemComponent,
       }
     ]
   },
