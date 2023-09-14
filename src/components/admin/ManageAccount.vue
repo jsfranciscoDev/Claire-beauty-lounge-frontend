@@ -42,14 +42,9 @@ const handleClick = () => {
   document.getElementById('my-file').click();
 };
 
-
 onMounted(() => {
   userData.fetchUser();
-  preview.value = backendbaseURL+userData.user_profile;
 })
-
-console.log(preview.value);
-
 
 </script>
 
@@ -90,9 +85,9 @@ console.log(preview.value);
                     <div class="upload-image h-100">
                         <div class="form-group">
                             <div class="p-2">
-                                <!-- <img :src="backendbaseURL+userData.user_profile" class="img-fluid preview-image" /> -->
-                                <div v-if="preview">
-                                    <img :src="preview" class="img-fluid preview-image" />
+                              
+                                <div v-if="backendbaseURL+userData.user_profile">
+                                    <img :src="backendbaseURL+userData.user_profile" class="img-fluid preview-image" />
                                 </div>
                                 <div v-else>
                                     <img src="/images/profile.png" class="img-fluid preview-image" />
@@ -178,8 +173,8 @@ console.log(preview.value);
 }
 
 .preview-image{
-    max-width: 200px;
-    height:  200px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     object-fit: cover;
 }
