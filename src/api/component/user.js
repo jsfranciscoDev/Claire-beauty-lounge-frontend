@@ -13,4 +13,10 @@ export default {
     logout(){
         return api.post('/api/logout');
     },
+    uploadPhoto(payload){
+        return api.post('/api/upload-photo', {file: payload});
+    },
+    fetchUser(){
+        return api.get('/api/get-user');
+    },
 }

@@ -5,7 +5,12 @@ import CryptoJS from 'crypto-js';
 const user = store();
 
 const logoutUser = () => {
+  localStorage.setItem('role', '');
+  localStorage.setItem('authenticated', '');
+  localStorage.setItem('token', '');
+  localStorage.setItem('session', '');
   user.logout();
+
 }
 
 const role = localStorage.getItem('role');

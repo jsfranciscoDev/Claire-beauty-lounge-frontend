@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted  } from "vue";
 import { store } from "../store/index";
 import { useRouter } from 'vue-router';
 
@@ -49,7 +49,7 @@ const registerAccount = async (event) => {
 const login = () => {
   setTimeout(() => {
     window.location.reload();
-  }, 1000); 
+  }, 2000); 
 }
 
 const clearErrorMessage = () => {
@@ -57,6 +57,7 @@ const clearErrorMessage = () => {
   userData.user.errorWarning = ''
   accountCreated.value = false;
 }
+
 
 </script>
 

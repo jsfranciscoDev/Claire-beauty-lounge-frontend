@@ -6,7 +6,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;700&display=swap');
 
 
-$font-primary:  'Open Sans', sans-serif;
+$font-primary:  'Montserrat', sans-serif;
 $font-secondary: 'Playfair Display', serif;
 $font-tertiary: 'Cinzel', serif;
 
@@ -42,6 +42,7 @@ body {
 	font-size: 16px;
 	line-height: 1.8;
 	font-weight: 400;
+    background-color: #efefef !important;
 	color: lighten($black,60%);
 	&.menu-show {
 		overflow: hidden;
@@ -52,6 +53,7 @@ body {
 }
 a {
 	transition: .3s all ease;
+    font-family: $font-tertiary !important;
 	color: $primary;
 	&:hover, &:focus {
 		text-decoration: none;
@@ -64,7 +66,13 @@ h1, h2, h3, h4, h5,
 	line-height: 1.5;
 	color: rgba(0,0,0,.8);
 	font-weight: 400;
+    font-family: $font-tertiary;
 }
+
+button, .button{
+    font-family: $font-tertiary !important;
+}
+
 
 .text-primary {
 	color: $primary!important;
@@ -2281,7 +2289,12 @@ section#tables  p {
     font-weight: 400;
 }
 .form-control {
-    border-radius: inherit;
+    border-radius: 10px;
+    background-color: rgb(236, 236, 236);
+    border: none;
+    padding: 10px 10px;
+    font-size: 16px;
+    font-family: $font-primary;
 }
 .help-block {
     margin-top: 10px;
@@ -2315,7 +2328,7 @@ section#tables  p {
   font-size: 0.85em;
   font-weight: 300;
   height: 40px;
-  border-radius: 0;
+  border-radius: 5 !important;
   -webkit-appearance: none;
   resize: none;
 }

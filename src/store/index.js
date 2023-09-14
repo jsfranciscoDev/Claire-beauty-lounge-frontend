@@ -11,6 +11,7 @@ export const store = defineStore({
       errorWarning:[],
       registerMessage: '',
     }],
+    user_profile: '',
     services: [],
     products: [],
     staff: [],
@@ -109,10 +110,26 @@ export const store = defineStore({
         this.staffValidation.error = error.response.data.errors;
       }
     },
+    async uploadPhoto(payload) {
+      try {
+        const response = await user.uploadPhoto(payload);
+          this.user_profile = response.data.path;
+          this.fetchUser();
+      } catch (error) {
+        this.staffValidation.error = error.response.data.errors;
+      }
+    },
     async deleteUserStaff(payload) {
       const response = await staff.deleteUserStaff(payload);
       return response;
     },
-
+    async fetchUser() {
+      try {
+        const response = await user.fetchUser();
+          this.user_profile = response.data.profile;
+      } catch (error) {
+        this.staffValidation.error = error.response.data.errors;
+      }
+    },
   },
 });
