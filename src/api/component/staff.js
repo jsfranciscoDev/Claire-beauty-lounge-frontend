@@ -10,4 +10,7 @@ export default {
     deleteUserStaff(payload){
         return api.delete(`/api/remove-staff/${payload}`);
     },
+    getStaff(){
+        return api.get('/api/get-staff');
+    }
 }

@@ -456,6 +456,7 @@ button, .button{
 	right: 0;
 	z-index: 3;
 	padding: 0;
+    position: absolute;
 	@include media-breakpoint-down(md) {
 		background: $black!important;
 		position: relative;
@@ -5144,9 +5145,9 @@ h4.title3 {
 button {
     background-color: #eee;
     border: none;
-    padding: 5px 0px;
+    padding: 5px 30px;
     font-size: 12px;
-    width: 15em;
+    width: auto;
     border-radius: 1rem;
     color: lightcoral;
     box-shadow: 0 0.4rem #dfd9d9;
@@ -5169,3 +5170,46 @@ button {
     cursor: auto;
     color: grey;
    }
+
+//    STAFF PAGE 
+
+.staff-cards{
+    padding: 5rem 0;
+
+    .cards-image{
+        display: flex;
+        justify-content: center;
+    }
+    .cards{
+        box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+        border-radius: 20px;
+        max-width: 360px;
+        height: auto;
+        padding: 2rem;
+        margin: 0px 2rem;
+
+        img{
+            max-width: 150px;
+            border-radius: 50%;
+        }
+
+        .cards-text{
+            label {
+                margin-top: 5px;
+                font-weight: bold;
+            }
+
+            p{
+                font-size: 14px;
+            }
+        }
+
+        .card-action{
+           margin-top: 10px;
+
+           button{
+             margin: 0px 5px;
+           }
+        }
+    }
+}
