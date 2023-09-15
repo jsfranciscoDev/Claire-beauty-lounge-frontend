@@ -5138,3 +5138,34 @@ h4.title3 {
 }
 
 // admin table 
+
+
+// 
+button {
+    background-color: #eee;
+    border: none;
+    padding: 5px 0px;
+    font-size: 12px;
+    width: 15em;
+    border-radius: 1rem;
+    color: lightcoral;
+    box-shadow: 0 0.4rem #dfd9d9;
+    cursor: pointer;
+   }
+   
+   button:active {
+    color: white;
+    box-shadow: 0 0.2rem #dfd9d9;
+    transform: translateY(0.2rem);
+   }
+   
+   button:hover:not(:disabled) {
+    background: lightcoral;
+    color: white;
+    text-shadow: 0 0.1rem #bcb4b4;
+   }
+   
+   button:disabled {
+    cursor: auto;
+    color: grey;
+   }

@@ -19,4 +19,10 @@ export default {
     fetchUser(){
         return api.get('/api/get-user');
     },
+    changePassword(payload){
+        return api.post('/api/change-password', {payload});
+    },
+    updateUserDetails(payload){
+        return api.post('/api/update-user', payload);
+    }
 }

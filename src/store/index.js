@@ -2,6 +2,7 @@ import user from "../api/component/user.js";
 import staff from "../api/component/staff.js"
 import { defineStore } from 'pinia';
 import CryptoJS from 'crypto-js';
+import Swal from 'sweetalert2';
 
 export const store = defineStore({
   id: 'store',
@@ -11,6 +12,13 @@ export const store = defineStore({
       errorWarning:[],
       registerMessage: '',
     }],
+    user_password: {
+      new_password: '',
+      current_password: '',
+      password_confirmation: '',
+      error: '',
+    },
+    user_details:{},
     user_profile: '',
     services: [],
     products: [],
@@ -18,7 +26,6 @@ export const store = defineStore({
     staffValidation: [],
     role: null,
     session: true,
-    
   }),
   actions: {
     async login(payload) {
@@ -127,8 +134,42 @@ export const store = defineStore({
       try {
         const response = await user.fetchUser();
           this.user_profile = response.data.profile;
+          this.user_details = response.data.user;
       } catch (error) {
         this.staffValidation.error = error.response.data.errors;
+      }
+    },
+    async changePassword(){
+      try {
+        const response = await user.changePassword(this.user_password);
+            if(response.data.status == 'failed'){
+              this.user_password.error = response.data.message;
+            }else if(response.data.status == 'success'){
+              this.user_password = {}
+              Swal.fire({
+                  title: 'Password Successfully Changed!',
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+              });
+            }
+      } catch (error) {
+        
+      }
+    },
+    async updateUserDetails(){
+      try {
+        const response = await user.updateUserDetails(this.user_details);
+            if(response.data.status == 'failed'){
+              this.user_password.error = response.data.message;
+            }else if(response.data.status == 'success'){
+              Swal.fire({
+                  title: response.data.message,
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+              });
+            }
+      } catch (error) {
+        
       }
     },
   },
