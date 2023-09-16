@@ -9,6 +9,7 @@ import AdminStaff from '../components/admin/staff.vue';
 import ManageAccount from '../components/admin/ManageAccount.vue';
 import Dashboard from '../components/admin/Dashboard.vue';
 import DailyTimeRecord from '../components/admin/DailyTimeRecord.vue';
+import AdminServices from '../components/admin/Services.vue';
 import { createPinia } from 'pinia';
 import { store } from "../store/index";
 import CryptoJS from 'crypto-js';
@@ -78,6 +79,10 @@ const routes = [
       {
         path: '/admin/daily-time-record',
         component: DailyTimeRecord,
+      },
+      {
+        path: '/admin/services',
+        component: AdminServices,
       }
     ]
   },

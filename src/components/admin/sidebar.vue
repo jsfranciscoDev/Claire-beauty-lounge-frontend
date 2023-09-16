@@ -30,6 +30,9 @@ const userRole = roleBytes.toString(CryptoJS.enc.Utf8);
                 <i class="fa fa-window-maximize"><span><router-link to="/admin/dashboard" class="sidebar-link">Dashboard</router-link></span></i>
             </li>
             <li>
+                <i class="fa fa-bed"><span><router-link to="/admin/services" class="sidebar-link">Services</router-link></span></i>
+            </li>
+            <li>
                 <i class="fa fa-clock"><span><router-link to="/admin/daily-time-record" class="sidebar-link">Daily Time Record</router-link></span></i>
             </li>
             <li>

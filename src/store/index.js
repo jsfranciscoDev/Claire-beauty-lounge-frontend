@@ -196,10 +196,9 @@ export const store = defineStore({
         
       }
     },
-    async getDTR(months){
+    async getDTR(){
       try {
-        const response = await user.getDTR(months);
-           console.log(response.data.action);
+        const response = await user.getDTR();
            this.timeInButtonAction = response.data.action
       } catch (error) {
         
