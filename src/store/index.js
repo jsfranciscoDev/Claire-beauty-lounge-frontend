@@ -26,6 +26,7 @@ export const store = defineStore({
     staffValidation: [],
     role: null,
     session: true,
+    timeInButtonAction: '',
   }),
   actions: {
     async login(payload) {
@@ -108,6 +109,7 @@ export const store = defineStore({
     async getUserStaff(page) {
       try {
         const response = await staff.getUserStaff(page);
+          console.log(response.data.user);
           if(response.data.message == 'success'){
             this.staff = response.data.user;
             // this.staffValidation.message = response.data.message;
@@ -162,6 +164,7 @@ export const store = defineStore({
             if(response.data.status == 'failed'){
               this.user_password.error = response.data.message;
             }else if(response.data.status == 'success'){
+
               Swal.fire({
                   title: response.data.message,
                   icon: 'success',
@@ -172,5 +175,35 @@ export const store = defineStore({
         
       }
     },
+    async timeIn(user_id, time , date, action){
+      try {
+        const response = await user.timeIn(user_id,time,date ,action);
+            if(response.data.status == 'failed'){
+                Swal.fire({
+                  title: response.data.message,
+                  icon: 'warning',
+                  confirmButtonText: 'OK'
+              });
+            }else if(response.data.status == 'success'){
+
+              Swal.fire({
+                  title: response.data.message,
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+              });
+            }
+      } catch (error) {
+        
+      }
+    },
+    async getDTR(months){
+      try {
+        const response = await user.getDTR(months);
+           console.log(response.data.action);
+           this.timeInButtonAction = response.data.action
+      } catch (error) {
+        
+      }
+    }
   },
 });

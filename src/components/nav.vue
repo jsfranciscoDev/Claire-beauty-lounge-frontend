@@ -33,7 +33,7 @@ onMounted(() => {
               <a class="nav-link" @click="logoutUser">Logout</a>
             </li>
             <li class="nav-item" :class="{ 'active': $route.path === '/admin' }" v-else-if="user.role == 'admin' || user.role == 'staff'">
-              <router-link to="/admin" class="nav-link">admin</router-link>
+              <router-link to="/admin/dashboard" class="nav-link">admin</router-link>
             </li>
             <li class="nav-item" :class="{ 'active': $route.path === '/admin' }" v-else>
               <router-link to="/admin" class="nav-link">Login</router-link>

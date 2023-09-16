@@ -81,7 +81,7 @@ onMounted(() => {
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
-                <tbody v-for="(data,index) in  staffStoreData.staff.data" :key="index">
+                <tbody v-for="(data,index) in  staffStoreData.staff" :key="index">
                   <tr>
                     <!-- {{ data }} -->
                     <td>{{ data.name }}</td>

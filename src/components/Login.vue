@@ -31,7 +31,7 @@ const LoginAccount = async (event) => {
   await userData.login(user); 
   const auth = localStorage.getItem('session');
   if (auth) {
-    router.push('/admin');
+    router.push('/admin/dashboard');
   }
 
 };

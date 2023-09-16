@@ -5143,13 +5143,15 @@ h4.title3 {
 
 // 
 button {
-    background-color: #eee;
     border: none;
     padding: 5px 30px;
     font-size: 12px;
     width: auto;
     border-radius: 1rem;
-    color: lightcoral;
+    text-transform: uppercase;
+    background-color: #e4d5b7;
+    color: #343434;
+    font-weight: bold;
     box-shadow: 0 0.4rem #dfd9d9;
     cursor: pointer;
    }
@@ -5181,7 +5183,7 @@ button {
         justify-content: center;
     }
     .cards{
-        box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px;
         border-radius: 20px;
         max-width: 360px;
         height: auto;
@@ -5189,7 +5191,9 @@ button {
         margin: 0px 2rem;
 
         img{
-            max-width: 150px;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
             border-radius: 50%;
         }
 
@@ -5197,6 +5201,7 @@ button {
             label {
                 margin-top: 5px;
                 font-weight: bold;
+                font-size: 12px;
             }
 
             p{
@@ -5212,4 +5217,44 @@ button {
            }
         }
     }
+}
+
+.time-clock{
+    width: 300px;
+    height: auto;
+    background-color: #ffffff;
+    padding: 20px 20px;
+    border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px;
+
+    img{
+        width: 150px;
+        height: 150px;
+        margin-top: 20px;
+    }
+    .clock{
+        font-size: 34px;
+        font-weight: bold;
+        color: black;
+    }
+
+    .clock-date{
+        font-size: 24px;
+        font-weight: bold;
+        color: black;   
+    }
+
+    .time-button{
+        background-color: green;
+        border-radius: none !important;
+        color: white;
+        margin-top: 10px;
+    }
+}
+
+.select-dropdown{
+    min-width: 300px;
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin: 5px;
 }
