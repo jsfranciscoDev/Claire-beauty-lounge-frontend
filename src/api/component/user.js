@@ -19,4 +19,16 @@ export default {
     fetchUser(){
         return api.get('/api/get-user');
     },
+    changePassword(payload){
+        return api.post('/api/change-password', {payload});
+    },
+    updateUserDetails(payload){
+        return api.post('/api/update-user', payload);
+    },
+    timeIn(user_id,time,date,action){
+        return api.post('/api/user-time-in', {user_id,time,date,action});
+    },
+    getDTR(){
+        return api.get('/api/get-user-records');
+    },
 }

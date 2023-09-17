@@ -13,9 +13,11 @@
     "axios": "^1.5.0",
     "crypto-js": "^4.1.1",
     "file-saver": "^2.0.5",
+    "moment-timezone": "^0.5.43",
     "pinia": "^2.1.6",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4",
+    "vue-sweetalert2": "^5.0.5",
     "vuex": "^4.1.0"
   },
   "devDependencies": {

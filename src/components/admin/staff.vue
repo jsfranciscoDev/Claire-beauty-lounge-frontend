@@ -23,8 +23,6 @@ const addStaffUser = () => {
     });
 }
 
-console.log(staffStoreData.staff);
-
 const editStaff = (data) => {
     updateStaff.value = true
     staffData.email = data.email;

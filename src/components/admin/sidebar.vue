@@ -22,12 +22,18 @@ const userRole = roleBytes.toString(CryptoJS.enc.Utf8);
         <div class="navbar-collapse">
         <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
           <div class="admin-logo">
-            <span  class="navbar-brand nav-link admin-logo">Claire Beauty Lounge</span>
+            <router-link to="/" class="sidebar-link"><span  class="navbar-brand nav-link admin-logo">Claire Beauty Lounge</span></router-link>
           </div>
             
           <ul id="side-menu">
             <li>
-                <i class="fa-solid fa-house"><span><router-link to="/admin/dashboard" class="sidebar-link">Dashboard</router-link></span></i>
+                <i class="fa fa-window-maximize"><span><router-link to="/admin/dashboard" class="sidebar-link">Dashboard</router-link></span></i>
+            </li>
+            <li>
+                <i class="fa fa-bed"><span><router-link to="/admin/services" class="sidebar-link">Services</router-link></span></i>
+            </li>
+            <li>
+                <i class="fa fa-clock"><span><router-link to="/admin/daily-time-record" class="sidebar-link">Daily Time Record</router-link></span></i>
             </li>
             <li>
                <i class="fa fa-users nav_icon" v-if="userRole == 'admin'"><span><router-link to="/admin/staff" class="sidebar-link">Staff</router-link></span></i>
