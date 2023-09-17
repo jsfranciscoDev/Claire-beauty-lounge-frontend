@@ -55,8 +55,8 @@ const staffUserTimein = (action) => {
                   
                    <span class="clock-date">{{ currentDate }}</span>
                     <h5>{{ userData.user_details.name }}</h5>
-                    <button class="time-button" @click="staffUserTimein('time_in')" v-if="userData.timeInButtonAction == 'time_in'">Time in</button>
-                    <button class="time-button" style="background-color: red;" @click="staffUserTimein('time_out')"  v-if="userData.timeInButtonAction == 'time_out'">Time out</button>
+                    <button class="time-button" @click="staffUserTimein('time_in')" v-if="userData.timeInButtonAction == 'time_in' && userRole =='staff'">Time in</button>
+                    <button class="time-button" style="background-color: red;" @click="staffUserTimein('time_out')"  v-if="userData.timeInButtonAction == 'time_out' && userRole =='staff'">Time out</button>
                 </div>
                 <div align="center">
                     <center>

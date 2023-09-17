@@ -5,7 +5,7 @@ export default {
         return api.post('/api/create-staff', payload);
     },
     getUserStaff(page){
-        return api.get(`/api/get-staff?page=${page}`);
+        return api.get(`/api/get-staffs?page=${page}`);
     },
     deleteUserStaff(payload){
         return api.delete(`/api/remove-staff/${payload}`);

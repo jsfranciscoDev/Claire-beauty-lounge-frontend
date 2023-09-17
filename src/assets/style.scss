@@ -450,13 +450,13 @@ button, .button{
 
 
 .ftco-navbar-light {
-	background: transparent !important;
+	background: white !important;
 	top: 0px;
 	left: 0;
 	right: 0;
 	z-index: 3;
 	padding: 0;
-    position: absolute;
+    position: fixed;
 	@include media-breakpoint-down(md) {
 		background: $black!important;
 		position: relative;
@@ -5228,8 +5228,8 @@ button {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px;
 
     img{
-        width: 150px;
-        height: 150px;
+        width: 120px;
+        height: 120px;
         margin-top: 20px;
     }
     .clock{
@@ -5239,8 +5239,7 @@ button {
     }
 
     .clock-date{
-        font-size: 24px;
-        font-weight: bold;
+        font-size: 18px;
         color: black;   
     }
 

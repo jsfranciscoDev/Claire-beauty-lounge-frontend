@@ -109,7 +109,7 @@ export const store = defineStore({
     async getUserStaff(page) {
       try {
         const response = await staff.getUserStaff(page);
-          console.log(response.data.user);
+        console.log(response.data.user)
           if(response.data.message == 'success'){
             this.staff = response.data.user;
             // this.staffValidation.message = response.data.message;

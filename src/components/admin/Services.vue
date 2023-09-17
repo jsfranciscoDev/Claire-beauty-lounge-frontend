@@ -1,7 +1,7 @@
 <script setup>
 import { reactive, ref, onMounted } from "vue";
-import { store } from "../../store/index";
-const staffStoreData = store();
+import { store } from "../../store/service";
+const service = store();
 
 const staffData = reactive({
     email: null,
@@ -14,50 +14,41 @@ const staffData = reactive({
 const staffDialog = ref(false)
 const updateStaff = ref(false);
 
-const addStaffUser = () => {
-    staffStoreData.createStaff(staffData).then(e => {
-        if(e.data.message == 'success'){
-            closeDialog();
-            staffStoreData.getUserStaff();
-        }
-    });
+const addServices = () => {
+    service.createServices();
 }
 
-console.log(staffStoreData.staff);
+// const editStaff = (data) => {
+//     updateStaff.value = true
+//     staffData.email = data.email;
+//     staffData.name = data.name;
+//     staffData.contact = data.contact;
+//     staffDialog.value = true;
+// }
 
-const editStaff = (data) => {
-    updateStaff.value = true
-    staffData.email = data.email;
-    staffData.name = data.name;
-    staffData.contact = data.contact;
-    staffDialog.value = true;
-}
+// const deleteStaff = (id) => {
+//     staffStoreData.deleteUserStaff(id).then(response => {
+//         if(response.data.message == 'success'){
+//             staffStoreData.getUserStaff();
+//             closeDialog();
+//         }
+//     });
+// }
 
-const deleteStaff = (id) => {
-    staffStoreData.deleteUserStaff(id).then(response => {
-        if(response.data.message == 'success'){
-            staffStoreData.getUserStaff();
-            closeDialog();
-        }
-    });
-}
 const closeDialog = () => {
     staffDialog.value = false
     resetFields();
 }
 
 const resetFields = () => {
-    updateStaff.value = false;
-    staffStoreData.staffValidation.message = '';
-    staffStoreData.staffValidation.error = '';
-    Object.keys(staffData).forEach(key => staffData[key] = null);
+    Object.keys(service.services).forEach(key => service[key] = null);
 }
 const paginate = (page) => {
-    staffStoreData.getUserStaff(page);
+    // staffStoreData.getUserStaff(page);
 }
 
 onMounted(() => {
-    staffStoreData.getUserStaff();
+    // staffStoreData.getUserStaff();
 });
 
 
@@ -74,38 +65,35 @@ onMounted(() => {
               <table class="table mb-0">
                 <thead>
                   <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Contact</th>
-                    <th scope="col">Position</th>
+                    <th scope="col">Service Name</th>
+                    <th scope="col">Service Type</th>
+                    <th scope="col">Price</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
-                <tbody v-for="(data,index) in  staffStoreData.staff" :key="index">
+                <tbody >
                   <tr>
-                    <!-- {{ data }} -->
-                    <td>{{ data.name }}</td>
-                    <td>{{ data.email }}</td>
-                    <td>{{ data.contact }}</td>
-                    <td>{{ data.role }}</td>
-                    <td>
-                        <!-- <span @click="editStaff(data,index)"><i class="fa-solid fa-edit"></i></span> -->
-                        <span @click="deleteStaff(data.id)"><i class="fa-solid fa-trash"></i></span></td>
+                 
+                    <td>asdasd</td>
+                    <td>asd</td>
+                    <td>asd</td>
+                    <td>asd</td>
+                 
+                   
                   </tr>
                 </tbody>
 
               </table>
         
-              <div v-if="staffStoreData.staff.total > 10" class="table-pagination">  
+              <!-- <div v-if="staffStoreData.staff.total > 10" class="table-pagination">  
                 <div>
-                    <button @click="paginate(staffStoreData.staff.current_page + 1)" v-if="staffStoreData.staff.next_page_url" ><i class="fa fa-angle-right"></i></button>
-                    <button @click="paginate(staffStoreData.staff.current_page - 1)" v-if="staffStoreData.staff.prev_page_url"><i class="fa fa-angle-left"></i></button>
+                  
                 </div>
                 <div >
                     <span> Page {{ staffStoreData.staff.current_page  }} - {{ staffStoreData.staff.last_page }} </span>
                 </div>
                 
-              </div>
+              </div> -->
         </div>
     </div>
 
@@ -114,40 +102,29 @@ onMounted(() => {
         <div class="form-container">
             <div class="staff-form">
                 <div class="form-input">
-                    <h2 v-if="!updateStaff"><i class="fa-solid fa-plus"></i> Add Staff</h2>
-                    <h2 v-else> <i class="fa-solid fa-edit"></i> Update Staff</h2>
-                <div class="alert alert-danger d-flex flex-column" role="alert"  v-if="staffStoreData.staffValidation.error">
-                    <span v-html="staffStoreData.staffValidation.error.name"></span>
-                    <span v-html="staffStoreData.staffValidation.error.email"></span>
-                    <span v-html="staffStoreData.staffValidation.error.password"></span>
-                    <span v-html="staffStoreData.staffValidation.error.contact"></span>
+                    <!-- <h2 v-if="!updateStaff"><i class="fa-solid fa-plus"></i> Add Services</h2>
+                    <h2 v-else> <i class="fa-solid fa-edit"></i> Update Staff</h2> -->
+                <div class="alert alert-danger d-flex flex-column" role="alert"  >
+                    <span v-html="asd"></span>
+                  
                 </div>
-                <form @submit.prevent="addStaffUser">
+                <form @submit.prevent="addServices">
                    
                 <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" v-model="staffData.email" autocomplete="off">
+                    <label>Service Name</label>
+                    <input type="text" class="form-control" v-model="service.services.name" autocomplete="off">
                     <span  class="text-danger fs-12"></span>
                 </div>
-                <div class="form-group" v-if="!updateStaff">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" v-model="staffData.password" autocomplete="off">
-                    <span  class="text-danger"></span>
-                </div>
-                <div class="form-group" v-if="!updateStaff">
-                    <label for="confirm_password">Confirmed Password</label>
-                    <input type="password" class="form-control" v-model="staffData.password_confirmation" autocomplete="off">
-                    <span  class="text-danger"></span>
-                </div>
+        
                 <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" class="form-control" v-model="staffData.name" autocomplete="off">
+                    <label>Service Type</label>
+                    <input type="text" class="form-control" v-model="service.services.Type" autocomplete="off">
                     <span  class="text-danger"></span>
                 </div>
                
                 <div class="form-group">
-                    <label for="name">Contact Number</label>
-                    <input type="text" class="form-control" v-model="staffData.contact" autocomplete="off" >
+                    <label>Price</label>
+                    <input type="text" class="form-control" v-model="service.services.price" autocomplete="off" >
                     <span  class="text-danger"></span>
                 </div>
                
