@@ -4,4 +4,7 @@ export default {
     createServices(payload){
         return api.post('/api/create-services', payload);
     },
+    getServices(page){
+        return api.get(`/api/get-services?page=${page}`);
+    }
 }

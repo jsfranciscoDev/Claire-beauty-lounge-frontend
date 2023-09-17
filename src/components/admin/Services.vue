@@ -3,19 +3,17 @@ import { reactive, ref, onMounted } from "vue";
 import { store } from "../../store/service";
 const service = store();
 
-const staffData = reactive({
-    email: null,
-    password: null,
-    password_confirmation: null,
-    name: null,
-    contact: null,
-})
 
 const staffDialog = ref(false)
 const updateStaff = ref(false);
 
 const addServices = () => {
-    service.createServices();
+    service.createServices().then(response => {
+        console.log(response);
+        if(response.data.status == 'success'){
+            closeDialog();
+        }
+    });
 }
 
 // const editStaff = (data) => {
@@ -41,14 +39,17 @@ const closeDialog = () => {
 }
 
 const resetFields = () => {
-    Object.keys(service.services).forEach(key => service[key] = null);
+    service.services = {}
 }
+
 const paginate = (page) => {
     // staffStoreData.getUserStaff(page);
+    service.getServices(page);
 }
 
 onMounted(() => {
     // staffStoreData.getUserStaff();
+    service.getServices();
 });
 
 
@@ -59,7 +60,7 @@ onMounted(() => {
         <h2><i class="fa fa-bed"></i> Manage Services</h2>
         <button type="button" @click="staffDialog = true"><i class="fa-solid fa-plus"></i>Add</button>
     </div>
-   
+
     <div class="table-container">
         <div class="table-responsive bg-white">   
               <table class="table mb-0">
@@ -68,16 +69,19 @@ onMounted(() => {
                     <th scope="col">Service Name</th>
                     <th scope="col">Service Type</th>
                     <th scope="col">Price</th>
+                    <th scope="col">Details</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
-                <tbody >
+                <tbody v-for="(data,index) in service.services_details.data" :key="index">
                   <tr>
                  
-                    <td>asdasd</td>
-                    <td>asd</td>
-                    <td>asd</td>
-                    <td>asd</td>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.type}}</td>
+                    <td>{{ data.price}}</td>
+                    <td>{{ data.details }}</td>
+                    <td>-</td>
+
                  
                    
                   </tr>
@@ -85,15 +89,16 @@ onMounted(() => {
 
               </table>
         
-              <!-- <div v-if="staffStoreData.staff.total > 10" class="table-pagination">  
+              <div v-if="service.services_details.total > 10" class="table-pagination">  
                 <div>
-                  
+                    <button @click="paginate(service.services_details.current_page + 1)" v-if="service.services_details.next_page_url" ><i class="fa fa-angle-right"></i></button>
+                    <button @click="paginate(service.services_details.current_page - 1)" v-if="service.services_details.prev_page_url"><i class="fa fa-angle-left"></i></button>
                 </div>
                 <div >
-                    <span> Page {{ staffStoreData.staff.current_page  }} - {{ staffStoreData.staff.last_page }} </span>
+                    <span> Page {{ service.services_details.current_page  }} - {{ service.services_details.last_page }} </span>
                 </div>
                 
-              </div> -->
+              </div>
         </div>
     </div>
 
@@ -125,6 +130,12 @@ onMounted(() => {
                 <div class="form-group">
                     <label>Price</label>
                     <input type="text" class="form-control" v-model="service.services.price" autocomplete="off" >
+                    <span  class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Details</label>
+                    <input type="text" class="form-control" v-model="service.services.details" autocomplete="off" >
                     <span  class="text-danger"></span>
                 </div>
                
