@@ -46,6 +46,9 @@ const paginate = (page) => {
     // staffStoreData.getUserStaff(page);
     service.getServices(page);
 }
+const deleteServices = (id) => {
+    service.deleteService(id)
+}
 
 onMounted(() => {
     // staffStoreData.getUserStaff();
@@ -80,7 +83,7 @@ onMounted(() => {
                     <td>{{ data.type}}</td>
                     <td>{{ data.price}}</td>
                     <td>{{ data.details }}</td>
-                    <td>-</td>
+                    <td> <span @click="deleteServices(data.id)"><i class="fa-solid fa-trash"></i></span></td>
 
                  
                    

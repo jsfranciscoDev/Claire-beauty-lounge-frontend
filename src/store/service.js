@@ -42,6 +42,16 @@ export const store = defineStore({
       } catch (error) {
        
       }
-  },
+    },
+      async deleteService(id) {
+        try {
+          const response = await service.deleteService(id);
+            if(response.data.message == 'success'){
+                this.getServices()
+            }
+        } catch (error) {
+        
+        }
+    },
   },
 });
