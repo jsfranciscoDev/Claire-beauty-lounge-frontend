@@ -42,6 +42,9 @@ const userRole = roleBytes.toString(CryptoJS.enc.Utf8);
                <i class="fa fa-cog"><span ><router-link to="/admin/manage-account" class="sidebar-link">Manage Account</router-link></span></i>
             </li>
             <li>
+              <i class="fa fa-cog"><span ><router-link to="/items" class="sidebar-link">Items</router-link></span></i>
+           </li>
+            <li>
                <i class="fa fa-sign-out"  @click="logoutUser"><span ><router-link to="/" class="sidebar-link">Logout</router-link></span></i>
             </li>
         
