@@ -57,6 +57,9 @@ const submitUpdate = () => {
     closeDialog();
 }
 
+const formatPrice =(price) =>{
+    return `₱${parseFloat(price).toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+}
 
 onMounted(() => {
     product.getProducts();
@@ -79,6 +82,7 @@ onMounted(() => {
                     <th scope="col">Batch Number</th>
                     <th scope="col">Price</th>
                     <th scope="col">Quantity</th>
+                    <th scope="col">Total Price</th>
                     <th scope="col">Expiration Date</th>
                     <th scope="col">Purchase Date</th>
                     <th scope="col">Supplier Information</th>
@@ -90,8 +94,9 @@ onMounted(() => {
                  
                     <td>{{ data.name }}</td>
                     <td>{{ data.batch_number }}</td>
-                    <td>{{ data.price }}</td>
+                    <td>{{ formatPrice(data.price) }}</td>
                     <td>{{ data.quantity }}</td>
+                    <td>{{ formatPrice(data.price * data.quantity) }}</td>
                     <td>{{ data.purchase_dates }}</td>
                     <td>{{ data.expiration_date }}</td>
                     <td>{{ data.supplier_information }}</td>
