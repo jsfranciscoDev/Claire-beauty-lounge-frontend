@@ -10,6 +10,8 @@ import ManageAccount from '../components/admin/ManageAccount.vue';
 import Dashboard from '../components/admin/Dashboard.vue';
 import DailyTimeRecord from '../components/admin/DailyTimeRecord.vue';
 import AdminServices from '../components/admin/Services.vue';
+import AdminInventory from '../components/admin/Inventory.vue';
+
 
 import { createPinia } from 'pinia';
 import { store } from "../store/index";
@@ -84,6 +86,10 @@ const routes = [
       {
         path: '/admin/services',
         component: AdminServices,
+      },
+      {
+        path: '/admin/inventory',
+        component: AdminInventory,
       }
     ]
   },

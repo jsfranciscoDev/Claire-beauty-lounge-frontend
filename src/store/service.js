@@ -47,7 +47,27 @@ export const store = defineStore({
         try {
           const response = await service.deleteService(id);
             if(response.data.message == 'success'){
+                this.getServices();
+                Swal.fire({
+                  title: 'Deleted Successfully!',
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+              });
+            }
+        } catch (error) {
+        
+        }
+    },
+    async updateServices() {
+        try {
+          const response = await service.updateServices(this.services);
+            if(response.data.status == 'success'){
                 this.getServices()
+                Swal.fire({
+                    title: response.data.message,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
             }
         } catch (error) {
         

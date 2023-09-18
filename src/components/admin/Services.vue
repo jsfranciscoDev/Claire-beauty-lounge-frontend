@@ -4,8 +4,8 @@ import { store } from "../../store/service";
 const service = store();
 
 
-const staffDialog = ref(false)
-const updateStaff = ref(false);
+const formDialog = ref(false)
+const Update = ref(false);
 
 const addServices = () => {
     service.createServices().then(response => {
@@ -16,25 +16,9 @@ const addServices = () => {
     });
 }
 
-// const editStaff = (data) => {
-//     updateStaff.value = true
-//     staffData.email = data.email;
-//     staffData.name = data.name;
-//     staffData.contact = data.contact;
-//     staffDialog.value = true;
-// }
-
-// const deleteStaff = (id) => {
-//     staffStoreData.deleteUserStaff(id).then(response => {
-//         if(response.data.message == 'success'){
-//             staffStoreData.getUserStaff();
-//             closeDialog();
-//         }
-//     });
-// }
-
 const closeDialog = () => {
-    staffDialog.value = false
+    formDialog.value = false;
+    Update.value = false;
     resetFields();
 }
 
@@ -43,25 +27,54 @@ const resetFields = () => {
 }
 
 const paginate = (page) => {
-    // staffStoreData.getUserStaff(page);
     service.getServices(page);
 }
+
 const deleteServices = (id) => {
     service.deleteService(id)
 }
 
+const updateServices = (data) => {
+    service.services.name = data.name
+    service.services.Type = data.type
+    service.services.price = data.price
+    service.services.details = data.details
+    service.services.id = data.id
+    formDialog.value = true
+    Update.value = true
+}
+
+const submitUpdate = () => {
+    service.updateServices();
+    closeDialog();
+}
+
+
 onMounted(() => {
-    // staffStoreData.getUserStaff();
     service.getServices();
 });
 
+const formatPrice =(price) =>{
+    return `₱${parseFloat(price).toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+}
+
+const isNumber = function(evt) {
+  evt = (evt) ? evt : window.event;
+  var charCode = (evt.which) ? evt.which : evt.keyCode;
+  if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+    evt.preventDefault();
+    return false;
+  } else {
+    return true;
+  }
+}
 
 </script>
 
 <template>
     <div class="admin-component-header">
         <h2><i class="fa fa-bed"></i> Manage Services</h2>
-        <button type="button" @click="staffDialog = true"><i class="fa-solid fa-plus"></i>Add</button>
+        <button type="button" @click="formDialog = true"><i class="fa-solid fa-plus"></i>Add</button>
     </div>
 
     <div class="table-container">
@@ -81,12 +94,13 @@ onMounted(() => {
                  
                     <td>{{ data.name }}</td>
                     <td>{{ data.type}}</td>
-                    <td>{{ data.price}}</td>
+                    <td>{{ formatPrice(data.price) }}</td>
                     <td>{{ data.details }}</td>
-                    <td> <span @click="deleteServices(data.id)"><i class="fa-solid fa-trash"></i></span></td>
+                    <td> 
+                        <span @click="updateServices(data)"><i class="fa-solid fa-edit"></i></span>
+                        <span @click="deleteServices(data.id)"><i class="fa-solid fa-trash"></i></span>
+                    </td>
 
-                 
-                   
                   </tr>
                 </tbody>
 
@@ -94,8 +108,8 @@ onMounted(() => {
         
               <div v-if="service.services_details.total > 10" class="table-pagination">  
                 <div>
-                    <button @click="paginate(service.services_details.current_page + 1)" v-if="service.services_details.next_page_url" ><i class="fa fa-angle-right"></i></button>
                     <button @click="paginate(service.services_details.current_page - 1)" v-if="service.services_details.prev_page_url"><i class="fa fa-angle-left"></i></button>
+                    <button @click="paginate(service.services_details.current_page + 1)" v-if="service.services_details.next_page_url" ><i class="fa fa-angle-right"></i></button>
                 </div>
                 <div >
                     <span> Page {{ service.services_details.current_page  }} - {{ service.services_details.last_page }} </span>
@@ -106,45 +120,55 @@ onMounted(() => {
     </div>
 
     <!-- MODAL -->
-    <div class="add-staff" v-if="staffDialog">
+    <div class="add-staff" v-if="formDialog">
         <div class="form-container">
             <div class="staff-form">
                 <div class="form-input">
-                    <!-- <h2 v-if="!updateStaff"><i class="fa-solid fa-plus"></i> Add Services</h2>
-                    <h2 v-else> <i class="fa-solid fa-edit"></i> Update Staff</h2> -->
-                <div class="alert alert-danger d-flex flex-column" role="alert"  >
+                    <h2 v-if="!Update"><i class="fa-solid fa-plus"></i> Add Services</h2>
+                    <h2 v-else> <i class="fa-solid fa-edit"></i> Update Services</h2>
+                <!-- <div class="alert alert-danger d-flex flex-column" role="alert"  >
                     <span v-html="asd"></span>
                   
-                </div>
+                </div> -->
                 <form @submit.prevent="addServices">
                    
                 <div class="form-group">
                     <label>Service Name</label>
-                    <input type="text" class="form-control" v-model="service.services.name" autocomplete="off">
+                    <input type="text" class="form-control" v-model="service.services.name" autocomplete="off" required>
                     <span  class="text-danger fs-12"></span>
                 </div>
         
                 <div class="form-group">
                     <label>Service Type</label>
-                    <input type="text" class="form-control" v-model="service.services.Type" autocomplete="off">
+                    <input type="text" class="form-control" v-model="service.services.Type" autocomplete="off" required>
                     <span  class="text-danger"></span>
                 </div>
                
                 <div class="form-group">
                     <label>Price</label>
-                    <input type="text" class="form-control" v-model="service.services.price" autocomplete="off" >
+                    <input type="text" class="form-control" v-model="service.services.price" autocomplete="off" @keypress="isNumber($event)"  required>
                     <span  class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
                     <label>Details</label>
-                    <input type="text" class="form-control" v-model="service.services.details" autocomplete="off" >
+                    <input type="text" class="form-control" v-model="service.services.details" autocomplete="off" required>
                     <span  class="text-danger"></span>
                 </div>
+                
+             
+                <div v-if="!Update">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="button" class="btn btn-danger" @click="closeDialog">Cancel</button>
+                </div>
                
-                <button type="submit" class="btn btn-primary">Create</button>
-                <button type="button" class="btn btn-danger" @click="closeDialog">Cancel</button>
               </form>
+
+              <div v-if="Update">
+                <button class="btn btn-primary" @click="submitUpdate()">Update</button>
+                <button type="button" class="btn btn-danger" @click="closeDialog">Cancel</button>
+              </div>
+           
             </div>
             </div>
         </div>

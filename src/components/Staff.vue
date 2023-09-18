@@ -22,7 +22,12 @@ onMounted(() => {
 <template>
     <navBar/>
     <banner :page_header="someDynamicValue"></banner>
-
+    <div class="row justify-content-center pt-5 pb-5">
+        <div class="col-md-10 heading-section text-center ftco-animate fadeInUp ftco-animated">
+            <h2 class="">Our Expert Staffs</h2>
+            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+        </div>
+    </div>
     <!-- STAFF SECTION -->
     <div class="container">
         <div class="row staff-cards">
