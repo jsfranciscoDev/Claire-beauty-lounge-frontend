@@ -87,6 +87,26 @@ button, .button{
 	}
 		/* style */
 }
+
+.column-one{
+	padding: 100px;
+    background-color: #f4f4f4;
+	h2{
+		color: $secondary;
+	}
+}
+
+.column-two{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    max-height: 500px;
+
+    img{
+        object-fit: cover;
+        max-height: 505px;
+    }
+}
+
 //OWL CAROUSEL
 .owl-carousel {
 	position: relative;

@@ -12,5 +12,8 @@ export default {
     },
     updateServices(data){
         return api.put('/api/update-service', data);
+    },
+    getServicesDropdown(){
+        return api.get('/api/get-services-dropdown');
     }
 }

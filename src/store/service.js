@@ -6,7 +6,8 @@ export const store = defineStore({
   id: 'service',
   state: () => ({
     services:{},
-    services_details:{}
+    services_details:{},
+    services_dropdown: '',
   }),
   actions: {
     async createServices() {
@@ -73,5 +74,6 @@ export const store = defineStore({
         
         }
     },
+
   },
 });

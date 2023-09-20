@@ -1,5 +1,6 @@
 import user from "../api/component/user.js";
 import staff from "../api/component/staff.js"
+import service from "../api/component/service.js"
 import { defineStore } from 'pinia';
 import CryptoJS from 'crypto-js';
 import Swal from 'sweetalert2';
@@ -27,6 +28,7 @@ export const store = defineStore({
     role: null,
     session: true,
     timeInButtonAction: '',
+    service_dropdown: null,
   }),
   actions: {
     async login(payload) {
@@ -207,6 +209,14 @@ export const store = defineStore({
       } catch (error) {
         
       }
-    }
+    },
+    async getServicesDropdown() {
+        try {
+          const response = await service.getServicesDropdown();
+          this.service_dropdown = response.data
+        } catch (error) {
+        
+        }
+    },
   },
 });

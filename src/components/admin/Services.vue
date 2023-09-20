@@ -258,7 +258,7 @@ const isNumber = function(evt) {
     cursor: pointer;
 }
 .table-container .table th, .table td{
-    padding: 0.55rem !important;
+    padding: 1rem !important;
 }
 .table-container td, .table-container th{
     font-size: 14px;
@@ -290,8 +290,17 @@ const isNumber = function(evt) {
 }
 
 .table-responsive{
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    /* padding: 2rem; */
+    /* padding: 15px;
+    border-radius: 10px; */
+    /* box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; */
+}
+
+.table-container .table th, .table td{
+    border: 1px solid #dee2e6;
+}
+
+.table-responsive td{
+    padding: 5px;
 }
 </style>
