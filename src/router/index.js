@@ -10,6 +10,9 @@ import ManageAccount from '../components/admin/ManageAccount.vue';
 import Dashboard from '../components/admin/Dashboard.vue';
 import DailyTimeRecord from '../components/admin/DailyTimeRecord.vue';
 import AdminServices from '../components/admin/Services.vue';
+import AdminInventory from '../components/admin/Inventory.vue';
+import Booking from '../components/Book.vue';
+
 
 import { createPinia } from 'pinia';
 import { store } from "../store/index";
@@ -25,6 +28,33 @@ const routes = [
   { path: '/services', component: Services },
   { path: '/staff', component: Staff },
   { path: '/login', component: Login },
+  { path: '/book', component: Booking,
+    beforeEnter: (to, from, next) => {
+      const auth = localStorage.getItem('session');
+      const role = localStorage.getItem('role');
+      
+      if (!auth || !role) {
+        next('/login');
+        return false;
+      }
+
+      try {
+        const bytes = CryptoJS.AES.decrypt(auth, 'session');
+        const decryptedSessionValue = bytes.toString(CryptoJS.enc.Utf8);
+        const roleBytes = CryptoJS.AES.decrypt(role, 'role');
+        const decryptedRoleValue = roleBytes.toString(CryptoJS.enc.Utf8);
+
+        if (decryptedSessionValue === 'true' && (decryptedRoleValue === 'user')) {
+          next();
+        } else {
+          window.location = '/'
+        }
+      } catch (error) {
+        console.error('Error decrypting data:', error);
+        next('/login'); // Redirect to login page in case of decryption error
+      }
+    }, 
+  },
   {
     path: '/admin',
     component: Admin,
@@ -84,6 +114,10 @@ const routes = [
       {
         path: '/admin/services',
         component: AdminServices,
+      },
+      {
+        path: '/admin/inventory',
+        component: AdminInventory,
       }
     ]
   },

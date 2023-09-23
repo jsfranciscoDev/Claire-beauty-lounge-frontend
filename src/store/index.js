@@ -1,5 +1,6 @@
 import user from "../api/component/user.js";
 import staff from "../api/component/staff.js"
+import service from "../api/component/service.js"
 import { defineStore } from 'pinia';
 import CryptoJS from 'crypto-js';
 import Swal from 'sweetalert2';
@@ -27,6 +28,8 @@ export const store = defineStore({
     role: null,
     session: true,
     timeInButtonAction: '',
+    service_dropdown: null,
+    user_appointment: null,
   }),
   actions: {
     async login(payload) {
@@ -100,6 +103,11 @@ export const store = defineStore({
       try {
         const response = await staff.createStaff(payload);
           if(response.data.message == 'success'){
+              Swal.fire({
+                title: 'Staff Created Successfully!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
             return response;
           }
       } catch (error) {
@@ -109,7 +117,6 @@ export const store = defineStore({
     async getUserStaff(page) {
       try {
         const response = await staff.getUserStaff(page);
-        console.log(response.data.user)
           if(response.data.message == 'success'){
             this.staff = response.data.user;
             // this.staffValidation.message = response.data.message;
@@ -203,6 +210,39 @@ export const store = defineStore({
       } catch (error) {
         
       }
-    }
+    },
+    async getServicesDropdown() {
+        try {
+          const response = await service.getServicesDropdown();
+          this.service_dropdown = response.data
+        } catch (error) {
+        
+        }
+    },
+    async sendAppointment(payload) {  
+        try {
+          const response = await service.sendAppointment(payload);
+          console.log(response);
+            if(response.data.status == 'success'){
+                Swal.fire({
+                  title: response.data.message,
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+              });
+              this.fetchAppointment();
+              return response;
+            }
+        } catch (error) {
+        
+        }
+    },
+    async fetchAppointment() {  
+        try {
+          const response = await service.fetchAppointment();
+            this.user_appointment = response.data.appointment;
+        } catch (error) {
+        
+        }
+    },
   },
 });

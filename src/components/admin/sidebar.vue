@@ -33,6 +33,9 @@ const userRole = roleBytes.toString(CryptoJS.enc.Utf8);
                 <i class="fa fa-bed"><span><router-link to="/admin/services" class="sidebar-link">Services</router-link></span></i>
             </li>
             <li>
+                <i class="fa fa-linode"><span><router-link to="/admin/inventory" class="sidebar-link">Inventory</router-link></span></i>
+            </li>
+            <li>
                 <i class="fa fa-clock"><span><router-link to="/admin/daily-time-record" class="sidebar-link">Daily Time Record</router-link></span></i>
             </li>
             <li>
@@ -41,9 +44,9 @@ const userRole = roleBytes.toString(CryptoJS.enc.Utf8);
             <li>
                <i class="fa fa-cog"><span ><router-link to="/admin/manage-account" class="sidebar-link">Manage Account</router-link></span></i>
             </li>
-            <li>
+            <!-- <li>
               <i class="fa fa-cog"><span ><router-link to="/items" class="sidebar-link">Items</router-link></span></i>
-           </li>
+           </li> -->
             <li>
                <i class="fa fa-sign-out"  @click="logoutUser"><span ><router-link to="/" class="sidebar-link">Logout</router-link></span></i>
             </li>

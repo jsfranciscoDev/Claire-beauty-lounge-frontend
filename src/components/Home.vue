@@ -27,11 +27,24 @@ import navBar from '../components/nav.vue'
     </section>
 
     <section>
-     
+	
+		<div class="row">
+			<div class="col-sm-12 col-md-6  col-lg-6 column-two">
+				
+			</div>
+			<div class="col-sm-12 col-md-6  col-lg-6 column-one" >
+				<h2>We provide huge facilities with advanced technology equipments and best quality service. </h2>
+				<p class="mt-2"> Here we offer best treatment that you might have never experienced before.</p>
+				<button class="mt-3" ><router-link to="/book" class="text-dark">Book Now</router-link></button>
+			</div>
+			
+		</div>
+		
     </section>
 
     <footerSection></footerSection>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+
 </style>

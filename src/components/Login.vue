@@ -2,7 +2,7 @@
 import { reactive, ref, onMounted  } from "vue";
 import { store } from "../store/index";
 import { useRouter } from 'vue-router';
-
+import navBar from '../components/nav.vue'
 
 const userData = store();
 
@@ -62,7 +62,7 @@ const clearErrorMessage = () => {
 </script>
 
 <template>
-    
+    <navBar/>
     <div class="row vh-100">
       <div class="col-md-6 pl-0" >
         <img src="../assets//images/about.jpg" alt="Salon" class="h-100" />

@@ -87,6 +87,30 @@ button, .button{
 	}
 		/* style */
 }
+
+.column-one{
+	padding: 100px;
+    background-color: #f4f4f4;
+	h2{
+		color: $secondary;
+	}
+}
+
+.column-two{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    max-height: 500px;
+
+    img{
+        object-fit: cover;
+        max-height: 505px;
+    }
+}
+
+.table-container .table th, .table td{
+    vertical-align: text-top;
+}
+
 //OWL CAROUSEL
 .owl-carousel {
 	position: relative;
@@ -2160,6 +2184,17 @@ h3.hdg {
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
   border-top: none;
 }
+
+.table-actions {
+    
+    span{
+        margin: 0px 10px;
+        font-size: 12px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+}
+
 .grid_3 p{
   line-height: 2em;
   color: #888;
@@ -5176,7 +5211,7 @@ button {
 //    STAFF PAGE 
 
 .staff-cards{
-    padding: 5rem 0;
+    padding: 0 0 3rem 0;
 
     .cards-image{
         display: flex;

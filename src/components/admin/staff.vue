@@ -58,7 +58,16 @@ onMounted(() => {
     staffStoreData.getUserStaff();
 });
 
-
+const isNumber = function(evt) {
+  evt = (evt) ? evt : window.event;
+  var charCode = (evt.which) ? evt.which : evt.keyCode;
+  if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+    evt.preventDefault();
+    return false;
+  } else {
+    return true;
+  }
+}
 </script>
 
 <template>
@@ -96,8 +105,8 @@ onMounted(() => {
         
               <div v-if="staffStoreData.staff.total > 10" class="table-pagination">  
                 <div>
-                    <button @click="paginate(staffStoreData.staff.current_page + 1)" v-if="staffStoreData.staff.next_page_url" ><i class="fa fa-angle-right"></i></button>
                     <button @click="paginate(staffStoreData.staff.current_page - 1)" v-if="staffStoreData.staff.prev_page_url"><i class="fa fa-angle-left"></i></button>
+                    <button @click="paginate(staffStoreData.staff.current_page + 1)" v-if="staffStoreData.staff.next_page_url" ><i class="fa fa-angle-right"></i></button>
                 </div>
                 <div >
                     <span> Page {{ staffStoreData.staff.current_page  }} - {{ staffStoreData.staff.last_page }} </span>
@@ -124,28 +133,28 @@ onMounted(() => {
                    
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" v-model="staffData.email" autocomplete="off">
+                    <input type="text" class="form-control" v-model="staffData.email" autocomplete="off" required>
                     <span  class="text-danger fs-12"></span>
                 </div>
                 <div class="form-group" v-if="!updateStaff">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" v-model="staffData.password" autocomplete="off">
+                    <input type="password" class="form-control" v-model="staffData.password" autocomplete="off" required>
                     <span  class="text-danger"></span>
                 </div>
                 <div class="form-group" v-if="!updateStaff">
                     <label for="confirm_password">Confirmed Password</label>
-                    <input type="password" class="form-control" v-model="staffData.password_confirmation" autocomplete="off">
+                    <input type="password" class="form-control" v-model="staffData.password_confirmation" autocomplete="off" required>
                     <span  class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label for="name">Full Name</label>
-                    <input type="text" class="form-control" v-model="staffData.name" autocomplete="off">
+                    <input type="text" class="form-control" v-model="staffData.name" autocomplete="off" required>
                     <span  class="text-danger"></span>
                 </div>
                
                 <div class="form-group">
                     <label for="name">Contact Number</label>
-                    <input type="text" class="form-control" v-model="staffData.contact" autocomplete="off" >
+                    <input type="text" class="form-control" v-model="staffData.contact" autocomplete="off" @keypress="isNumber($event)" maxlength="11" required>
                     <span  class="text-danger"></span>
                 </div>
                
@@ -273,8 +282,8 @@ onMounted(() => {
 }
 
 .table-responsive{
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    /* padding: 15px; */
+    /* border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; */
 }
 </style>
