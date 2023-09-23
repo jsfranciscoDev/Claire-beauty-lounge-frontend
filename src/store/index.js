@@ -29,6 +29,7 @@ export const store = defineStore({
     session: true,
     timeInButtonAction: '',
     service_dropdown: null,
+    user_appointment: null,
   }),
   actions: {
     async login(payload) {
@@ -214,6 +215,31 @@ export const store = defineStore({
         try {
           const response = await service.getServicesDropdown();
           this.service_dropdown = response.data
+        } catch (error) {
+        
+        }
+    },
+    async sendAppointment(payload) {  
+        try {
+          const response = await service.sendAppointment(payload);
+          console.log(response);
+            if(response.data.status == 'success'){
+                Swal.fire({
+                  title: response.data.message,
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+              });
+              this.fetchAppointment();
+              return response;
+            }
+        } catch (error) {
+        
+        }
+    },
+    async fetchAppointment() {  
+        try {
+          const response = await service.fetchAppointment();
+            this.user_appointment = response.data.appointment;
         } catch (error) {
         
         }

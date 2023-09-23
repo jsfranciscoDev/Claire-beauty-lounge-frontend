@@ -30,7 +30,7 @@ import navBar from '../components/nav.vue'
 	
 		<div class="row">
 			<div class="col-sm-12 col-md-6  col-lg-6 column-two">
-				<img src="../assets/images/bg-1.jpg">
+				
 			</div>
 			<div class="col-sm-12 col-md-6  col-lg-6 column-one" >
 				<h2>We provide huge facilities with advanced technology equipments and best quality service. </h2>

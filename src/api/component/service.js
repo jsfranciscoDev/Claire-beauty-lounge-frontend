@@ -15,5 +15,11 @@ export default {
     },
     getServicesDropdown(){
         return api.get('/api/get-services-dropdown');
+    },
+    sendAppointment(payload){
+        return api.post('/api/create-appointment', payload);
+    },
+    fetchAppointment(){
+        return api.get('/api/get-appointment');
     }
 }
