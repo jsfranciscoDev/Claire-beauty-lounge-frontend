@@ -8,6 +8,7 @@ export const store = defineStore({
     services:{},
     services_details:{},
     services_dropdown: '',
+    service_product_dropdown: '',
   }),
   actions: {
     async createServices() {
@@ -74,6 +75,51 @@ export const store = defineStore({
         
         }
     },
-
+    async getServicesProductDropdown() {
+        try {
+          const response = await service.getServicesProductDropdown();
+          this.service_product_dropdown = response.data
+        } catch (error) {
+        
+        }
+    },
+    async attachProductsOnService(service_id, services_items){
+      try {
+        const response = await service.attachProductsOnService(service_id, services_items);
+        if(response.data.status == 'success'){
+          Swal.fire({
+              title: response.data.message,
+              icon: 'success',
+              confirmButtonText: 'OK'
+          });
+          this.getServices();
+        }else{
+          Swal.fire({
+              title: 'Add Products Failed!',
+              text: response.data.message,
+              icon: 'warning',
+              confirmButtonText: 'OK'
+          });
+        }
+        return response;
+      } catch (error) {
+      
+      }
+    },
+    async removeAttachedProducts(id) {
+        try {
+          const response = await service.removeAttachedProducts(id);
+            if(response.data.message == 'success'){
+                this.getServices();
+                Swal.fire({
+                  title: 'Deleted Successfully!',
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+              });
+            }
+        } catch (error) {
+        
+        }
+    },
   },
 });

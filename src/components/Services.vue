@@ -8,15 +8,17 @@
         <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
     </div>
 
-    <div class="table-container mt-5" style="width: 800px;">
+    <div class="table-container mt-5" style="width: 1200px;">
         <div class="table-responsive bg-white">   
               <table class="table mb-0">
                 <thead>
                   <tr>
                     <th scope="col">Service Name</th>
                     <th scope="col">Service Type</th>
-                    <th scope="col">Price</th>
+                    <th scope="col">Service Price</th>
                     <th scope="col">Details</th>
+                    <th scope="col">Package Included</th>
+                    <th scope="col">Total Package Price</th>
                   </tr>
                 </thead>
                 <tbody v-for="(data,index) in service.services_details.data" :key="index">
@@ -25,14 +27,23 @@
                     <td>{{ data.name }}</td>
                     <td>{{ data.type}}</td>
                     <td>{{ formatPrice(data.price) }}</td>
-                    <td>{{ data.details }}</td>
+                    <td >{{ data.details }}   
+                    </td>
+                    <td>
+                      <div v-for="(product,i) in data.products">
+                            {{ product.name }} {{ formatPrice(product.price) }} x {{ product.quantity }} pcs. = {{ formatPrice(product.price * product.quantity ) }}
+                        </div>
+                    </td>
+                    <td> 
+                        {{ formatPrice(data.price + data.total_product_price ) }}
+                    </td>
 
                   </tr>
                 </tbody>
 
               </table>
         
-              <div v-if="service.services_details.total > 10" class="table-pagination">  
+              <div v-if="service.services_details.total > 3" class="table-pagination">  
                 <div>
                   
                     <button @click="paginate(service.services_details.current_page - 1)" v-if="service.services_details.prev_page_url"><i class="fa fa-angle-left"></i></button>
