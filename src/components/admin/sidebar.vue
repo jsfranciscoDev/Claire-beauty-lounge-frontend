@@ -33,6 +33,9 @@ const userRole = roleBytes.toString(CryptoJS.enc.Utf8);
                 <i class="fa fa-bed"><span><router-link to="/admin/services" class="sidebar-link">Services</router-link></span></i>
             </li>
             <li>
+                <i class="fa fa-bed"><span><router-link to="/admin/appointments" class="sidebar-link">Appointments</router-link></span></i>
+            </li>
+            <li>
                 <i class="fa fa-linode"><span><router-link to="/admin/inventory" class="sidebar-link">Inventory</router-link></span></i>
             </li>
             <li>
