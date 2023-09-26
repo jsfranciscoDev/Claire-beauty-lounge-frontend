@@ -55,7 +55,7 @@ onBeforeMount(() => {
                 </p>
 
                 <p class="message">
-                 {{ moment(userData.user_appointment?.created_at).format('MMMM Do YYYY, h:mm:ss a') }}
+                 {{ moment(userData.user_appointment?.date).format('MMMM Do YYYY, h:mm:ss a') }}
                 </p>
               </div>
               <div class="actions">

@@ -59,7 +59,7 @@ const updateUserDetails = () => {
      
     </div>
     <div class="table-container">
-        <div class="table-responsive bg-white">   
+        <div class="table-responsive bg-white pb-3 pt-3">   
             <div class="row">
                 <div class="col-12 col-md-6 col-lg-6">
                     <h4>Change Password</h4>
@@ -68,7 +68,7 @@ const updateUserDetails = () => {
                         <span v-html="userData.user_password.error"></span>
                     </div>
 
-                    <div class="mt-2">
+                    <div class="mt-1">
                         <div class="form-group">
                             <label for="username">Old Password:</label>
                             <input type="password" class="form-control" v-model="userData.user_password.current_password" placeholder="Enter Old Password">
@@ -116,10 +116,10 @@ const updateUserDetails = () => {
             </div>
         </div>
     </div>
-    <div class="table-container  mt-5">
-        <div class="table-responsive bg-white">   
+    <div class="table-container  mt-1">
+        <div class="table-responsive bg-white pb-3 pt-3">   
             <div class="row">
-                <div class="col-12 col-md-6 col-lg-6">
+                <div class="col-12 col-md-6 col-lg-6 ">
                     <h4>User Details</h4>
                     <div class="mt-2">
                         <div class="form-group">
