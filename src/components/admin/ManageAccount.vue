@@ -2,6 +2,7 @@
 import { reactive, ref, onMounted } from "vue";
 import CryptoJS from 'crypto-js';
 
+
 import { store } from "../../store/index";
 const userData = store();
 
@@ -9,18 +10,14 @@ const role = localStorage.getItem('role');
 const roleBytes = CryptoJS.AES.decrypt(role, 'role');
 const userRole = roleBytes.toString(CryptoJS.enc.Utf8);
 
-
-const changePassword = ref(false);
 const preview = ref(null);
 
 const backendbaseURL = import.meta.env.VITE_APP_BASE_URL;
-console.log(backendbaseURL);
-const toggleAction = () => {
-    changePassword.value = !changePassword.value;
-}
+
 
 const previewImage = (event) => {
     const file = event.target.files[0];
+    console.log(file);
     if (file && (file.type.startsWith('image/png') || file.type.startsWith('image/jpeg'))) {
         preview.value = URL.createObjectURL(file);
 
@@ -46,6 +43,14 @@ onMounted(() => {
   userData.fetchUser();
 })
 
+const changePassword = ( ) => {
+    userData.changePassword();
+}
+
+const updateUserDetails = () => {
+    userData.updateUserDetails();
+}
+
 </script>
 
 <template>
@@ -54,30 +59,35 @@ onMounted(() => {
      
     </div>
     <div class="table-container">
-        <div class="table-responsive bg-white">   
+        <div class="table-responsive bg-white pb-3 pt-3">   
             <div class="row">
                 <div class="col-12 col-md-6 col-lg-6">
                     <h4>Change Password</h4>
-                    <div class="mt-2">
+                 
+                    <div class="alert alert-danger d-flex flex-column" role="alert" v-if="userData.user_password.error" >
+                        <span v-html="userData.user_password.error"></span>
+                    </div>
+
+                    <div class="mt-1">
                         <div class="form-group">
                             <label for="username">Old Password:</label>
-                            <input type="text" class="form-control" placeholder="Enter Old Password">
+                            <input type="password" class="form-control" v-model="userData.user_password.current_password" placeholder="Enter Old Password">
                             <span class="text-danger fs-12"></span>
                         </div>
 
                         <div class="form-group">
                             <label for="username">New Password:</label>
-                            <input type="text" class="form-control" placeholder="Enter New Password">
+                            <input type="password" class="form-control"  v-model="userData.user_password.new_password" placeholder="Enter New Password">
                             <span class="text-danger fs-12"></span>
                         </div>
 
                         <div class="form-group">
                             <label for="username">Confirm Password:</label>
-                            <input type="text" class="form-control" placeholder="Enter Confirm Password">
+                            <input type="password" class="form-control"  v-model="userData.user_password.password_confirmation" placeholder="Enter Confirm Password">
                             <span class="text-danger fs-12"></span>
                         </div>
                     </div>
-                    <button @click="toggleAction">Change Password</button>
+                    <button @click="changePassword()" type="button">Change Password</button>
                     
                 </div>
                 <div class="col-12 col-md-6 col-lg-6">
@@ -106,42 +116,42 @@ onMounted(() => {
             </div>
         </div>
     </div>
-    <div class="table-container  mt-5">
-        <div class="table-responsive bg-white">   
+    <div class="table-container  mt-1">
+        <div class="table-responsive bg-white pb-3 pt-3">   
             <div class="row">
-                <div class="col-12 col-md-6 col-lg-6">
+                <div class="col-12 col-md-6 col-lg-6 ">
                     <h4>User Details</h4>
                     <div class="mt-2">
                         <div class="form-group">
                         <label for="username">Username:</label>
-                        <input type="text" class="form-control" placeholder="Enter username">
+                        <input type="text" class="form-control" v-model="userData.user_details.email" placeholder="Enter username">
                         <span class="text-danger fs-12"></span>
                     </div>
                     <div class="form-group">
                         <label for="username">Full Name:</label>
-                        <input type="text" class="form-control" placeholder="Enter Full Name">
+                        <input type="text" class="form-control" v-model="userData.user_details.name" placeholder="Enter Full Name">
                         <span class="text-danger fs-12"></span>
                     </div>
 
                     <div class="form-group">
                         <label for="username">Contact Number:</label>
-                        <input type="text" class="form-control" placeholder="Enter Number">
+                        <input type="text" class="form-control"  v-model="userData.user_details.contact" placeholder="Enter Number">
                         <span class="text-danger fs-12"></span>
                     </div>
                     </div>
                    
-                    <button type="button" @click="staffDialog = true">Update</button>
+                    <button type="button" @click="updateUserDetails">Update</button>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6" v-if="userRole == 'staff'">
                     <h4>Staff Expertise</h4>
                     <div class="form-group">
                         <label for="username">Skills:</label>
-                        <textarea class="form-control" style="resize: none;" rows="3"></textarea>
+                        <textarea class="form-control" v-model="userData.user_details.expertise" style="resize: none;" rows="3"></textarea>
                         <span class="text-danger fs-12"></span>
                     </div>
                     <div class="form-group">
                         <label for="username">Short Bio:</label>
-                        <textarea class="form-control"  style="resize: none;" rows="2"></textarea>
+                        <textarea class="form-control"  v-model="userData.user_details.bio" style="resize: none;" rows="2"></textarea>
                         <span class="text-danger fs-12"></span>
                     </div>
                   

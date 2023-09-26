@@ -1,7 +1,9 @@
 import user from "../api/component/user.js";
 import staff from "../api/component/staff.js"
+import service from "../api/component/service.js"
 import { defineStore } from 'pinia';
 import CryptoJS from 'crypto-js';
+import Swal from 'sweetalert2';
 
 export const store = defineStore({
   id: 'store',
@@ -11,6 +13,13 @@ export const store = defineStore({
       errorWarning:[],
       registerMessage: '',
     }],
+    user_password: {
+      new_password: '',
+      current_password: '',
+      password_confirmation: '',
+      error: '',
+    },
+    user_details:{},
     user_profile: '',
     services: [],
     products: [],
@@ -18,7 +27,9 @@ export const store = defineStore({
     staffValidation: [],
     role: null,
     session: true,
-    
+    timeInButtonAction: '',
+    service_dropdown: null,
+    user_appointment: null,
   }),
   actions: {
     async login(payload) {
@@ -92,6 +103,11 @@ export const store = defineStore({
       try {
         const response = await staff.createStaff(payload);
           if(response.data.message == 'success'){
+              Swal.fire({
+                title: 'Staff Created Successfully!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
             return response;
           }
       } catch (error) {
@@ -127,9 +143,106 @@ export const store = defineStore({
       try {
         const response = await user.fetchUser();
           this.user_profile = response.data.profile;
+          this.user_details = response.data.user;
       } catch (error) {
         this.staffValidation.error = error.response.data.errors;
       }
+    },
+    async changePassword(){
+      try {
+        const response = await user.changePassword(this.user_password);
+            if(response.data.status == 'failed'){
+              this.user_password.error = response.data.message;
+            }else if(response.data.status == 'success'){
+              this.user_password = {}
+              Swal.fire({
+                  title: 'Password Successfully Changed!',
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+              });
+            }
+      } catch (error) {
+        
+      }
+    },
+    async updateUserDetails(){
+      try {
+        const response = await user.updateUserDetails(this.user_details);
+            if(response.data.status == 'failed'){
+              this.user_password.error = response.data.message;
+            }else if(response.data.status == 'success'){
+
+              Swal.fire({
+                  title: response.data.message,
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+              });
+            }
+      } catch (error) {
+        
+      }
+    },
+    async timeIn(user_id, time , date, action){
+      try {
+        const response = await user.timeIn(user_id,time,date ,action);
+            if(response.data.status == 'failed'){
+                Swal.fire({
+                  title: response.data.message,
+                  icon: 'warning',
+                  confirmButtonText: 'OK'
+              });
+            }else if(response.data.status == 'success'){
+
+              Swal.fire({
+                  title: response.data.message,
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+              });
+            }
+      } catch (error) {
+        
+      }
+    },
+    async getDTR(){
+      try {
+        const response = await user.getDTR();
+           this.timeInButtonAction = response.data.action
+      } catch (error) {
+        
+      }
+    },
+    async getServicesDropdown() {
+        try {
+          const response = await service.getServicesDropdown();
+          this.service_dropdown = response.data
+        } catch (error) {
+        
+        }
+    },
+    async sendAppointment(payload) {  
+        try {
+          const response = await service.sendAppointment(payload);
+          console.log(response);
+            if(response.data.status == 'success'){
+                Swal.fire({
+                  title: response.data.message,
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+              });
+              this.fetchAppointment();
+              return response;
+            }
+        } catch (error) {
+        
+        }
+    },
+    async fetchAppointment() {  
+        try {
+          const response = await service.fetchAppointment();
+            this.user_appointment = response.data.appointment;
+        } catch (error) {
+        
+        }
     },
   },
 });

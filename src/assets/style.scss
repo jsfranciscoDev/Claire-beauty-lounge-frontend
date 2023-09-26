@@ -87,6 +87,36 @@ button, .button{
 	}
 		/* style */
 }
+
+.column-one{
+	padding: 100px;
+    background-color: #f4f4f4;
+	h2{
+		color: $secondary;
+	}
+}
+
+.column-two{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    max-height: 500px;
+
+    img{
+        object-fit: cover;
+        max-height: 505px;
+    }
+}
+
+.table-container .table th, .table td{
+    vertical-align: text-top;
+    border: none !important;
+}
+
+.table-container .table th{
+    vertical-align: text-top;
+    border-bottom: 1px solid !important;
+}
+
 //OWL CAROUSEL
 .owl-carousel {
 	position: relative;
@@ -450,12 +480,13 @@ button, .button{
 
 
 .ftco-navbar-light {
-	background: transparent !important;
+	background: white !important;
 	top: 0px;
 	left: 0;
 	right: 0;
 	z-index: 3;
 	padding: 0;
+    position: fixed;
 	@include media-breakpoint-down(md) {
 		background: $black!important;
 		position: relative;
@@ -2159,6 +2190,17 @@ h3.hdg {
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
   border-top: none;
 }
+
+.table-actions {
+    
+    span{
+        margin: 0px 5px;
+        font-size: 12px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+}
+
 .grid_3 p{
   line-height: 2em;
   color: #888;
@@ -5138,3 +5180,121 @@ h4.title3 {
 }
 
 // admin table 
+
+
+// 
+button {
+    border: none;
+    padding: 5px 30px;
+    font-size: 12px;
+    width: auto;
+    border-radius: 1rem;
+    text-transform: uppercase;
+    background-color: #e4d5b7;
+    color: #343434;
+    font-weight: bold;
+    box-shadow: 0 0.4rem #dfd9d9;
+    cursor: pointer;
+   }
+   
+   button:active {
+    color: white;
+    box-shadow: 0 0.2rem #dfd9d9;
+    transform: translateY(0.2rem);
+   }
+   
+   button:hover:not(:disabled) {
+    background: lightcoral;
+    color: white;
+    text-shadow: 0 0.1rem #bcb4b4;
+   }
+   
+   button:disabled {
+    cursor: auto;
+    color: grey;
+   }
+
+//    STAFF PAGE 
+
+.staff-cards{
+    padding: 0 0 3rem 0;
+
+    .cards-image{
+        display: flex;
+        justify-content: center;
+    }
+    .cards{
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px;
+        border-radius: 20px;
+        max-width: 360px;
+        height: auto;
+        padding: 2rem;
+        margin: 0px 2rem;
+
+        img{
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .cards-text{
+            label {
+                margin-top: 5px;
+                font-weight: bold;
+                font-size: 12px;
+            }
+
+            p{
+                font-size: 14px;
+            }
+        }
+
+        .card-action{
+           margin-top: 10px;
+
+           button{
+             margin: 0px 5px;
+           }
+        }
+    }
+}
+
+.time-clock{
+    width: 300px;
+    height: auto;
+    background-color: #ffffff;
+    padding: 20px 20px;
+    border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px;
+
+    img{
+        width: 120px;
+        height: 120px;
+        margin-top: 20px;
+    }
+    .clock{
+        font-size: 34px;
+        font-weight: bold;
+        color: black;
+    }
+
+    .clock-date{
+        font-size: 18px;
+        color: black;   
+    }
+
+    .time-button{
+        background-color: green;
+        border-radius: none !important;
+        color: white;
+        margin-top: 10px;
+    }
+}
+
+.select-dropdown{
+    min-width: 300px;
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin: 5px;
+}
