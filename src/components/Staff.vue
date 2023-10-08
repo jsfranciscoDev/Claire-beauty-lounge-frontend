@@ -52,8 +52,7 @@ onMounted(() => {
                   
                 </div>
                 <div class="card-action">
-                    <button>Hire</button>
-                    <button>Hire</button>
+                    <button class="mt-3" ><router-link to="/book" class="text-dark">Book Now</router-link></button>
                 </div>
                
             </div>

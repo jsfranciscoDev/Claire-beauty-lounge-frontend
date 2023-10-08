@@ -18,5 +18,8 @@ export default {
     },
     getUserDropdown(){
         return api.get('/api/user-dropdown');
+    },
+    getStaffDropdown(){
+        return api.get('/api/book-staff-dropdown');
     }
 }

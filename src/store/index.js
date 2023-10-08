@@ -1,5 +1,6 @@
 import user from "../api/component/user.js";
 import staff from "../api/component/staff.js"
+import api from "../api/component/appointments.js"
 import service from "../api/component/service.js"
 import { defineStore } from 'pinia';
 import CryptoJS from 'crypto-js';
@@ -30,28 +31,35 @@ export const store = defineStore({
     timeInButtonAction: '',
     service_dropdown: null,
     user_appointment: null,
+    staff_dropdown: null,
   }),
   actions: {
     async login(payload) {
       try {
         const response = await user.login(payload);
-      
+        console.log(response);
         if (response.data.message == 'success') {
-            localStorage.setItem("token", response.data.token);
+            sessionStorage.setItem("token", response.data.token);
             this.session = true;
             const authValue =  'true';
             const roleValue =   response.data.role;
+            const staffRole =   response.data.staff_role;
 
             const encryptedRoleValue = CryptoJS.AES.encrypt(roleValue, 'role').toString();
-            localStorage.setItem('role', encryptedRoleValue);
+            sessionStorage.setItem('role', encryptedRoleValue);
 
             const encryptedValue = CryptoJS.AES.encrypt(authValue, 'session').toString();
         
-            localStorage.setItem('session', encryptedValue);
+            sessionStorage.setItem('session', encryptedValue);
 
-            const test = localStorage.getItem('session');
+            const test = sessionStorage.getItem('session');
             const bytes = CryptoJS.AES.decrypt(test, 'session');
             const decryptedValue = bytes.toString(CryptoJS.enc.Utf8);
+
+            if(staffRole != null){
+              const encryptedRoleValue = CryptoJS.AES.encrypt(staffRole, 'staff_role').toString();
+              sessionStorage.setItem('staff_role', encryptedRoleValue);
+            }
            
         }
        
@@ -69,8 +77,8 @@ export const store = defineStore({
         const response = await user.register(payload);
         if (response.data.message == 'success') {
             this.registerMessage = response.data.message
-            localStorage.setItem("token", response.data.token);
-            localStorage.setItem('authenticated', true)
+            sessionStorage.setItem("token", response.data.token);
+            sessionStorage.setItem('authenticated', true)
         }
       } catch (error) {
         this.user.error = error.response.data.errors;
@@ -79,10 +87,10 @@ export const store = defineStore({
     async logout() {
       try {
         const response = await user.logout();
-          localStorage.setItem('role', '');
-          localStorage.setItem('authenticated', '');
-          localStorage.setItem('token', '');
-          localStorage.setItem('session', '');
+          sessionStorage.setItem('role', '');
+          sessionStorage.setItem('authenticated', '');
+          sessionStorage.setItem('token', '');
+          sessionStorage.setItem('session', '');
           this.role = null;       
           window.location.reload();
       } catch (error) {
@@ -240,6 +248,30 @@ export const store = defineStore({
         try {
           const response = await service.fetchAppointment();
             this.user_appointment = response.data.appointment;
+        } catch (error) {
+        
+        }
+    },
+    async updateAppointment(data){
+      try {
+          const response = await api.updateAppointment(data);
+          console.log(response.data.status)
+          if(response.data.status){
+            Swal.fire({
+                title: response.data.message,
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+           this.fetchAppointment();
+          }
+        } catch (error) {
+          
+        }
+    },
+    async getStaffDropdown() {
+        try {
+          const response = await staff.getStaffDropdown();
+            this.staff_dropdown = response.data.staff_dropdown
         } catch (error) {
         
         }

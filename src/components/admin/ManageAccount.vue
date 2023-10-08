@@ -6,7 +6,7 @@ import CryptoJS from 'crypto-js';
 import { store } from "../../store/index";
 const userData = store();
 
-const role = localStorage.getItem('role');
+const role = sessionStorage.getItem('role');
 const roleBytes = CryptoJS.AES.decrypt(role, 'role');
 const userRole = roleBytes.toString(CryptoJS.enc.Utf8);
 

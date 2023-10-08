@@ -3,6 +3,10 @@ import { onMounted , ref } from 'vue';
 import HeaderTabs from '../admin/tabs/tabs.vue';
 import AppointmentAll from '../admin/tabs/AppointmentAll.vue';
 import AppointmentPending from '../admin/tabs/AppointmentPending.vue';
+import AppointmentCancelled from '../admin/tabs/AppointmentCancelled.vue';
+import AppointmentReschedule from '../admin/tabs/AppointmentReschedule.vue';
+import AppointmentApproved from '../admin/tabs/AppointmentApproved.vue';
+import AppointmentCompleted from '../admin/tabs/AppointmentCompleted.vue';
 
 const tabs = ref([
     {
@@ -59,6 +63,12 @@ const tabs = ref([
                 </div>
             </template>
 
+            <template v-if="active == 'cancelled'">
+                <div class="mt-2">
+                   <AppointmentCancelled></AppointmentCancelled>
+                </div>
+            </template>
+
             <template v-if="active == 'pending'">
                 <div class="mt-2">
                     <AppointmentPending></AppointmentPending>
@@ -66,15 +76,15 @@ const tabs = ref([
             </template>
 
             <template v-if="active == 'reschedule'">
-                reschedule
+                <AppointmentReschedule></AppointmentReschedule>
             </template>
 
             <template v-if="active == 'approved'">
-                approved
+              <AppointmentApproved></AppointmentApproved>
             </template>
 
             <template v-if="active == 'completed'">
-                completed
+                <AppointmentCompleted></AppointmentCompleted>
             </template>
 
         </template>

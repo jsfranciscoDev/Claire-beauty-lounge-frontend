@@ -5,11 +5,11 @@ import moment from 'moment';
 const appointmentData = appointment();
 
 const paginate = (page) => {
-    appointmentData.getStatusgappointments(page,1);
+    appointmentData.getStatusgappointments(page,3);
 }
 
 onBeforeMount(() => {
- appointmentData.getStatusgappointments(1,1);
+ appointmentData.getStatusgappointments(1,3);
 });
 
 const getStatusClass = (status) => {

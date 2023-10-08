@@ -29,7 +29,7 @@ const LoginAccount = async (event) => {
  
  clearErrorMessage();
   await userData.login(user); 
-  const auth = localStorage.getItem('session');
+  const auth = sessionStorage.getItem('session');
   if (auth) {
     router.push('/admin/dashboard');
   }
@@ -58,6 +58,16 @@ const clearErrorMessage = () => {
   accountCreated.value = false;
 }
 
+const isNumber = function(evt) {
+  evt = (evt) ? evt : window.event;
+  var charCode = (evt.which) ? evt.which : evt.keyCode;
+  if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+    evt.preventDefault();
+    return false;
+  } else {
+    return true;
+  }
+}
 
 </script>
 
@@ -119,6 +129,12 @@ const clearErrorMessage = () => {
                     <span v-if="userData.user.error" v-html="userData.user.error.password_confirmation" class="text-danger"></span>
                 </div>
                
+                <div class="form-group">
+                    <label for="name">Contact Number</label>
+                    <input type="text" class="form-control" v-model="user.contact" autocomplete="off" @keypress="isNumber($event)" maxlength="11" required>
+                    <span  class="text-danger"></span>
+                </div>
+
                 <button type="submit" class="btn login-btn mb-2">Login</button>
                 <span class="">Do you already have an account?</span> <span class="register-btn" @click="toggleAction">Sign in here!</span>
               </form>

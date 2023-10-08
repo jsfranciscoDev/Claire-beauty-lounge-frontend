@@ -32,8 +32,8 @@ const routes = [
   { path: '/login', component: Login },
   { path: '/book', component: Booking,
     beforeEnter: (to, from, next) => {
-      const auth = localStorage.getItem('session');
-      const role = localStorage.getItem('role');
+      const auth = sessionStorage.getItem('session');
+      const role = sessionStorage.getItem('role');
       
       if (!auth || !role) {
         next('/login');
@@ -61,8 +61,8 @@ const routes = [
     path: '/admin',
     component: Admin,
     beforeEnter: (to, from, next) => {
-      const auth = localStorage.getItem('session');
-      const role = localStorage.getItem('role');
+      const auth = sessionStorage.getItem('session');
+      const role = sessionStorage.getItem('role');
       
       if (!auth || !role) {
         next('/login');
@@ -89,7 +89,7 @@ const routes = [
       {
         path: '/admin/staff',
         beforeEnter: (to, from, next) => {
-          const role = localStorage.getItem('role');
+          const role = sessionStorage.getItem('role');
           const roleBytes = CryptoJS.AES.decrypt(role, 'role');
           const decryptedRoleValue = roleBytes.toString(CryptoJS.enc.Utf8);
     

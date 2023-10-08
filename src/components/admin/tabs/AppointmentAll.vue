@@ -2,6 +2,8 @@
 import { appointment } from "../../../store/appointment";
 import { onBeforeMount  } from "vue";
 import moment from 'moment';
+import Swal from 'sweetalert2';
+
 const appointmentData = appointment();
 
 const paginate = (page) => {
@@ -12,8 +14,31 @@ onBeforeMount(() => {
  appointmentData.getAllappointments();
 });
 
+const updateAppointment = (appointment_id, status , message) => {
+  let data = {
+    id: appointment_id,
+    status: status
+  }
+
+  Swal.fire({
+    title: `${message} Appointment?`,
+    text: "Please make sure the details correct",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: `Yes, ${message} it!`
+  }).then((result) => {
+    if (result.isConfirmed) {
+      appointmentData.updateAppointment(data);
+    }
+  })
+
+ 
+}
+
 const getStatusClass = (status) => {
-    console.log(status);
+ 
       switch (status) {
         case 'Cancelled':
           return 'text-danger'
@@ -44,6 +69,7 @@ const getStatusClass = (status) => {
                     <th scope="col" >Email</th>
                     <th scope="col" >Contact#</th>
                     <th scope="col" >Service</th>
+                    <th scope="col" >Staff</th>
                     <th scope="col" >Status</th>
                     <th scope="col" >Action</th>
                   </tr>
@@ -56,12 +82,13 @@ const getStatusClass = (status) => {
                     <td>{{ data?.email }}</td>
                     <td>{{ data?.contact }}</td>
                     <td>{{ data?.service }}</td>
+                    <td>{{ data?.staff_name }}</td>
                     <td :class="getStatusClass(data.detail)"><b>{{ data?.detail }}</b></td>
                   
                     <td class="table-actions d-flex flex-column"> 
-                        <span @click="updateServices(data)">Reschedule</span>
-                        <span @click="deleteServices(data.id)">Declined</span>
-                        <span @click="addServicesProduct(data.id)">Approved</span>
+                        <span @click="updateAppointment(data.appointment_id,4, 'Reschedule')">Reschedule</span>
+                        <span @click="updateAppointment(data.appointment_id,2 ,'Declined')">Declined</span>
+                        <span @click="updateAppointment(data.appointment_id,3 , 'Approved')">Approved</span>
                     </td>
 
                   </tr>

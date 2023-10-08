@@ -16,6 +16,30 @@ export const appointment = defineStore({
           } catch (error) {
             
           }
+    },
+    async getStatusgappointments(page, status){
+      try {
+          const response = await api.getStatusgappointments(page, status);
+          this.data = response.data.appointment
+        } catch (error) {
+          
+        }
+    },
+    async updateAppointment(data){
+      try {
+          const response = await api.updateAppointment(data);
+          console.log(response.data.status)
+          if(response.data.status){
+            Swal.fire({
+                title: response.data.message,
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+            this.getAllappointments();
+          }
+        } catch (error) {
+          
+        }
     }
   }
 });

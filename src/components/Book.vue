@@ -1,17 +1,23 @@
 <script setup>
 import { reactive, ref, onMounted, onBeforeMount   } from "vue";
 import { store } from "../store/index";
+import Swal from 'sweetalert2';
+
 import moment from 'moment';
-import navBar from '../components/nav.vue'
+import navBar from '../components/nav.vue';
 
 const userData = store();
 const accountCreated = ref(false);
 const selectedServices = ref('');
-
+const selectedStaff = ref('');
 
 
 const handlerServiceChange = (event) => {
    selectedServices.value = event.target.value;
+};
+
+const handlerStaffChange = (event) => {
+   selectedStaff.value = event.target.value;
 };
 
 const Appointment = reactive({
@@ -19,11 +25,13 @@ const Appointment = reactive({
     service_id: '',
     date: '',
     time: '',
+    user_staff: ''
 })
 
 const userSendAppointment = () => {
     Appointment.user_id = userData.user_details.id,
-    Appointment.service_id = selectedServices
+    Appointment.service_id = selectedServices,
+    Appointment.user_staff = selectedStaff,
     userData.sendAppointment(Appointment)
 }
 
@@ -31,13 +39,57 @@ onMounted(() => {
     userData.fetchUser();
     userData.getServicesDropdown();
     userData.fetchAppointment();
+    userData.getStaffDropdown();
 });
 
 onBeforeMount(() => {
     userData.fetchUser();
     userData.getServicesDropdown();
     userData.fetchAppointment();
+    userData.getStaffDropdown();
 });
+
+
+const getStatusClass = (status) => {
+ 
+ switch (status) {
+   case 'Cancelled':
+     return 'text-danger'
+   case 'Pending':
+     return 'text-warning'; // Bootstrap class for warning color
+   case 'Reschedule':
+     return 'text-info'; // Bootstrap class for info color
+   case 'Approved':
+     return 'text-success'; // Bootstrap class for success color
+   case 'Completed':
+     return 'text-primary'; // Bootstrap class for primary color
+   default:
+     return ''; // Default class, if none of the statuses match
+ }
+}
+
+const updateAppointment = (appointment_id, status , message) => {
+  let data = {
+    id: appointment_id,
+    status: status
+  }
+
+  Swal.fire({
+    title: `${message} Appointment?`,
+    text: "Please make sure the details correct",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: `Yes, ${message} it!`
+  }).then((result) => {
+    if (result.isConfirmed) {
+      userData.updateAppointment(data);
+    }
+  })
+
+ 
+}
 
 </script>
 
@@ -45,21 +97,25 @@ onBeforeMount(() => {
     <navBar/>
     <div class="row vh-100">
       <div class="col-md-6 pl-0" >
-        <div class="appointment-container">
+        <div class="appointment-container" :style="{ opacity: userData.user_appointment?.detail === 'Cancelled' ? 0.5 : 1 }">
           <div class="card" v-if="userData.user_appointment">
             <div class="header">
               <div class="content">
-                <span :class="userData.user_appointment?.status == 1 ? 'is-pending' : 'is-approved'">Pending</span>
+                <span :class="getStatusClass( userData.user_appointment.detail)">{{ userData.user_appointment?.detail }}</span>
                 <p class="message">
-                 {{ userData.user_appointment?.name }}
+                 {{ userData.user_appointment?.service }}
                 </p>
 
+                <p class="message">
+                 {{ userData.user_appointment?.staff_name }}
+                </p>
+                
                 <p class="message">
                  {{ moment(userData.user_appointment?.date).format('MMMM Do YYYY, h:mm:ss a') }}
                 </p>
               </div>
               <div class="actions">
-                <button class="track" type="button">
+                <button class="track" type="button" @click="updateAppointment(userData.user_appointment.appointment_id ,2 ,'Cancel')" :disabled="userData.user_appointment.detail == 'Cancelled'">
                   Cancel
                 </button>
               </div>
@@ -83,11 +139,22 @@ onBeforeMount(() => {
               </div>
               <center><p>RESERVATION</p><h2>Make an Appointment</h2></center>
                 <form @submit.prevent="userSendAppointment">
-                <label for="password">Services:</label>
-                <select  v-model="selectedServices" class="select-dropdown"  @change="handlerServiceChange" style="width: 100%;">
-                        <option disabled value="">Select Services</option>
-                        <option v-for="data in userData.service_dropdown" :value="data.id">{{ data.name }}</option>
-                </select>
+                <div class="form-group">
+                  <label for="password">Services:</label>
+                  <select  v-model="selectedServices" class="select-dropdown"  @change="handlerServiceChange" style="width: 100%;">
+                          <option disabled value="">Select Services</option>
+                          <option v-for="data in userData.service_dropdown" :value="data.id">{{ data.name }}</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="password">Select Staff:</label>
+                  <select  v-model="selectedStaff" class="select-dropdown"  @change="handlerStaffChange" style="width: 100%;">
+                          <option disabled value="">Select Staff</option>
+                          <option v-for="data in userData.staff_dropdown" :value="data.id">{{ data.name }}</option>
+                  </select>
+                </div>
+                
                 <div class="form-group">
                     <label for="password">Date:</label>
                     <input type="date" class="form-control" v-model="Appointment.date" placeholder="Enter password">

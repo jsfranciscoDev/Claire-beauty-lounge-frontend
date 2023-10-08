@@ -7,7 +7,7 @@ import CryptoJS from 'crypto-js';
 import { store } from "../../store/index";
 const userData = store();
 
-const role = localStorage.getItem('role');
+const role = sessionStorage.getItem('role');
 const roleBytes = CryptoJS.AES.decrypt(role, 'role');
 const userRole = roleBytes.toString(CryptoJS.enc.Utf8);
 
@@ -58,10 +58,8 @@ const staffUserTimein = (action) => {
                     <button class="time-button" @click="staffUserTimein('time_in')" v-if="userData.timeInButtonAction == 'time_in' && userRole =='staff'">Time in</button>
                     <button class="time-button" style="background-color: red;" @click="staffUserTimein('time_out')"  v-if="userData.timeInButtonAction == 'time_out' && userRole =='staff'">Time out</button>
                 </div>
-                <div align="center">
-                    <center>
-                        <img :src="backendbaseURL+userData.user_profile" class="img-fluid preview-image" />
-                    </center>
+                <div>
+                    <img :src="backendbaseURL+userData.user_profile" class="img-fluid preview-image" />
                 </div>
             </div>
         </div>

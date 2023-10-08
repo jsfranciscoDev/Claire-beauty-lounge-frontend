@@ -84,7 +84,8 @@ const isNumber = function(evt) {
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Contact</th>
-                    <th scope="col">Position</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Role Description</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
@@ -94,7 +95,8 @@ const isNumber = function(evt) {
                     <td>{{ data.name }}</td>
                     <td>{{ data.email }}</td>
                     <td>{{ data.contact }}</td>
-                    <td>{{ data.role }}</td>
+                    <td>{{ data.staff_role }}</td>
+                    <td>{{ data.role_description }}</td>
                     <td>
                         <!-- <span @click="editStaff(data,index)"><i class="fa-solid fa-edit"></i></span> -->
                         <span @click="deleteStaff(data.id)"><i class="fa-solid fa-trash"></i></span></td>
@@ -128,6 +130,7 @@ const isNumber = function(evt) {
                     <span v-html="staffStoreData.staffValidation.error.email"></span>
                     <span v-html="staffStoreData.staffValidation.error.password"></span>
                     <span v-html="staffStoreData.staffValidation.error.contact"></span>
+                    <span v-html="staffStoreData.staffValidation.error.staff_role"></span>
                 </div>
                 <form @submit.prevent="addStaffUser">
                    
@@ -157,7 +160,15 @@ const isNumber = function(evt) {
                     <input type="text" class="form-control" v-model="staffData.contact" autocomplete="off" @keypress="isNumber($event)" maxlength="11" required>
                     <span  class="text-danger"></span>
                 </div>
-               
+
+                <div class="form-group">
+                    <label for="name">Staff Role</label>
+                    <select  v-model="staffData.staff_role" class="select-dropdown"  @change="handleUserChange" style="width: 100%;">
+                            <option value="1">System Administrator</option>
+                            <option value="2">Services</option>
+                    </select>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Create</button>
                 <button type="button" class="btn btn-danger" @click="closeDialog">Cancel</button>
               </form>
@@ -178,7 +189,7 @@ const isNumber = function(evt) {
 .add-staff{
     position: absolute;
     width: 100%;
-    height: 100vh;
+    min-height: 110%;
     z-index: 9999;
     top: 0;
     left: 0 ;

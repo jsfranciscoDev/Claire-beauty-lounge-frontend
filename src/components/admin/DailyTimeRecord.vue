@@ -34,7 +34,6 @@ const months = [
 let selectedMonth = "";
 let selectedUser = "";
 
-console.log(selectedUser);
 
 const handleMonthChange = (event) => {
   monthsFilter.value = event.target.value;
@@ -47,7 +46,7 @@ const handleUserChange = (event) => {
 };
 
 
-const role = localStorage.getItem('role');
+const role = sessionStorage.getItem('role');
 const roleBytes = CryptoJS.AES.decrypt(role, 'role');
 const userRole = roleBytes.toString(CryptoJS.enc.Utf8);
 
