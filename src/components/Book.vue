@@ -20,6 +20,8 @@ const handlerStaffChange = (event) => {
    selectedStaff.value = event.target.value;
 };
 
+const oneTimePassword = ref(['', '', '', '', '', '']);
+
 const Appointment = reactive({
     user_id: '',
     service_id: '',
@@ -28,11 +30,37 @@ const Appointment = reactive({
     user_staff: ''
 })
 
+const verification = ref(false);
+
 const userSendAppointment = () => {
+    sendOtp();
     Appointment.user_id = userData.user_details.id,
     Appointment.service_id = selectedServices,
-    Appointment.user_staff = selectedStaff,
-    userData.sendAppointment(Appointment)
+    Appointment.user_staff = selectedStaff
+    // userData.sendAppointment(Appointment)
+}
+
+const sendOtp = () => {
+  verification.value = true
+  userData.sendOtp()
+
+  setTimeout(() => {
+    verification.value = false;
+  }, 180000);
+}
+
+const validateDate = () => {
+  const currentDate = moment().format('MM/DD/YYYY');
+  const appointmentDate = moment(Appointment.date);
+
+  if (appointmentDate.isBefore(currentDate)) {
+        Swal.fire({
+            title: 'Invalid Date',
+            text: 'Please check the details. You cannot book an appointment in the past.',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+        });
+  } 
 }
 
 onMounted(() => {
@@ -48,7 +76,6 @@ onBeforeMount(() => {
     userData.fetchAppointment();
     userData.getStaffDropdown();
 });
-
 
 const getStatusClass = (status) => {
  
@@ -66,6 +93,16 @@ const getStatusClass = (status) => {
    default:
      return ''; // Default class, if none of the statuses match
  }
+}
+
+const sendVerification = () => {
+  const userOtp = oneTimePassword.value.join('');
+  userData.submitUserOtp(userOtp).then(e => {
+    if(e == 'verified'){
+      verification.value = false
+      userData.sendAppointment(Appointment)
+    }
+  });;
 }
 
 const updateAppointment = (appointment_id, status , message) => {
@@ -96,7 +133,7 @@ const updateAppointment = (appointment_id, status , message) => {
 <template>
     <navBar/>
     <div class="row vh-100">
-      <div class="col-md-6 pl-0" >
+      <div class="col-md-6 pl-0">
         <div class="appointment-container" :style="{ opacity: userData.user_appointment?.detail === 'Cancelled' ? 0.5 : 1 }">
           <div class="card" v-if="userData.user_appointment">
             <div class="header">
@@ -122,9 +159,27 @@ const updateAppointment = (appointment_id, status , message) => {
             </div>
         </div>
         <div v-else>
-          <span>No Appointment Records.</span>
+          <span v-if="!verification">No Appointment Records.</span>
+          <div v-else>
+            <form class="form" @submit.prevent="sendVerification"> 
+              <div class="title">OTP</div> 
+              <div class="title">Verification Code</div> 
+              <p class="message">We have sent a verification code to your mobile number</p> 
+              <div class="inputs"> 
+                <input id="input1" type="text" v-model="oneTimePassword[0]" maxlength="1"> 
+                <input id="input2" type="text" v-model="oneTimePassword[1]" maxlength="1"> 
+                <input id="input3" type="text" v-model="oneTimePassword[2]" maxlength="1"> 
+                <input id="input4" type="text" v-model="oneTimePassword[3]" maxlength="1"> 
+                <input id="input5" type="text" v-model="oneTimePassword[4]" maxlength="1"> 
+                <input id="input6" type="text" v-model="oneTimePassword[5]" maxlength="1"> 
+              </div>  <button class="action" type="submit">Submit OTP</button>
+            </form>
+          </div>
         </div>
+
         </div>
+        
+      
       
       </div>
       <div class="col-md-6 login-form d-flex align-items-center justify-content-center">
@@ -137,11 +192,11 @@ const updateAppointment = (appointment_id, status , message) => {
               <div class="alert alert-info" role="info" v-if="accountCreated">
                 Account has been successfully created.
               </div>
-              <center><p>RESERVATION</p><h2>Make an Appointment</h2></center>
+              <p>RESERVATION</p><h2>Make an Appointment</h2>
                 <form @submit.prevent="userSendAppointment">
                 <div class="form-group">
                   <label for="password">Services:</label>
-                  <select  v-model="selectedServices" class="select-dropdown"  @change="handlerServiceChange" style="width: 100%;">
+                  <select  v-model="selectedServices" class="select-dropdown"  @change="handlerServiceChange" style="width: 100%;" required>
                           <option disabled value="">Select Services</option>
                           <option v-for="data in userData.service_dropdown" :value="data.id">{{ data.name }}</option>
                   </select>
@@ -149,7 +204,7 @@ const updateAppointment = (appointment_id, status , message) => {
 
                 <div class="form-group">
                   <label for="password">Select Staff:</label>
-                  <select  v-model="selectedStaff" class="select-dropdown"  @change="handlerStaffChange" style="width: 100%;">
+                  <select  v-model="selectedStaff" class="select-dropdown"  @change="handlerStaffChange" style="width: 100%;" required>
                           <option disabled value="">Select Staff</option>
                           <option v-for="data in userData.staff_dropdown" :value="data.id">{{ data.name }}</option>
                   </select>
@@ -157,11 +212,11 @@ const updateAppointment = (appointment_id, status , message) => {
                 
                 <div class="form-group">
                     <label for="password">Date:</label>
-                    <input type="date" class="form-control" v-model="Appointment.date" placeholder="Enter password">
+                    <input type="date" class="form-control" v-model="Appointment.date" required @change="validateDate()">
                 </div>
                 <div class="form-group">
                     <label for="password">Time:</label>
-                    <input type="time" class="form-control"  v-model="Appointment.time"  placeholder="Enter password">
+                    <input type="time" class="form-control"  v-model="Appointment.time"  required>
                 </div>
                 <button type="submit" class="btn login-btn mb-2" @click="login">Submit</button>
                
@@ -299,6 +354,59 @@ const updateAppointment = (appointment_id, status , message) => {
 
 .is-approved{
   color: rgb(21, 184, 34);
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 380px;
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  color: black
+}
+
+.message {
+  color: #a3a3a3;
+  font-size: 14px;
+  margin-top: 4px;
+  text-align: center
+}
+
+.inputs {
+  margin-top: 10px
+}
+
+.inputs input {
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  border: none;
+  border-bottom: 1.5px solid #d2d2d2;
+  margin: 0 10px;
+}
+
+.inputs input:focus {
+  border-bottom: 1.5px solid royalblue;
+  outline: none;
+}
+
+.action {
+  margin-top: 24px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: royalblue;
+  color: white;
+  cursor: pointer;
+  align-self: end;
 }
 </style>
 

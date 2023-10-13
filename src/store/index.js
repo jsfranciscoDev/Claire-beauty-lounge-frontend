@@ -32,6 +32,7 @@ export const store = defineStore({
     service_dropdown: null,
     user_appointment: null,
     staff_dropdown: null,
+    otp_id: null,
   }),
   actions: {
     async login(payload) {
@@ -232,11 +233,6 @@ export const store = defineStore({
           const response = await service.sendAppointment(payload);
           console.log(response);
             if(response.data.status == 'success'){
-                Swal.fire({
-                  title: response.data.message,
-                  icon: 'success',
-                  confirmButtonText: 'OK'
-              });
               this.fetchAppointment();
               return response;
             }
@@ -276,5 +272,45 @@ export const store = defineStore({
         
         }
     },
+    async sendOtp() {
+        try {
+          const response = await user.sendOtp();
+            this.otp_id = response.data.otp_id
+            console.log(this.otp_id);
+        } catch (error) {
+        
+        }
+    },
+    async submitUserOtp(userOtp) {
+      let payload = {
+        otp_id: this.otp_id,
+        user_otp: userOtp
+      }
+      try {
+        const response = await user.submitUserOtp(payload);
+
+        if(response.data.status == 'failed'){
+            Swal.fire({
+                title: response.data.title,
+                text: response.data.message,
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+        }
+
+        if(response.data.status == 'verified'){
+            Swal.fire({
+              title: response.data.title,
+              text: response.data.message,
+              icon: 'success',
+              confirmButtonText: 'OK'
+          });
+
+          return response.data.status;
+        }
+      } catch (error) {
+      
+      }
+  },
   },
 });

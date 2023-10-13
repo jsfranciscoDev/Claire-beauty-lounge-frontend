@@ -31,4 +31,10 @@ export default {
     getDTR(){
         return api.get('/api/get-user-records');
     },
+    sendOtp(){
+        return api.get('/api/get-otp');
+    },
+    submitUserOtp(payload){
+        return api.post('/api/submit-user-otp', payload);
+    },
 }
