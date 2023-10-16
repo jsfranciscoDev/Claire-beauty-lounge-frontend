@@ -7,7 +7,11 @@ export const store = defineStore({
   id: 'product',
   state: () => ({
     product: {},
-    product_details: {}
+    product_details: {},
+    notification_details:{
+        quantity: null,
+        mobile_number: null,
+    },
   }),
   actions: {
     async createProduct() {

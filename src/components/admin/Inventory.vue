@@ -83,8 +83,8 @@ onMounted(() => {
                     <th scope="col">Price</th>
                     <th scope="col">Quantity</th>
                     <th scope="col">Total Price</th>
-                    <th scope="col">Expiration Date</th>
                     <th scope="col">Purchase Date</th>
+                    <th scope="col">Expiration Date</th>
                     <th scope="col">Supplier Information</th>
                     <th scope="col">Action</th>
                   </tr>

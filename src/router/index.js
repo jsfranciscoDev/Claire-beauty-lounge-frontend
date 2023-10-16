@@ -13,6 +13,7 @@ import AdminServices from '../components/admin/Services.vue';
 import AdminInventory from '../components/admin/Inventory.vue';
 import Booking from '../components/Book.vue';
 import Appointments from '../components/admin/Appointment.vue';
+import Notifications from '../components/admin/Notifications.vue';
 
 
 
@@ -124,6 +125,10 @@ const routes = [
       {
         path: '/admin/appointments',
         component: Appointments,
+      },
+      {
+        path: '/admin/notifications',
+        component: Notifications,
       }
     ]
   },

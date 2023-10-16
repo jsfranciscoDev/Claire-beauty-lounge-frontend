@@ -272,9 +272,9 @@ export const store = defineStore({
         
         }
     },
-    async sendOtp() {
+    async sendOtp(payload) {
         try {
-          const response = await user.sendOtp();
+          const response = await user.sendOtp(payload);
             this.otp_id = response.data.otp_id
             console.log(this.otp_id);
         } catch (error) {
@@ -312,5 +312,45 @@ export const store = defineStore({
       
       }
   },
+  async sendAppointmentOtp() {
+      try {
+        const response = await user.sendAppointmentOtp();
+          this.otp_id = response.data.otp_id
+          console.log(this.otp_id);
+      } catch (error) {
+      
+        }
+    },
+    async submitAppointmentOtp(userOtp) {
+      let payload = {
+        otp_id: this.otp_id,
+        user_otp: userOtp
+      }
+      try {
+        const response = await user.submitAppointmentOtp(payload);
+
+        if(response.data.status == 'failed'){
+            Swal.fire({
+                title: response.data.title,
+                text: response.data.message,
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+        }
+
+        if(response.data.status == 'verified'){
+            Swal.fire({
+              title: response.data.title,
+              text: response.data.message,
+              icon: 'success',
+              confirmButtonText: 'OK'
+          });
+
+          return response.data.status;
+        }
+      } catch (error) {
+      
+      }
+    },
   },
 });

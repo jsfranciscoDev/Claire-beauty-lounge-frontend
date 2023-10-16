@@ -31,10 +31,16 @@ export default {
     getDTR(){
         return api.get('/api/get-user-records');
     },
-    sendOtp(){
-        return api.get('/api/get-otp');
+    sendOtp(mobile_num){
+        return api.post('/api/get-otp', {mobile_num});
     },
     submitUserOtp(payload){
         return api.post('/api/submit-user-otp', payload);
+    },
+    sendAppointmentOtp(){
+        return api.post('/api/appointment-otp');
+    },
+    submitAppointmentOtp(payload){
+        return api.post('/api/submit-appointment-otp', payload);
     },
 }

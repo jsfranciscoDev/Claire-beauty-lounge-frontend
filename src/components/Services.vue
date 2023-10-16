@@ -17,8 +17,8 @@
                     <th scope="col">Service Type</th>
                     <th scope="col">Service Price</th>
                     <th scope="col">Details</th>
-                    <th scope="col">Package Included</th>
-                    <th scope="col">Total Package Price</th>
+                    <!-- <th scope="col">Package Included</th> -->
+                    <!-- <th scope="col">Total Package Price</th> -->
                   </tr>
                 </thead>
                 <tbody v-for="(data,index) in service.services_details.data" :key="index">
@@ -29,14 +29,14 @@
                     <td>{{ formatPrice(data.price) }}</td>
                     <td >{{ data.details }}   
                     </td>
-                    <td>
+                    <!-- <td>
                       <div v-for="(product,i) in data.products">
                             {{ product.name }} {{ formatPrice(product.price) }} x {{ product.quantity }} pcs. = {{ formatPrice(product.price * product.quantity ) }}
                         </div>
-                    </td>
-                    <td> 
+                    </td> -->
+                    <!-- <td> 
                         {{ formatPrice(data.price + data.total_product_price ) }}
-                    </td>
+                    </td> -->
 
                   </tr>
                 </tbody>

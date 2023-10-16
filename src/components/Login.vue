@@ -16,6 +16,15 @@ const user = reactive({
 
 const resgisterAction = ref(true);
 const accountCreated = ref(false);
+const verification = ref(false);
+const selectedServices = ref('');
+const selectedStaff = ref('');
+
+const countdownMinutes = 3;
+const countdownTime = ref(countdownMinutes * 60);
+let countdownInterval;
+
+const oneTimePassword = ref(['', '', '', '', '', '']);
 
 const toggleAction = () => {
   resgisterAction.value = !resgisterAction.value;
@@ -36,20 +45,52 @@ const LoginAccount = async (event) => {
 
 };
 
+const sendOtp = () => {
+  verification.value = true
+  userData.sendOtp(user.contact)
+  countdownInterval = setInterval(() => {
+    countdownTime.value -= 1;
+    if (countdownTime.value <= 0) {
+      clearInterval(countdownInterval);
+
+      // Perform any action you want after the countdown ends
+    }
+  }, 1000);
+  setTimeout(() => {
+    verification.value = false;
+    clearInterval(countdownInterval);
+    countdownTime.value = countdownMinutes * 60;
+  }, 180000);
+}
+
 const registerAccount = async (event) => {
+  
   event.preventDefault();
+  sendOtp();
   clearErrorMessage();
-  await userData.register(user);  
-  if(userData.registerMessage == 'success'){
-    toggleAction();
-    accountCreated.value = true 
-  }
+ 
 };
 
 const login = () => {
   setTimeout(() => {
     window.location.reload();
   }, 1000); 
+}
+
+const sendVerification = () => {
+  const userOtp = oneTimePassword.value.join('');
+  userData.submitUserOtp(userOtp).then(e => {
+    if(e == 'verified'){
+      verification.value = false
+      userData.register(user);  
+      if(userData.registerMessage == 'success'){
+        toggleAction();
+        accountCreated.value = true 
+      }
+      clearInterval(countdownInterval);
+      countdownTime.value = countdownMinutes * 60;
+    }
+  });;
 }
 
 const clearErrorMessage = () => {
@@ -105,7 +146,7 @@ const isNumber = function(evt) {
         </div>
         </div>
         <div class="row align-items-center justify-content-center" v-else>
-            <div class="form-input">
+            <div class="form-input" v-if="!verification">
               <h2>Create Account</h2>
                 <form @submit.prevent="registerAccount">
                 <div class="form-group">
@@ -135,8 +176,34 @@ const isNumber = function(evt) {
                     <span  class="text-danger"></span>
                 </div>
 
-                <button type="submit" class="btn login-btn mb-2">Login</button>
+                <button type="submit" class="btn login-btn mb-2">Sign up</button>
                 <span class="">Do you already have an account?</span> <span class="register-btn" @click="toggleAction">Sign in here!</span>
+              </form>
+            </div>
+
+            <div v-else>
+                <form class="form otp-form" @submit.prevent="sendVerification" > 
+                <div class="title">OTP</div> 
+                <div class="title">Verification Code</div> 
+                <p class="message">We have sent a verification code to your mobile number</p> 
+                <div class="inputs"> 
+                  <input id="input1" type="text" v-model="oneTimePassword[0]" maxlength="1"> 
+                  <input id="input2" type="text" v-model="oneTimePassword[1]" maxlength="1"> 
+                  <input id="input3" type="text" v-model="oneTimePassword[2]" maxlength="1"> 
+                  <input id="input4" type="text" v-model="oneTimePassword[3]" maxlength="1"> 
+                  <input id="input5" type="text" v-model="oneTimePassword[4]" maxlength="1"> 
+                  <input id="input6" type="text" v-model="oneTimePassword[5]" maxlength="1"> 
+                </div> 
+                <div>
+                  <div class="count-down-timer">
+                    <span>{{ Math.floor(countdownTime / 60) }}:</span>
+                    <span>{{ countdownTime % 60 < 10 ? '0' : '' }}{{ countdownTime % 60 }}</span>
+                  </div>
+                
+
+                  <div> <button class="action" type="submit">Submit OTP</button></div>
+                </div>
+                
               </form>
             </div>
         </div>

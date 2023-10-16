@@ -10,6 +10,10 @@ const userData = store();
 const accountCreated = ref(false);
 const selectedServices = ref('');
 const selectedStaff = ref('');
+const verification = ref(false);
+const countdownMinutes = 3;
+const countdownTime = ref(countdownMinutes * 60);
+let countdownInterval;
 
 
 const handlerServiceChange = (event) => {
@@ -30,7 +34,7 @@ const Appointment = reactive({
     user_staff: ''
 })
 
-const verification = ref(false);
+
 
 const userSendAppointment = () => {
     sendOtp();
@@ -42,10 +46,19 @@ const userSendAppointment = () => {
 
 const sendOtp = () => {
   verification.value = true
-  userData.sendOtp()
+  userData.sendAppointmentOtp()
+  countdownInterval = setInterval(() => {
+    countdownTime.value -= 1;
+    if (countdownTime.value <= 0) {
+      clearInterval(countdownInterval);
 
+      // Perform any action you want after the countdown ends
+    }
+  }, 1000);
   setTimeout(() => {
     verification.value = false;
+    clearInterval(countdownInterval);
+    countdownTime.value = countdownMinutes * 60;
   }, 180000);
 }
 
@@ -97,10 +110,12 @@ const getStatusClass = (status) => {
 
 const sendVerification = () => {
   const userOtp = oneTimePassword.value.join('');
-  userData.submitUserOtp(userOtp).then(e => {
+  userData.submitAppointmentOtp(userOtp).then(e => {
     if(e == 'verified'){
       verification.value = false
       userData.sendAppointment(Appointment)
+      clearInterval(countdownInterval);
+      countdownTime.value = countdownMinutes * 60;
     }
   });;
 }
@@ -159,22 +174,7 @@ const updateAppointment = (appointment_id, status , message) => {
             </div>
         </div>
         <div v-else>
-          <span v-if="!verification">No Appointment Records.</span>
-          <div v-else>
-            <form class="form" @submit.prevent="sendVerification"> 
-              <div class="title">OTP</div> 
-              <div class="title">Verification Code</div> 
-              <p class="message">We have sent a verification code to your mobile number</p> 
-              <div class="inputs"> 
-                <input id="input1" type="text" v-model="oneTimePassword[0]" maxlength="1"> 
-                <input id="input2" type="text" v-model="oneTimePassword[1]" maxlength="1"> 
-                <input id="input3" type="text" v-model="oneTimePassword[2]" maxlength="1"> 
-                <input id="input4" type="text" v-model="oneTimePassword[3]" maxlength="1"> 
-                <input id="input5" type="text" v-model="oneTimePassword[4]" maxlength="1"> 
-                <input id="input6" type="text" v-model="oneTimePassword[5]" maxlength="1"> 
-              </div>  <button class="action" type="submit">Submit OTP</button>
-            </form>
-          </div>
+          <span>No Appointment Records.</span>
         </div>
 
         </div>
@@ -183,7 +183,7 @@ const updateAppointment = (appointment_id, status , message) => {
       
       </div>
       <div class="col-md-6 login-form d-flex align-items-center justify-content-center">
-        <div class="row align-items-center justify-content-center">
+        <div class="row align-items-center justify-content-center" v-if="!verification">
             <div class="form-input">
               
               <div class="alert alert-danger" role="alert" v-if="userData.user.errorWarning">
@@ -223,6 +223,32 @@ const updateAppointment = (appointment_id, status , message) => {
               </form>
         </div>
         </div>
+        <div v-else>
+          <!-- add 3 minute countdownhere -->
+            <form class="form otp-form" @submit.prevent="sendVerification" > 
+              <div class="title">OTP</div> 
+              <div class="title">Verification Code</div> 
+              <p class="message">We have sent a verification code to your mobile number</p> 
+              <div class="inputs"> 
+                <input id="input1" type="text" v-model="oneTimePassword[0]" maxlength="1"> 
+                <input id="input2" type="text" v-model="oneTimePassword[1]" maxlength="1"> 
+                <input id="input3" type="text" v-model="oneTimePassword[2]" maxlength="1"> 
+                <input id="input4" type="text" v-model="oneTimePassword[3]" maxlength="1"> 
+                <input id="input5" type="text" v-model="oneTimePassword[4]" maxlength="1"> 
+                <input id="input6" type="text" v-model="oneTimePassword[5]" maxlength="1"> 
+              </div> 
+              <div>
+                <div class="count-down-timer">
+                  <span>{{ Math.floor(countdownTime / 60) }}:</span>
+                  <span>{{ countdownTime % 60 < 10 ? '0' : '' }}{{ countdownTime % 60 }}</span>
+                </div>
+               
+
+                <div> <button class="action" type="submit">Submit OTP</button></div>
+              </div>
+              
+            </form>
+          </div>
       </div>
     </div>
 </template>
@@ -407,6 +433,17 @@ const updateAppointment = (appointment_id, status , message) => {
   color: white;
   cursor: pointer;
   align-self: end;
+}
+
+.otp-form{
+  position: relative;
+
+}
+
+.count-down-timer{
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
 }
 </style>
 

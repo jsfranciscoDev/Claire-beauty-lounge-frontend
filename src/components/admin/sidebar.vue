@@ -50,6 +50,9 @@ if(staff_role){
                 <i class="fa fa-linode"><span><router-link to="/admin/inventory" class="sidebar-link">Inventory</router-link></span></i>
             </li>
             <li>
+              <i class="fa fa-bell"><span><router-link to="/admin/notifications" class="sidebar-link">Notications</router-link></span></i>
+            </li>
+            <li>
                 <i class="fa fa-clock"><span><router-link to="/admin/daily-time-record" class="sidebar-link">Daily Time Record</router-link></span></i>
             </li>
             <li>
@@ -77,6 +80,9 @@ if(staff_role){
             </li>
             <li v-if="StaffAcessRole == 'System Administrator'">
                 <i class="fa fa-linode"><span><router-link to="/admin/inventory" class="sidebar-link">Inventory</router-link></span></i>
+            </li>
+            <li v-if="StaffAcessRole == 'System Administrator'">
+                <i class="fa fa-bell"><span><router-link to="/admin/notifications" class="sidebar-link">Notications</router-link></span></i>
             </li>
             <li>
                 <i class="fa fa-clock"><span><router-link to="/admin/daily-time-record" class="sidebar-link">Daily Time Record</router-link></span></i>
