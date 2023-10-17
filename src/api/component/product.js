@@ -12,5 +12,11 @@ export default {
     },
     updateProducts(data){
         return api.put('/api/update-product', data);
+    },
+    sendNotification(payload){
+        return api.post('/api/update-notifications', payload);
+    },
+    getNotification(){
+        return api.get('/api/get-notifications');
     }
 }

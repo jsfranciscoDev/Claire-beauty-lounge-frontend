@@ -24,8 +24,9 @@ const currentDate = ref();
 
 // Update the time every second
 const intervalId = setInterval(() => {
-  currentTime.value = moment().format('LTS');
-  currentDate.value = moment().format('L');
+    const now = moment.tz('Asia/Manila');
+    currentTime.value = now.format('LTS');
+    currentDate.value = now.format('L');
 }, 1000);
 
 // Clean up when the component is unmounted

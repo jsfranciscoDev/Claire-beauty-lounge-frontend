@@ -10,7 +10,7 @@ export const store = defineStore({
     product_details: {},
     notification_details:{
         quantity: null,
-        mobile_number: null,
+        phone_number: null,
     },
   }),
   actions: {
@@ -78,5 +78,31 @@ export const store = defineStore({
       
       }
   },
+  async sendNotification() {
+      try {
+        const response = await product.sendNotification(this.notification_details);
+          if(response.data.status == 'success'){
+              Swal.fire({
+                  title: response.data.title,
+                  text: response.data.message,
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+              });
+              
+          }
+      } catch (error) {
+      
+      }
+  },
+  async getNotification() {
+    try {
+      const response = await product.getNotification();
+        if(response.data.status == 'success'){  
+              this.notification_details = response.data.notification;
+        }
+    } catch (error) {
+    
+    }
+},
 },
 });

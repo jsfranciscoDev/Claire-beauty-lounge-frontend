@@ -1,8 +1,9 @@
 <script setup>
 import { reactive, ref, onMounted } from "vue";
 import { store } from "../../store/product";
+import Swal from 'sweetalert2';
 
-const notificaton = store();
+const product = store();
 
 const isNumber = function(evt) {
   evt = (evt) ? evt : window.event;
@@ -16,11 +17,23 @@ const isNumber = function(evt) {
 }
 
 const sendNotificationData = () => {
-   
+    Swal.fire({
+    title: '',
+    text: "Are you sure do you want to update the sms notification?",
+    icon: 'info',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, Update it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+        product.sendNotification();
+    }
+  })
 }
 
 onMounted(() => {
-    notificaton.notificatonData();
+    product.getNotification();
 })
 
 </script>
@@ -33,23 +46,23 @@ onMounted(() => {
         <div class="table-responsive bg-white pb-3 pt-3">   
             <div class="row">
                 <div class="col-12 col-md-6 col-lg-6">
-                    <span>Set the minimum quantity and mobile number to receive a notification if the product is low in stock.</span>
+                    <span><b>Set the minimum quantity and mobile number to receive a notification if the product is low in stock.</b></span>
                  
-                    <div class="alert alert-danger d-flex flex-column" role="alert" v-if="notificaton.error" >
-                        <span v-html="notificaton.error"></span>
+                    <div class="alert alert-danger d-flex flex-column" role="alert" v-if="product.error" >
+                        <span v-html="product.error"></span>
                     </div>
 
                     <div class="mt-1">
                         <div class="form-group">
                            
                             <label >Set Item Quantity:</label>
-                            <input type="text" class="form-control" v-model="notificaton.notification_details.quantity" placeholder="Quantity" autocomplete="off"  @keypress="isNumber($event)" required>
+                            <input type="text" class="form-control" v-model="product.notification_details.quantity" placeholder="Quantity" autocomplete="off"  @keypress="isNumber($event)" required>
                             <span class="text-danger fs-12"></span>
                         </div>
 
                         <div class="form-group">
                             <label >Contact Number:</label>
-                            <input type="text" class="form-control"  v-model="notificaton.notification_details.mobile_number" placeholder="Phone Number" autocomplete="off" @keypress="isNumber($event)" maxlength="11" required>
+                            <input type="text" class="form-control"  v-model="product.notification_details.phone_number" placeholder="Phone Number" autocomplete="off" @keypress="isNumber($event)" maxlength="11" required>
                             <span class="text-danger fs-12"></span>
                         </div>
 
