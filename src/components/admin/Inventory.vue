@@ -1,8 +1,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { store } from "../../store/product";
+
 const product = store();
 
+const storedToken = sessionStorage.getItem('token');
+console.log(storedToken);
 
 const formDialog = ref(false)
 const Update = ref(false);
@@ -16,6 +19,8 @@ const addProductItem = () => {
         }
     });
 }
+
+
 
 const closeDialog = () => {
     formDialog.value = false;

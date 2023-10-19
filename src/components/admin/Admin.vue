@@ -3,14 +3,17 @@
   import sidebar from './sidebar.vue';
   import staff from './staff.vue';
   import { useRouter } from 'vue-router';
-
+  import {  onBeforeMount } from "vue";
 
   const userData = store();
   const fetchData = () => {
       userData.userRole();
   }
   
-
+  // router.push('/admin/dashboard');
+onBeforeMount(() => {
+  userData.userRole();
+});
 </script>
 
 <template>

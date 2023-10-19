@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, onMounted  } from "vue";
+import { reactive, ref, onMounted, onBeforeMount  } from "vue";
 import { store } from "../store/index";
 import { useRouter } from 'vue-router';
 import navBar from '../components/nav.vue'
@@ -64,16 +64,14 @@ const sendOtp = () => {
 }
 
 const registerAccount = async (event) => {
-  
   event.preventDefault();
   sendOtp();
   clearErrorMessage();
- 
 };
 
 const login = () => {
   setTimeout(() => {
-    window.location.reload();
+    // window.location.reload();
   }, 1000); 
 }
 

@@ -1,22 +1,48 @@
-import api from '../api'
+import axios from 'axios';
+const storedToken = sessionStorage.getItem('token');
+const baseURL = import.meta.env.VITE_APP_BASE_URL;
 
 export default {
     createProduct(payload){
-        return api.post('/api/create-product', payload);
+        return axios.post(`${baseURL}/api/create-product`, payload, {
+            headers: {
+                'Authorization': `Bearer ${storedToken}`
+                }
+            });
     },
     getProducts(page){
-        return api.get(`/api/get-products?page=${page}`);
+        return axios.get(`${baseURL}/api/get-products?page=${page}`, {
+            headers: {
+                'Authorization': `Bearer ${storedToken}`
+                }
+            });
     },
     deleteProduct(id){
-        return api.delete(`/api/remove-product/${id}`);
+        return axios.delete(`${baseURL}/api/remove-product/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${storedToken}`
+                }
+            });
     },
     updateProducts(data){
-        return api.put('/api/update-product', data);
+        return axios.put(`${baseURL}/api/update-product`, data, {
+            headers: {
+                'Authorization': `Bearer ${storedToken}`
+                }
+            });
     },
     sendNotification(payload){
-        return api.post('/api/update-notifications', payload);
+        return axios.post(`${baseURL}/api/update-notifications`, payload , {
+            headers: {
+                'Authorization': `Bearer ${storedToken}`
+                }
+            });
     },
     getNotification(){
-        return api.get('/api/get-notifications');
+        return axios.get(`${baseURL}/api/get-notifications`,{
+            headers: {
+                'Authorization': `Bearer ${storedToken}`
+                }
+            });
     }
 }

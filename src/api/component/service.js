@@ -1,38 +1,80 @@
-import api from '../api'
+import axios from 'axios';
+const storedToken = sessionStorage.getItem('token');
+const baseURL = import.meta.env.VITE_APP_BASE_URL;
 
 export default {
     createServices(payload){
-        return api.post('/api/create-services', payload);
+        return axios.post(`${baseURL}/api/create-services`, payload, {
+            headers: {
+                'Authorization': `Bearer ${storedToken}`
+                }
+            });
     },
     getServices(page){
-        return api.get(`/api/get-services?page=${page}`);
+        return axios.get(`${baseURL}/api/get-services?page=${page}`, {
+            headers: {
+                'Authorization': `Bearer ${storedToken}`
+                }
+            });
     },
     deleteService(id){
-        return api.delete(`/api/remove-service/${id}`);
+        return axios.delete(`${baseURL}/api/remove-service/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${storedToken}`
+                }
+            });
     },
     updateServices(data){
-        return api.put('/api/update-service', data);
+        return axios.put(`${baseURL}/api/update-service`, data, {
+            headers: {
+                'Authorization': `Bearer ${storedToken}`
+                }
+            });
     },
     getServicesDropdown(){
-        return api.get('/api/get-services-dropdown');
+        return axios.get(`${baseURL}/api/get-services-dropdown`, {
+            headers: {
+                'Authorization': `Bearer ${storedToken}`
+                }
+            });
     },
     sendAppointment(payload){
-        return api.post('/api/create-appointment', payload);
+        return axios.post(`${baseURL}/api/create-appointment`, payload, {
+            headers: {
+                'Authorization': `Bearer ${storedToken}`
+                }
+            });
     },
     fetchAppointment(){
-        return api.get('/api/get-appointment');
+        return axios.get(`${baseURL}/api/get-appointment` ,{
+            headers: {
+                'Authorization': `Bearer ${storedToken}`
+                }
+            });
     },
     getServicesProductDropdown(){
-        return api.get('/api/get-products-dropdown');
+        return axios.get(`${baseURL}/api/get-products-dropdown`, {
+            headers: {
+                'Authorization': `Bearer ${storedToken}`
+                }
+            });
     },
     attachProductsOnService(service_id,service_items){
         let payload = {
             service_id: service_id,
             service_items: service_items
         }   
-        return api.post('/api/attach-service-items', payload);
+        return axios.post(`${baseURL}/api/attach-service-items`, payload,{
+            headers: {
+                'Authorization': `Bearer ${storedToken}`
+                }
+            });
     },
     removeAttachedProducts(id){
-        return api.delete(`/api/remove-service-items/${id}`);
+        return axios.delete(`${baseURL}/api/remove-service-items/${id}`,{
+            headers: {
+                'Authorization': `Bearer ${storedToken}`
+                }
+            });
     }
 }
