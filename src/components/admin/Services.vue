@@ -17,7 +17,6 @@ const ServicesItems = reactive([{
 
 const addServices = () => {
     service.createServices().then(response => {
-        console.log(response);
         if(response.data.status == 'success'){
             closeDialog();
         }

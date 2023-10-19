@@ -9,7 +9,6 @@ const user = store();
 const logoutUser = () => {
   sessionStorage.clear();
   user.logout();
-
 }
 const StaffAcessRole = ref(null);
 

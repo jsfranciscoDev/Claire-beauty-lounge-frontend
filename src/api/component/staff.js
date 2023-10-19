@@ -4,51 +4,51 @@ const baseURL = import.meta.env.VITE_APP_BASE_URL;
 
 export default {
     createStaff(payload){
-        return axios.post(`${baseURL}/api/create-staff`, payload,{
+        return axios.post(`${baseURL}api/create-staff`, payload,{
             headers: {
-                'Authorization': `Bearer ${storedToken}`
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }
             });
     },
     getUserStaff(page){
-        return axios.get(`${baseURL}/api/get-staffs?page=${page}`,{
+        return axios.get(`${baseURL}api/get-staffs?page=${page}`,{
             headers: {
-                'Authorization': `Bearer ${storedToken}`
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }
             });
     },
     deleteUserStaff(payload){
-        return axios.delete(`${baseURL}/api/remove-staff/${payload}`,{
+        return axios.delete(`${baseURL}api/remove-staff/${payload}`,{
             headers: {
-                'Authorization': `Bearer ${storedToken}`
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }
             });
     },
     getStaff(){
-        return axios.get(`${baseURL}/api/get-staff`,{
+        return axios.get(`${baseURL}api/get-staff`,{
             headers: {
-                'Authorization': `Bearer ${storedToken}`
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }
             });
     },
     getUserDTR(months,user_id){
-        return axios.post(`${baseURL}/api/get-user-dtr`, {months: months, user_id: user_id},{
+        return axios.post(`${baseURL}api/get-user-dtr`, {months: months, user_id: user_id},{
             headers: {
-                'Authorization': `Bearer ${storedToken}`
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }
             });
     },
     getUserDropdown(){
-        return axios.get(`${baseURL}/api/user-dropdown`,{
+        return axios.get(`${baseURL}api/user-dropdown`,{
             headers: {
-                'Authorization': `Bearer ${storedToken}`
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }
             });
     },
     getStaffDropdown(){
-        return axios.get(`${baseURL}/api/book-staff-dropdown`,{
+        return axios.get(`${baseURL}api/book-staff-dropdown`,{
             headers: {
-                'Authorization': `Bearer ${storedToken}`
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }
             });
     }

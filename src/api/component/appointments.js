@@ -4,24 +4,24 @@ const baseURL = import.meta.env.VITE_APP_BASE_URL;
 
 export default {
     getAllappointments(page){
-        return axios.get(`${baseURL}/api/get-all-appointments?page=${page}`, {
+        return axios.get(`${baseURL}api/get-all-appointments?page=${page}`, {
             headers: {
-                'Authorization': `Bearer ${storedToken}`
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }
             });
     },
     getStatusgappointments(page,status){
 
-        return axios.post(`${baseURL}/api/get-status-appointments?page=${page}`, {status},{
+        return axios.post(`${baseURL}api/get-status-appointments?page=${page}`, {status},{
             headers: {
-                'Authorization': `Bearer ${storedToken}`
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }
             });
     },
     updateAppointment(data){;
-        return axios.post(`${baseURL}/api/update-status-appointment`, data,{
+        return axios.post(`${baseURL}api/update-status-appointment`, data,{
             headers: {
-                'Authorization': `Bearer ${storedToken}`
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }
             });
     },

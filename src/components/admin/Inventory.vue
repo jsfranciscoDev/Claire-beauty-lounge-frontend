@@ -13,7 +13,6 @@ const Update = ref(false);
 
 const addProductItem = () => {
     product.createProduct().then(response => {
-        console.log(response);
         if(response.data.status == 'success'){
             closeDialog();
         }

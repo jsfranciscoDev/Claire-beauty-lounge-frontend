@@ -38,7 +38,6 @@ export const store = defineStore({
     async login(payload) {
       try {
         const response = await user.login(payload);
-        console.log(response);
         if (response.data.message == 'success') {
             sessionStorage.setItem("token", response.data.token);
             this.session = true;
@@ -231,7 +230,6 @@ export const store = defineStore({
     async sendAppointment(payload) {  
         try {
           const response = await service.sendAppointment(payload);
-          console.log(response);
             if(response.data.status == 'success'){
               this.fetchAppointment();
               return response;
