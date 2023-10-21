@@ -2,6 +2,8 @@
 import { appointment } from "../../../store/appointment";
 import { onBeforeMount  } from "vue";
 import moment from 'moment';
+import Swal from 'sweetalert2';
+
 const appointmentData = appointment();
 
 const paginate = (page) => {
@@ -11,6 +13,29 @@ const paginate = (page) => {
 onBeforeMount(() => {
  appointmentData.getStatusgappointments(1,4);
 });
+
+const updateAppointment = (appointment_id, status , message) => {
+  let data = {
+    id: appointment_id,
+    status: status
+  }
+
+  Swal.fire({
+    title: `${message} Appointment?`,
+    text: "Please make sure the details correct",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: `Yes, ${message} it!`
+  }).then((result) => {
+    if (result.isConfirmed) {
+      appointmentData.updateAppointment(data);
+    }
+  })
+
+ 
+}
 
 const getStatusClass = (status) => {
     

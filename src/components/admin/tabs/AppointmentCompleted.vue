@@ -2,6 +2,7 @@
 import { appointment } from "../../../store/appointment";
 import { onBeforeMount  } from "vue";
 import moment from 'moment';
+import Swal from 'sweetalert2';
 const appointmentData = appointment();
 
 const paginate = (page) => {
@@ -11,6 +12,29 @@ const paginate = (page) => {
 onBeforeMount(() => {
  appointmentData.getStatusgappointments(1,5);
 });
+
+const updateAppointment = (appointment_id, status , message) => {
+  let data = {
+    id: appointment_id,
+    status: status
+  }
+
+  Swal.fire({
+    title: `${message} Appointment?`,
+    text: "Please make sure the details correct",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: `Yes, ${message} it!`
+  }).then((result) => {
+    if (result.isConfirmed) {
+      appointmentData.updateAppointment(data);
+    }
+  })
+
+ 
+}
 
 const getStatusClass = (status) => {
     
@@ -61,9 +85,10 @@ const getStatusClass = (status) => {
                     <td :class="getStatusClass(data.detail)"><b>{{ data?.detail }}</b></td>
                   
                     <td class="table-actions d-flex flex-column"> 
-                        <span @click="updateServices(data)">Reschedule</span>
-                        <span @click="deleteServices(data.id)">Declined</span>
-                        <span @click="addServicesProduct(data.id)">Approved</span>
+                        <span v-if="data.detail == '!Approved'" @click="updateAppointment(data.appointment_id,4, 'Reschedule')">Reschedule</span>
+                        <span v-if="data.detail == '!Approved'" @click="updateAppointment(data.appointment_id,2 ,'Declined')">Declined</span>
+                        <span v-if="data.detail == '!Approved'" @click="updateAppointment(data.appointment_id,3 , 'Approved')">Approved</span>
+                        <span v-if="data.detail == 'Approved'" @click="updateAppointment(data.appointment_id,5 , 'Complete')">Complete</span>
                     </td>
 
                   </tr>

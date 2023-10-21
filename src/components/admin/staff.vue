@@ -1,6 +1,8 @@
 <script setup>
 import { reactive, ref, onMounted } from "vue";
 import { store } from "../../store/index";
+import Swal from 'sweetalert2';
+
 const staffStoreData = store();
 
 const staffData = reactive({
@@ -32,12 +34,24 @@ const editStaff = (data) => {
 }
 
 const deleteStaff = (id) => {
-    staffStoreData.deleteUserStaff(id).then(response => {
-        if(response.data.message == 'success'){
-            staffStoreData.getUserStaff();
-            closeDialog();
-        }
-    });
+    Swal.fire({
+    title: 'Delete Staff',
+    text: "Are you sure do you want to delete this user?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: `Yes, Delete it!`
+  }).then((result) => {
+    if (result.isConfirmed) {
+        staffStoreData.deleteUserStaff(id).then(response => {
+            if(response.data.message == 'success'){
+                staffStoreData.getUserStaff();
+                closeDialog();
+            }
+        });
+    }
+  })
 }
 const closeDialog = () => {
     staffDialog.value = false

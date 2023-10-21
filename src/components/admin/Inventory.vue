@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { store } from "../../store/product";
+import Swal from 'sweetalert2';
 
 const product = store();
 
@@ -36,7 +37,20 @@ const paginate = (page) => {
 }
 
 const removeProduct = (id) => {
-    product.deleteProduct(id);
+    Swal.fire({
+    title: 'Delete Product',
+    text: "Are you sure do you want to delete this Product?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: `Yes, Delete it!`
+  }).then((result) => {
+    if (result.isConfirmed) {
+        product.deleteProduct(id);
+    }
+  })
+  
 }
 
 const updateProduct = (data) => {
