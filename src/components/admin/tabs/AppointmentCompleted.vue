@@ -85,10 +85,10 @@ const getStatusClass = (status) => {
                     <td :class="getStatusClass(data.detail)"><b>{{ data?.detail }}</b></td>
                   
                     <td class="table-actions d-flex flex-column"> 
-                        <span v-if="data.detail == '!Approved'" @click="updateAppointment(data.appointment_id,4, 'Reschedule')">Reschedule</span>
-                        <span v-if="data.detail == '!Approved'" @click="updateAppointment(data.appointment_id,2 ,'Declined')">Declined</span>
-                        <span v-if="data.detail == '!Approved'" @click="updateAppointment(data.appointment_id,3 , 'Approved')">Approved</span>
-                        <span v-if="data.detail == 'Approved'" @click="updateAppointment(data.appointment_id,5 , 'Complete')">Complete</span>
+                      <span v-if="!['Approved', 'Cancelled', 'Reschedule'].includes(data.detail)" @click="updateAppointment(data.appointment_id, 4, 'Reschedule')">Reschedule</span>
+                      <span v-if="!['Approved', 'Cancelled', 'Reschedule'].includes(data.detail)" @click="updateAppointment(data.appointment_id, 2, 'Declined')">Declined</span>
+                      <span v-if="!['Approved', 'Cancelled', 'Reschedule'].includes(data.detail)" @click="updateAppointment(data.appointment_id, 3, 'Approved')">Approved</span>
+                      <span v-if="data.detail === 'Approved' && !['Cancelled', 'Reschedule'].includes(data.detail)" @click="updateAppointment(data.appointment_id, 5, 'Complete')">Complete</span>
                     </td>
 
                   </tr>
