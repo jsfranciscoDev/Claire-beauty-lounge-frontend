@@ -1,15 +1,20 @@
 <script setup>
 import { store } from "../store/index";
-import { onMounted } from 'vue'; // Import the onMounted hook
+import { onMounted, ref } from 'vue'; // Import the onMounted hook
+import axios from 'axios';
+const baseURL = import.meta.env.VITE_APP_BASE_URL;
 
 const user = store();
+const role = ref();
 
 const logoutUser = () => {
   user.logout();
 }
 
 onMounted(() => {
- user.userRole()
+ user.userRole().then(response => {
+    console.log(response);
+ })
 });
 </script>
 

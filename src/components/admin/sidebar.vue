@@ -3,11 +3,12 @@
 import { store } from "../../store/index";
 import CryptoJS from 'crypto-js';
 import { reactive, ref, onMounted, onBeforeMount  } from "vue";
+import axios from 'axios';
+const baseURL = import.meta.env.VITE_APP_BASE_URL;
 
 const user = store();
 
 const logoutUser = () => {
-  sessionStorage.clear();
   user.logout();
 }
 const StaffAcessRole = ref(null);

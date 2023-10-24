@@ -18,8 +18,7 @@ export default {
             });
     },
     logout(){
-        // return api.post('/api/logout');
-        return axios.post(`${baseURL}api/logout`, {},{
+        return axios.post(`${baseURL}api/logout`, {user_id: 1}, {
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }

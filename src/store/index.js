@@ -87,12 +87,8 @@ export const store = defineStore({
     async logout() {
       try {
         const response = await user.logout();
-          sessionStorage.setItem('role', '');
-          sessionStorage.setItem('authenticated', '');
-          sessionStorage.setItem('token', '');
-          sessionStorage.setItem('session', '');
-          this.role = null;       
-          window.location.reload();
+          sessionStorage.clear();
+          this.role = '';       
       } catch (error) {
         this.user.error = error.response.data.errors;
       }
