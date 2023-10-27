@@ -18,6 +18,7 @@ let countdownInterval;
 
 const handlerServiceChange = (event) => {
    selectedServices.value = event.target.value;
+   userData.getStaffDropdown(selectedServices.value);
 };
 
 const handlerStaffChange = (event) => {

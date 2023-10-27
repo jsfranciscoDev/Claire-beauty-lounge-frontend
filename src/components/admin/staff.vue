@@ -13,8 +13,11 @@ const staffData = reactive({
     contact: null,
 })
 
+const selectedCategories = ref([]);
+
 const staffDialog = ref(false)
 const updateStaff = ref(false);
+const addService = ref(false);
 
 const addStaffUser = () => {
     staffStoreData.createStaff(staffData).then(e => {
@@ -25,12 +28,9 @@ const addStaffUser = () => {
     });
 }
 
-const editStaff = (data) => {
-    updateStaff.value = true
-    staffData.email = data.email;
-    staffData.name = data.name;
-    staffData.contact = data.contact;
-    staffDialog.value = true;
+const assignedService = (data) => {
+    addService.value = true
+    staffStoreData.staff_services.user_id = data;
 }
 
 const deleteStaff = (id) => {
@@ -55,6 +55,8 @@ const deleteStaff = (id) => {
 }
 const closeDialog = () => {
     staffDialog.value = false
+    addService.value = false
+    selectedCategories.value = [];
     resetFields();
 }
 
@@ -70,6 +72,7 @@ const paginate = (page) => {
 
 onMounted(() => {
     staffStoreData.getUserStaff();
+    staffStoreData.getServiceCategoryDropdown();
 });
 
 const isNumber = function(evt) {
@@ -81,6 +84,23 @@ const isNumber = function(evt) {
   } else {
     return true;
   }
+}
+
+const addStaffServices = () => {
+    staffStoreData.staff_services.services = selectedCategories;
+    staffStoreData.assignedStaffServices().then(e =>{
+        if(e.data.status == 'success'){
+            closeDialog();
+        }
+    });
+}
+
+const removeServices = (data) => {
+    staffStoreData.removeStaffServices(data).then(e =>{
+        if(e.data.status == 'success'){
+            closeDialog();
+        }
+    });
 }
 </script>
 
@@ -94,13 +114,15 @@ const isNumber = function(evt) {
         <div class="table-responsive bg-white">   
               <table class="table mb-0">
                 <thead>
+                 
                   <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Contact</th>
                     <th scope="col">Role</th>
+                    <th scope="col">Services</th>
                     <th scope="col">Role Description</th>
-                    <th scope="col">Action</th>
+                    <th scope="col" width="15%">Action</th>
                   </tr>
                 </thead>
                 <tbody v-for="(data,index) in  staffStoreData.staff.data" :key="index">
@@ -110,10 +132,13 @@ const isNumber = function(evt) {
                     <td>{{ data.email }}</td>
                     <td>{{ data.contact }}</td>
                     <td>{{ data.staff_role }}</td>
+                    <td>{{ data.services.map(service => service.service_category).join(' , ') }}</td>
                     <td>{{ data.role_description }}</td>
-                    <td>
-                        <!-- <span @click="editStaff(data,index)"><i class="fa-solid fa-edit"></i></span> -->
-                        <span @click="deleteStaff(data.id)"><i class="fa-solid fa-trash"></i></span></td>
+                    <td class="d-flex flex-column">
+                        <span v-if=" data.staff_role == 'Services'" @click="assignedService(data.id)" class="service-actions">Assign Services</span>
+                        <span v-if=" data.staff_role == 'Services'" @click="removeServices(data.id)" class="service-actions">Revome Services</span>
+                        <span @click="deleteStaff(data.id)"  class="service-actions">Delete Staff</span>
+                    </td>
                   </tr>
                 </tbody>
 
@@ -184,6 +209,34 @@ const isNumber = function(evt) {
                 </div>
 
                 <button type="submit" class="btn btn-primary">Create</button>
+                <button type="button" class="btn btn-danger" @click="closeDialog">Cancel</button>
+              </form>
+            </div>
+            </div>
+        </div>
+     
+    </div>
+    <!-- MODAL -->
+
+     <!-- MODAL -->
+     <div class="add-staff" v-if="addService">
+        <div class="form-container">
+            <div class="staff-form">
+                <div class="form-input">
+                    <h2 v-if="!updateStaff"><i class="fa-solid fa-plus"></i>Add Staff Services</h2>
+                
+                <form @submit.prevent="addStaffServices">
+            
+                    <div class="form-group">
+                        <label>Service Categories</label>
+                        <div v-for="(category, index) in staffStoreData.service_category_dropdown" :key="index">
+                            <label>
+                                <input type="checkbox" v-model="selectedCategories" :value="category.id"> {{ category.name }}
+                            </label>
+                        </div>
+                    </div>
+                
+                <button type="submit" class="btn btn-primary">Submit</button>
                 <button type="button" class="btn btn-danger" @click="closeDialog">Cancel</button>
               </form>
             </div>

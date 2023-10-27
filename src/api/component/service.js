@@ -105,5 +105,12 @@ export default {
                 }
             });
     },
+    getServiceCategoryDropdown(){
+        return axios.get(`${baseURL}api/get-service-category-dropdown`, {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                }
+            });
+    },
     
 }

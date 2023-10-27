@@ -49,7 +49,11 @@ onMounted(() => {
                         Expertise: 
                     </label>
                     <p> {{ data.expertise }}</p>
-                  
+                    
+                    <label>
+                        Services: 
+                    </label>
+                    <p>{{ data.services.map(service => service.service_category).join(' , ') }}</p>
                 </div>
                 <div class="card-action">
                     <button class="mt-3" ><router-link to="/book" class="text-dark">Book Now</router-link></button>

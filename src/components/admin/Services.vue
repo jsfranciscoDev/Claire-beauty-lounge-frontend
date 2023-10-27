@@ -81,12 +81,11 @@ const submitUpdate = () => {
 
 onMounted(() => {
     service.getServices();
-    service.getServicesProductDropdown();
 });
 
 onBeforeMount(() => {
  service.getServices();
- service.getServicesProductDropdown();
+ service.getServiceCategoryDropdown();
 });
  
 const formatPrice =(price) =>{
@@ -160,7 +159,7 @@ const removeServicesProduct = (services_id) => {
                 <thead>
                   <tr>
                     <th scope="col">Service Name</th>
-                    <th scope="col">Service Type</th>
+                    <th scope="col">Service Category</th>
                     <th scope="col">Service Price</th>
                     <th scope="col">Details</th>
                     <th scope="col">Package Included</th>
@@ -172,7 +171,7 @@ const removeServicesProduct = (services_id) => {
                   <tr>
                  
                     <td>{{ data.name }}</td>
-                    <td>{{ data.type}}</td>
+                    <td>{{ data.category}}</td>
                     <td>{{ formatPrice(data.price) }}</td>
                     <td >{{ data.details }} 
                     </td>
@@ -228,11 +227,20 @@ const removeServicesProduct = (services_id) => {
                     <span  class="text-danger fs-12"></span>
                 </div>
         
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label>Service Type</label>
                     <input type="text" class="form-control" v-model="service.services.Type" autocomplete="off" required>
                     <span  class="text-danger"></span>
-                </div>
+                </div> -->
+
+                <div class="form-group">
+                    <label>Service Category</label>
+                    <select  v-model="service.services.service_category" class="select-service-dropdown"  @change="handleServiceCategory" required>
+                            <option v-for="(data, index) in service.service_category_dropdown" :key="index" :value="data.id">
+                            {{ data.name }}
+                        </option>
+                    </select>
+                 </div>
                
                 <div class="form-group">
                     <label>Price</label>

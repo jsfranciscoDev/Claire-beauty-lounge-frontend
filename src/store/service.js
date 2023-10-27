@@ -10,7 +10,8 @@ export const store = defineStore({
     services_dropdown: '',
     service_product_dropdown: '',
     service_category: {},
-    service_category_details:{}
+    service_category_details:{},
+    service_category_dropdown:{}
   }),
   actions: {
     async createServices() {
@@ -187,5 +188,14 @@ export const store = defineStore({
         
         }
     },
+    async getServiceCategoryDropdown() {
+      try {
+        const response = await service.getServiceCategoryDropdown();
+        this.service_category_dropdown = response.data
+      } catch (error) {
+      
+      }
+  },
+    
   },
 });

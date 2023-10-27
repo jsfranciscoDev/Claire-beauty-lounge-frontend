@@ -45,11 +45,26 @@ export default {
                 }
             });
     },
-    getStaffDropdown(){
-        return axios.get(`${baseURL}api/book-staff-dropdown`,{
+    getStaffDropdown(payload){
+        return axios.post(`${baseURL}api/book-staff-dropdown`,{service_id: payload},{
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }
             });
-    }
+    },
+    assignedStaffServices(payload){
+      
+        return axios.post(`${baseURL}api/assign-staff-services`, payload,{
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                }
+            });
+    },
+    removeStaffServices(payload){
+        return axios.delete(`${baseURL}api/remove-staff-services/${payload}`,{
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                }
+            });
+    },
 }

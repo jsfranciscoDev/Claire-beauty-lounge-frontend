@@ -33,6 +33,8 @@ export const store = defineStore({
     user_appointment: null,
     staff_dropdown: null,
     otp_id: null,
+    service_category_dropdown: {},
+    staff_services:{}
   }),
   actions: {
     async login(payload) {
@@ -258,9 +260,9 @@ export const store = defineStore({
           
         }
     },
-    async getStaffDropdown() {
+    async getStaffDropdown(payload) {
         try {
-          const response = await staff.getStaffDropdown();
+          const response = await staff.getStaffDropdown(payload);
             this.staff_dropdown = response.data.staff_dropdown
         } catch (error) {
         
@@ -345,6 +347,44 @@ export const store = defineStore({
       } catch (error) {
       
       }
+    },
+    async getServiceCategoryDropdown() {
+        try {
+          const response = await service.getServiceCategoryDropdown();
+          this.service_category_dropdown = response.data
+        } catch (error) {
+        
+        }
+    },
+    async assignedStaffServices() {
+        try {
+          const response = await staff.assignedStaffServices(this.staff_services);
+            if(response.data.status == "success"){
+              Swal.fire({
+                  title: response.data.title,
+                  text: response.data.message,
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+              });
+              this.getUserStaff();
+            }
+            return response;
+        } catch (error) {
+        
+        }
+    },
+    async removeStaffServices(payload) {
+      const response = await staff.removeStaffServices(payload);
+      if(response.data.status == 'success'){
+        this.getUserStaff();
+        Swal.fire({
+          title: response.data.title,
+          text: response.data.message,
+          icon: 'success',
+          confirmButtonText: 'OK'
+      });
+      }
+      return response;
     },
   },
 });
