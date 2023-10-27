@@ -76,5 +76,34 @@ export default {
                 'Authorization': `Bearer ${storedToken}`
                 }
             });
-    }
+    },
+    createServiceCategory(payload){
+        return axios.post(`${baseURL}api/create-services-category`, payload, {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                }
+            });
+    },
+    getServicesCategory(page){
+        return axios.get(`${baseURL}api/get-service-category?page=${page}`, {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                }
+            });
+    },
+    deleteServiceCategory(id){
+        return axios.delete(`${baseURL}api/remove-service-category/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                }
+            });
+    },
+    updateServicesCategory(data){
+        return axios.put(`${baseURL}api/update-service-category`, data, {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                }
+            });
+    },
+    
 }

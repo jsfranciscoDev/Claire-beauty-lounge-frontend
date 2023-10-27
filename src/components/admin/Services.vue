@@ -1,8 +1,10 @@
 <script setup>
+
 import { reactive, ref, onMounted, onBeforeMount  } from "vue";
 import { store } from "../../store/service";
 import Swal from 'sweetalert2';
 const service = store();
+
 
 
 const formDialog = ref(false)
@@ -148,7 +150,7 @@ const removeServicesProduct = (services_id) => {
 
 <template>
     <div class="admin-component-header">
-        <h2><i class="fa fa-bed"></i> Manage Services</h2>
+        <h2  style="visibility: hidden;"><i class="fa fa-bed"></i> Manage Services</h2>
         <button type="button" @click="formDialog = true"><i class="fa-solid fa-plus"></i>Add</button>
     </div>
 

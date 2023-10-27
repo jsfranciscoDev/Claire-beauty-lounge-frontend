@@ -2,6 +2,7 @@
 import moment from 'moment-timezone';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import CryptoJS from 'crypto-js';
+import axios from 'axios';
 
 
 import { store } from "../../store/index";
@@ -13,30 +14,55 @@ const userRole = roleBytes.toString(CryptoJS.enc.Utf8);
 
 const backendbaseURL = import.meta.env.VITE_APP_BASE_URL;
 
-onMounted(() => {
-  userData.fetchUser();
-  userData.getDTR();
-})
 
-const currentTime = ref();
+
+// const currentTime = ref();
 const currentDate = ref();
 
 
-// Update the time every second
-const intervalId = setInterval(() => {
+// // Update the time every second
+// const intervalId = setInterval(() => {
+//     const now = moment.tz('Asia/Manila'); // Set the timezone to Asia/Manila
+//     currentTime.value = now.format('LTS');
+//     currentDate.value = now.format('L');
+// }, 1000);
+
+const currentTime = ref(null);
+let intervalId;
+
+const fetchCurrentTime = async () => {
     const now = moment.tz('Asia/Manila');
-    currentTime.value = now.format('LTS');
     currentDate.value = now.format('L');
-}, 1000);
+  try {
+    const response = await axios.get('http://worldtimeapi.org/api/ip');
+    const utcTime = response.data.utc_datetime;
+    const localTime = moment.tz(utcTime, 'UTC').tz('Asia/Manila');
+    currentTime.value = localTime.format('h:mm:ss A');
+  } catch (error) {
+    console.error('Error fetching current time:', error);
+  }
+};
 
 // Clean up when the component is unmounted
-onBeforeUnmount(() => {
-  clearInterval(intervalId);
-});
+// onBeforeUnmount(() => {
+//   clearInterval(intervalId);
+// });
 
 const staffUserTimein = (action) => {
     userData.timeIn( userData.user_details.id, currentTime.value, currentDate.value, action)
 }
+
+onBeforeUnmount(() => {
+    clearInterval(intervalId);
+});
+
+onMounted(() => {
+  userData.fetchUser();
+  userData.getDTR();
+  fetchCurrentTime();
+  intervalId = setInterval(fetchCurrentTime, 1000);
+})
+
 
 </script>
 

@@ -9,6 +9,8 @@ export const store = defineStore({
     services_details:{},
     services_dropdown: '',
     service_product_dropdown: '',
+    service_category: {},
+    service_category_details:{}
   }),
   actions: {
     async createServices() {
@@ -116,6 +118,70 @@ export const store = defineStore({
                   icon: 'success',
                   confirmButtonText: 'OK'
               });
+            }
+        } catch (error) {
+        
+        }
+    },
+    async createServiceCategory() {
+      try {
+        const response = await service.createServiceCategory(this.service_category);
+          if(response.data.status == 'success'){
+            this.getServicesCategory();
+              Swal.fire({
+                title: response.data.message,
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+            return response;
+
+           
+          }else{
+            Swal.fire({
+                title: response.data.message,
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+          }
+      } catch (error) {
+       
+      }
+  },
+  async getServicesCategory(page) {
+    try {
+      const response = await service.getServicesCategory(page);
+        if(response.data.message == 'success'){
+            this.service_category_details = response.data.services;
+        }
+    } catch (error) {
+     
+    }
+  },
+  async deleteServiceCategory(id) {
+        try {
+          const response = await service.deleteServiceCategory(id);
+            if(response.data.message == 'success'){
+                this.getServicesCategory();
+                Swal.fire({
+                  title: 'Deleted Successfully!',
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+              });
+            }
+        } catch (error) {
+        
+        }
+  },
+  async updateServicesCategory() {
+        try {
+          const response = await service.updateServicesCategory(this.service_category);
+            if(response.data.status == 'success'){
+              this.getServicesCategory();
+                Swal.fire({
+                    title: response.data.message,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
             }
         } catch (error) {
         
