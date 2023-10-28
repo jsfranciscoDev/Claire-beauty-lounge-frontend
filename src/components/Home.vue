@@ -30,7 +30,7 @@ import navBar from "../components/nav.vue";
               data-scrollax=" properties: { translateY: '70%' }"
             >
               <div class="text mt-5">
-                <span class="subheading">Claire Lounge</span>
+                <span class="subheading">Claire Lounge & Aesthetics</span>
                 <h1 class="mb-4">Get Pretty Look</h1>
                 <p class="mb-4">
                   We provide huge facilities with advanced technology equipments
@@ -47,16 +47,20 @@ import navBar from "../components/nav.vue";
 
   <section>
     <div class="row">
-      <div class="col-sm-12 col-md-6 col-lg-6 column-two"></div>
+      <div class="col-sm-12 col-md-6 col-lg-6 column-two">
+        <img
+          class="one-third align-self-end order-md-last img-fluid"
+          src="../assets/images/sample.jpg"
+          alt=""
+        />
+      </div>
       <div class="col-sm-12 col-md-6 col-lg-6 column-one">
-        <h2>
-          We provide huge facilities with advanced technology equipments and
-          best quality service.
-        </h2>
+        <h2>Come and book your appointment now.</h2>
         <p class="mt-2">
           Here we offer best treatment that you might have never experienced
           before.
         </p>
+        <br />
         <button class="mt-3">
           <router-link to="/book" class="text-dark">Book Now</router-link>
         </button>

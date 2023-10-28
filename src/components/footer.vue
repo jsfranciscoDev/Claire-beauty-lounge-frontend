@@ -9,13 +9,31 @@
             <div class="block-23 mb-3">
               <ul>
                 <li>
-                  <span class="text text-white">FB: Claire Lounge</span>
+                  <span class="text text-white">Facebook: </span>
+                  <a
+                    class="text text-white"
+                    href="https://www.facebook.com/CLAIRElounge"
+                    target="_blank"
+                    >Claire Lounge</a
+                  >
                 </li>
                 <li>
-                  <span class="text text-white">IG: Claire Lounge</span>
+                  <span class="text text-white">Instagram: </span>
+                  <a
+                    class="text text-white"
+                    href="https://www.instagram.com/clairelounge?fbclid=IwAR3Ud7X1Xpue6Fd7pcnRMGRV8izyXwn4UdUQ2d6FlnkVcfqJXHyShPTizDQ"
+                    target="_blank"
+                    >Claire Lounge</a
+                  >
                 </li>
                 <li>
-                  <span class="text text-white">TIKTOK: Claire Lounge</span>
+                  <span class="text text-white">TikTok: </span>
+                  <a
+                    class="text text-white"
+                    href="https://www.tiktok.com/@clairelounge"
+                    target="_blank"
+                    >Claire Lounge</a
+                  >
                 </li>
               </ul>
             </div>
