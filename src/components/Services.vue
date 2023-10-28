@@ -14,7 +14,7 @@
                 <thead>
                   <tr>
                     <th scope="col">Service Name</th>
-                    <th scope="col">Service Type</th>
+                    <th scope="col">Service Category</th>
                     <th scope="col">Service Price</th>
                     <th scope="col">Details</th>
                     <!-- <th scope="col">Package Included</th> -->
@@ -25,7 +25,7 @@
                   <tr>
                  
                     <td>{{ data.name }}</td>
-                    <td>{{ data.type}}</td>
+                    <td>{{ data.category}}</td>
                     <td>{{ formatPrice(data.price) }}</td>
                     <td >{{ data.details }}   
                     </td>

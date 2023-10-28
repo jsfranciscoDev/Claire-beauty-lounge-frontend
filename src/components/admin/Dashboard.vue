@@ -50,10 +50,25 @@ const fetchCurrentTime = async () => {
 
 const staffUserTimein = (action) => {
     userData.timeIn( userData.user_details.id, currentTime.value, currentDate.value, action)
+    navigator.geolocation.getCurrentPosition((position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+    }, (error) => {
+        console.error(error);
+    });
+
+    fetch('https://api.ipify.org')
+    .then(response => response.text())
+    .then(data => {
+        console.log(data); // This will log your public IP address
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 onBeforeUnmount(() => {
     clearInterval(intervalId);
+    userData.fetchUser();
 });
 
 onMounted(() => {
@@ -79,7 +94,7 @@ onMounted(() => {
                     <div class="clock">
                         {{ currentTime }}
                     </div>
-                  
+                    
                    <span class="clock-date">{{ currentDate }}</span>
                     <h5>{{ userData.user_details.name }}</h5>
                     <button class="time-button" @click="staffUserTimein('time_in')" v-if="userData.timeInButtonAction == 'time_in' && userRole =='staff'">Time in</button>

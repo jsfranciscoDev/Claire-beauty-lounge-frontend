@@ -247,7 +247,6 @@ export const store = defineStore({
     async updateAppointment(data){
       try {
           const response = await api.updateAppointment(data);
-          console.log(response.data.status)
           if(response.data.status){
             Swal.fire({
                 title: response.data.message,
@@ -272,7 +271,7 @@ export const store = defineStore({
         try {
           const response = await user.sendOtp(payload);
             this.otp_id = response.data.otp_id
-            console.log(this.otp_id);
+        
         } catch (error) {
         
         }
@@ -312,7 +311,6 @@ export const store = defineStore({
       try {
         const response = await user.sendAppointmentOtp();
           this.otp_id = response.data.otp_id
-          console.log(this.otp_id);
       } catch (error) {
       
         }

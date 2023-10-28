@@ -13,7 +13,7 @@ const logoutUser = () => {
 
 onMounted(() => {
  user.userRole().then(response => {
-    console.log(response);
+
  })
 });
 </script>

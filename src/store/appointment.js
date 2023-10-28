@@ -28,7 +28,7 @@ export const appointment = defineStore({
     async updateAppointment(data){
       try {
           const response = await api.updateAppointment(data);
-          console.log(response.data.status)
+      
           if(response.data.status){
             Swal.fire({
                 title: response.data.message,

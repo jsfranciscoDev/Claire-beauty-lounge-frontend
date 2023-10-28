@@ -15,6 +15,7 @@ import AdminInventory from '../components/admin/Inventory.vue';
 import Booking from '../components/Book.vue';
 import Appointments from '../components/admin/Appointment.vue';
 import Notifications from '../components/admin/Notifications.vue';
+import ForgotPassword from '../components/ForgotPassword.vue'
 
 
 
@@ -32,6 +33,7 @@ const routes = [
   { path: '/services', component: Services },
   { path: '/staff', component: Staff },
   { path: '/login', component: Login },
+  { path: '/forgot-password', component: ForgotPassword },
   { path: '/book', component: Booking,
     beforeEnter: (to, from, next) => {
       const auth = sessionStorage.getItem('session');

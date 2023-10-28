@@ -96,4 +96,25 @@ export default {
                 }
             });
     },
+    submitRevoceryEmail(payload){
+        return axios.post(`${baseURL}api/submit-recovery-email`, payload,{
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                }
+            });
+    },
+    sendRecoveryOtp(user_id){
+        return axios.post(`${baseURL}api/get-recovery-otp`, {user_id: user_id},{
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                }
+            });
+    },
+    recoveryChangePassword(payload){
+        return axios.post(`${baseURL}api/recovery-change-password`, {payload}, {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                }
+            });
+    },
 }

@@ -150,6 +150,7 @@ const passwordType = computed(() => showPassword.value ? 'text' : 'password');
                 <button type="submit" class="btn login-btn mb-2" @click="login">Login</button>
                 <span class="">Doesn't have an account yet?</span> <span class="register-btn" @click="toggleAction">Register here!</span>
               </form>
+              <span class="register-btn"><router-link to="/forgot-password"  style="color: black;">Forgot Password</router-link></span>
         </div>
         </div>
         <div class="row align-items-center justify-content-center" v-else>
@@ -185,6 +186,7 @@ const passwordType = computed(() => showPassword.value ? 'text' : 'password');
 
                 <button type="submit" class="btn login-btn mb-2">Sign up</button>
                 <span class="">Do you already have an account?</span> <span class="register-btn" @click="toggleAction">Sign in here!</span>
+               
               </form>
             </div>
 

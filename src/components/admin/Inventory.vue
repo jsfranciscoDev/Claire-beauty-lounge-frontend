@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 const product = store();
 
 const storedToken = sessionStorage.getItem('token');
-console.log(storedToken);
+
 
 const formDialog = ref(false)
 const Update = ref(false);
