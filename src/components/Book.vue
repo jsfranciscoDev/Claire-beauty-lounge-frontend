@@ -38,11 +38,11 @@ const Appointment = reactive({
 
 
 const userSendAppointment = () => {
-    sendOtp();
+    // sendOtp();
     Appointment.user_id = userData.user_details.id,
     Appointment.service_id = selectedServices,
     Appointment.user_staff = selectedStaff
-    // userData.sendAppointment(Appointment)
+    userData.sendAppointment(Appointment)
 }
 
 const sendOtp = () => {
