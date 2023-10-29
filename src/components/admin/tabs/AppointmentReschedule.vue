@@ -1,24 +1,36 @@
 <script setup>
 import { appointment } from "../../../store/appointment";
-import { onBeforeMount  } from "vue";
+import { onBeforeMount , ref , reactive} from "vue";
 import moment from 'moment';
 import Swal from 'sweetalert2';
 
 const appointmentData = appointment();
+const remarks = ref('');
+const remarksModal = ref(false);
+const data = reactive({
+    id: null,
+    status: null,
+    remarks: null
+})
 
 const paginate = (page) => {
-    appointmentData.getStatusgappointments(page,4);
+  appointmentData.getStatusgappointments(page,4);
 }
 
 onBeforeMount(() => {
- appointmentData.getStatusgappointments(1,4);
+  appointmentData.getStatusgappointments(1,4);
 });
 
+const closeDialog = () =>{
+  remarks.value = '',
+  remarksModal.value = false;
+}
+
 const updateAppointment = (appointment_id, status , message) => {
-  let data = {
-    id: appointment_id,
-    status: status
-  }
+ 
+  data.id = appointment_id;
+  data.status = status;
+  data.remarks = remarks;
 
   Swal.fire({
     title: `${message} Appointment?`,
@@ -30,15 +42,36 @@ const updateAppointment = (appointment_id, status , message) => {
     confirmButtonText: `Yes, ${message} it!`
   }).then((result) => {
     if (result.isConfirmed) {
-      appointmentData.updateAppointment(data);
+      if(status == 4){
+        remarksModal.value = true;
+      }else{
+        appointmentData.updateAppointment(data);
+      }
     }
   })
 
  
 }
 
+const sendAppointmentRemarks = () => {
+  remarksModal.value = false;
+  Swal.fire({
+    title: ` Send remarks`,
+    text: "Please make sure the details correct",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: `Yes, Send it!`
+  }).then((result) => {
+    if (result.isConfirmed) {
+       appointmentData.updateAppointment(data);
+    }
+  })
+}
+
 const getStatusClass = (status) => {
-    
+ 
       switch (status) {
         case 'Cancelled':
           return 'text-danger'
@@ -49,7 +82,7 @@ const getStatusClass = (status) => {
         case 'Approved':
           return 'text-success'; // Bootstrap class for success color
         case 'Completed':
-          return 'text-primary'; // Bootstrap class for primary color
+          return 'text-success'; // Bootstrap class for primary color
         default:
           return ''; // Default class, if none of the statuses match
       }
@@ -58,7 +91,7 @@ const getStatusClass = (status) => {
 
 <template>
      <div class="row">
-        <div class="table-container" style="width: 100%;">
+        <div class="table-container mt-2" style="width: 100%;">
          
         <div class="table-responsive bg-white">   
               <table class="table mb-0">
@@ -86,9 +119,9 @@ const getStatusClass = (status) => {
                     <td :class="getStatusClass(data.detail)"><b>{{ data?.detail }}</b></td>
                   
                     <td class="table-actions d-flex flex-column"> 
-                      <span v-if="!['Approved', 'Cancelled', 'Reschedule'].includes(data.detail)" @click="updateAppointment(data.appointment_id, 4, 'Reschedule')">Reschedule</span>
-                      <span v-if="!['Approved', 'Cancelled', 'Reschedule'].includes(data.detail)" @click="updateAppointment(data.appointment_id, 2, 'Declined')">Declined</span>
-                      <span v-if="!['Approved', 'Cancelled', 'Reschedule'].includes(data.detail)" @click="updateAppointment(data.appointment_id, 3, 'Approved')">Approved</span>
+                      <span v-if="!['Approved', 'Cancelled', 'Reschedule','Completed'].includes(data.detail)" @click="updateAppointment(data.appointment_id, 4, 'Reschedule')">Reschedule</span>
+                      <span v-if="!['Approved', 'Cancelled', 'Reschedule','Completed'].includes(data.detail)" @click="updateAppointment(data.appointment_id, 2, 'Declined')">Declined</span>
+                      <span v-if="!['Approved', 'Cancelled', 'Reschedule','Completed'].includes(data.detail)" @click="updateAppointment(data.appointment_id, 3, 'Approved')">Approved</span>
                       <span v-if="data.detail === 'Approved' && !['Cancelled', 'Reschedule'].includes(data.detail)" @click="updateAppointment(data.appointment_id, 5, 'Complete')">Complete</span>
                     </td>
 
@@ -108,4 +141,29 @@ const getStatusClass = (status) => {
         </div>
     </div>
     </div>
+
+     <!-- MODAL -->
+     <div class="add-staff" v-if="remarksModal">
+        <div class="form-container">
+            <div class="staff-form">
+                <div class="form-input">
+                    <h2 v-if="!updateStaff"><i class="fa-solid fa-bell"></i> Send Remarks</h2>
+                
+                <form @submit.prevent="sendAppointmentRemarks">
+               
+                <div class="form-group">
+                    <label for="name">(Reason for re-scheduling send to client)</label>
+                    <textarea class="form-control" v-model="remarks" autocomplete="off" required></textarea>
+                    <span  class="text-danger"></span>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-danger" @click="closeDialog">Cancel</button>
+              </form>
+            </div>
+            </div>
+        </div>
+     
+    </div>
+    <!-- MODAL -->
 </template>

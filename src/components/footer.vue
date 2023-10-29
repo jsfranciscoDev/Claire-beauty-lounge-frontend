@@ -49,8 +49,8 @@
                 <li>
                   <span class="icon icon-map-marker"></span
                   ><span class="text text-white"
-                    >Skyline Drive, San Jose del Monte, Bulacan, Philippines,
-                    3023</span
+                    ><a href="https://maps.app.goo.gl/UiFb3A7UUfDPgbBFA"  target="_blank">Skyline Drive, San Jose del Monte, Bulacan, Philippines,
+                    3023</a></span
                   >
                 </li>
                 <li>

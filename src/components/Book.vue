@@ -25,6 +25,8 @@ const handlerStaffChange = (event) => {
    selectedStaff.value = event.target.value;
 };
 
+const viewAppointments = ref(true);
+
 const oneTimePassword = ref(['', '', '', '', '', '']);
 
 const Appointment = reactive({
@@ -38,11 +40,66 @@ const Appointment = reactive({
 
 
 const userSendAppointment = () => {
-    // sendOtp();
+  
     Appointment.user_id = userData.user_details.id,
     Appointment.service_id = selectedServices,
     Appointment.user_staff = selectedStaff
-    userData.sendAppointment(Appointment)
+  
+    Swal.fire({
+    title: 'Book an appointment?',
+    text: "Are you sure do you want to book an appointment? Please make sure the details are correct.",
+    icon: 'info',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: `Yes!`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if(userData.user_appointment != null){
+              if(userData.user_appointment?.detail != 'Cancelled' && userData.user_appointment?.detail != 'Completed' && userData.user_appointment?.detail != 'Reschedule'){
+                Swal.fire({
+                  title: 'Oh no ! Do you have an existing appointment',
+                  text: "Please cancel the ongoing appointment with us before proceeding with booking.",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: `Confirm!`
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    showAppointments.value = true
+                  }
+                })
+          }else{
+            userData.sendAppointment(Appointment).then(e =>{
+              
+                if(e.data.status == 'success'){
+                  showAppointments.value = true;
+                  Swal.fire({
+                    title: 'Appointment Booked!',
+                    text: e.data.message,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+                }
+            })
+          }
+        }else{
+          userData.sendAppointment(Appointment).then(e =>{
+             
+              if(e.data.status == 'success'){
+                showAppointments.value = true;
+                Swal.fire({
+                  title: 'Appointment Booked!',
+                  text: e.data.message,
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+              });
+              }
+          })
+        }
+      }
+    })
 }
 
 const sendOtp = () => {
@@ -65,7 +122,7 @@ const sendOtp = () => {
 
 const validateDate = () => {
   const currentDate = moment().format('MM/DD/YYYY');
-  const appointmentDate = moment(Appointment.date);
+  const appointmentDate = moment.tz(Appointment.date, 'Asia/Manila');
 
   if (appointmentDate.isBefore(currentDate)) {
         Swal.fire({
@@ -74,7 +131,15 @@ const validateDate = () => {
             icon: 'warning',
             confirmButtonText: 'OK'
         });
-  } 
+  } else {
+    showAppointments.value = false;
+    userData.fetchallAppointments(Appointment.date);
+  }
+}
+const showAppointments = ref(true);
+
+function toggleView() {
+  showAppointments.value = !showAppointments.value;
 }
 
 onMounted(() => {
@@ -144,13 +209,25 @@ const updateAppointment = (appointment_id, status , message) => {
  
 }
 
+const paginate = (page) => {
+  userData.fetchallAppointments(Appointment.date,page);
+}
+
+const calculateEstimatedEndTime = (startDateTime, estimatedHours) => {
+  const endTime = moment(startDateTime).add(moment.duration(estimatedHours));
+  return endTime.format('MMMM Do YYYY, h:mm:ss a');
+}
+
 </script>
 
 <template>
     <navBar/>
     <div class="row vh-100">
       <div class="col-md-6 pl-0">
-        <div class="appointment-container" :style="{ opacity: userData.user_appointment?.detail === 'Cancelled' ? 0.5 : 1 }">
+        <div class="appointment-container" :style="{ opacity: userData.user_appointment?.detail === 'Cancelled' ? 0.5 : 1 }" v-if="showAppointments">
+          <div class="appoimtment-selection-header">
+            <span  @click="toggleView">View Appointments</span>
+          </div>
           <div class="card" v-if="userData.user_appointment">
             <div class="header">
               <div class="content">
@@ -166,6 +243,11 @@ const updateAppointment = (appointment_id, status , message) => {
                 <p class="message">
                  {{ moment(userData.user_appointment?.date).format('MMMM Do YYYY, h:mm:ss a') }}
                 </p>
+
+                <p class="message" v-if="userData.user_appointment?.remarks">
+                 {{ userData.user_appointment?.remarks}}
+                </p>
+
               </div>
               <div class="actions">
                 <button class="track" type="button" @click="updateAppointment(userData.user_appointment.appointment_id ,2 ,'Cancel')" :disabled="userData.user_appointment.detail == 'Cancelled'">
@@ -173,15 +255,59 @@ const updateAppointment = (appointment_id, status , message) => {
                 </button>
               </div>
             </div>
-        </div>
-        <div v-else>
-          <span>No Appointment Records.</span>
-        </div>
+          </div>
+          <div v-else>
+            <span>No Appointment Records.</span>
+          </div>
 
         </div>
-        
-      
-      
+        <div class="appointment-container" v-else>
+          <div class="appoimtment-selection-header">
+            <span  @click="toggleView">View Schedule</span>
+          </div>
+         
+            <div class="table-container" v-if="userData.selected_date_appointment.data.data">
+              <div class="table-responsive bg-white">   
+                    <table class="table mb-0">
+                      <thead>
+                        <tr>
+                          <th scope="col">Staff Name</th>
+                          <th scope="col">Date and Hours</th>
+                          <th scope="col">Estimated End Time</th>
+                        </tr>
+                      </thead>
+                      <tbody v-for="(data,index) in userData.selected_date_appointment.data" :key="index">
+                        <tr>
+                      
+                          <td>{{ data.name }}</td>
+                          <td>{{  moment(data?.date).format('MMMM Do YYYY, h:mm:ss a') }}</td>
+                          <td>{{ calculateEstimatedEndTime(data.date, data.estimated_hours) }}</td>
+
+                        </tr>
+                      </tbody>
+
+                    </table>
+              
+                    <div v-if="userData.selected_date_appointment.total > 5" class="table-pagination">  
+                      <div>
+                          <button @click="paginate(userData.selected_date_appointment.current_page - 1)" v-if="userData.selected_date_appointment.prev_page_url"><i class="fa fa-angle-left"></i></button>
+                          <button @click="paginate(userData.selected_date_appointment.current_page + 1)" v-if="userData.selected_date_appointment.next_page_url" ><i class="fa fa-angle-right"></i></button>
+                      </div>
+                      <div >
+                          <span> Page {{ userData.selected_date_appointment.current_page  }} - {{ userData.selected_date_appointment.last_page }} </span>
+                      </div>
+                      
+                    </div>
+              </div>
+            </div>
+            
+            <div v-else>
+
+              <h6>No booking on the selected date and time.</h6> <span>You can book at your most convenient time between 8 am and 10 pm.</span>
+            </div>
+          
+        </div>
+
       </div>
       <div class="col-md-6 login-form d-flex align-items-center justify-content-center">
         <div class="row align-items-center justify-content-center" v-if="!verification">
@@ -224,42 +350,27 @@ const updateAppointment = (appointment_id, status , message) => {
               </form>
         </div>
         </div>
-        <div v-else>
-          <!-- add 3 minute countdownhere -->
-            <form class="form otp-form" @submit.prevent="sendVerification" > 
-              <div class="title">OTP</div> 
-              <div class="title">Verification Code</div> 
-              <p class="message">We have sent a verification code to your mobile number</p> 
-              <div class="inputs"> 
-                <input id="input1" type="text" v-model="oneTimePassword[0]" maxlength="1"> 
-                <input id="input2" type="text" v-model="oneTimePassword[1]" maxlength="1"> 
-                <input id="input3" type="text" v-model="oneTimePassword[2]" maxlength="1"> 
-                <input id="input4" type="text" v-model="oneTimePassword[3]" maxlength="1"> 
-                <input id="input5" type="text" v-model="oneTimePassword[4]" maxlength="1"> 
-                <input id="input6" type="text" v-model="oneTimePassword[5]" maxlength="1"> 
-              </div> 
-              <div>
-                <div class="count-down-timer">
-                  <span>{{ Math.floor(countdownTime / 60) }}:</span>
-                  <span>{{ countdownTime % 60 < 10 ? '0' : '' }}{{ countdownTime % 60 }}</span>
-                </div>
-               
-
-                <div> <button class="action" type="submit">Submit OTP</button></div>
-              </div>
-              
-            </form>
-          </div>
+       
       </div>
     </div>
 </template>
 
 <style>
+.appoimtment-selection-header{
+  position: absolute;
+  right: 0;
+  top: 100px;
+}
 
+.appoimtment-selection-header span{
+  cursor: pointer;
+  font-weight: bold;
+}
 .appointment-container{
   display: grid;
   place-items: center;
   height: 100%;
+  position: relative;
 }
 
 .card {

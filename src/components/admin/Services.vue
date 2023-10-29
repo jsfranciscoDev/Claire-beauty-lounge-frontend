@@ -1,11 +1,14 @@
 <script setup>
 
-import { reactive, ref, onMounted, onBeforeMount  } from "vue";
+import { reactive, ref, onMounted, onBeforeMount, watch  } from "vue";
 import { store } from "../../store/service";
 import Swal from 'sweetalert2';
+import { TheMask } from 'vue-the-mask';
+
 const service = store();
 
 
+const inputText = ref('');
 
 const formDialog = ref(false)
 const Update = ref(false);
@@ -16,6 +19,7 @@ const ServicesItems = reactive([{
     product_id: null,
     quantity: 0,
 }]);
+
 
 const addServices = () => {
     service.createServices().then(response => {
@@ -145,6 +149,20 @@ const removeServicesProduct = (services_id) => {
     })
 }
 
+
+
+const formatTime = function(event) {
+  let input = event.target.value;
+  let sanitizedInput = input.replace(/\D/g, '');
+
+  if (sanitizedInput.length >= 4) {
+    // Format as HH:MM
+    sanitizedInput = sanitizedInput.replace(/^(.{2})(.{2})$/, "$1:$2");
+  }
+
+  service.services.estimated_hours = sanitizedInput.substring(0, 5);
+}
+
 </script>
 
 <template>
@@ -163,6 +181,7 @@ const removeServicesProduct = (services_id) => {
                     <th scope="col">Service Price</th>
                     <th scope="col">Details</th>
                     <th scope="col">Package Included</th>
+                    <th scope="col">Estimated Hours</th>
                     <th scope="col">Total Price</th>
                     <th scope="col" class="actions">Action</th>
                   </tr>
@@ -180,6 +199,7 @@ const removeServicesProduct = (services_id) => {
                             {{ product.name }} {{ formatPrice(product.price) }} x {{ product.quantity }} pcs. = {{ formatPrice(product.price * product.quantity ) }}
                         </div>
                     </td>
+                    <td>{{ data.estimated_hours }}</td>
                     <td> 
                         {{ formatPrice(data.price + data.total_product_price ) }}
                     </td>
@@ -252,6 +272,20 @@ const removeServicesProduct = (services_id) => {
                     <label>Details</label>
                     <input type="text" class="form-control" v-model="service.services.details" autocomplete="off" required>
                     <span  class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Estimated Process Time (HH:MM)</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        v-model="service.services.estimated_hours" 
+                        autocomplete="off" 
+                        required 
+                        @input="formatTime"
+                        @keypress="isNumber"
+                        maxlength="4"
+                    >
                 </div>
                 
              

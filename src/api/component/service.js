@@ -112,5 +112,12 @@ export default {
                 }
             });
     },
+    fetchallAppointments(date,page){
+        return axios.post(`${baseURL}api/get-schedule-appointment?page=${page}` , {date: date} , {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                }
+            });
+    },
     
 }

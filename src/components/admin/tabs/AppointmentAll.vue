@@ -1,10 +1,17 @@
 <script setup>
 import { appointment } from "../../../store/appointment";
-import { onBeforeMount  } from "vue";
+import { onBeforeMount , ref , reactive} from "vue";
 import moment from 'moment';
 import Swal from 'sweetalert2';
 
 const appointmentData = appointment();
+const remarks = ref('');
+const remarksModal = ref(false);
+const data = reactive({
+    id: null,
+    status: null,
+    remarks: null
+})
 
 const paginate = (page) => {
     appointmentData.getAllappointments(page);
@@ -14,11 +21,16 @@ onBeforeMount(() => {
  appointmentData.getAllappointments();
 });
 
+const closeDialog = () =>{
+  remarks.value = '',
+  remarksModal.value = false;
+}
+
 const updateAppointment = (appointment_id, status , message) => {
-  let data = {
-    id: appointment_id,
-    status: status
-  }
+ 
+  data.id = appointment_id;
+  data.status = status;
+  data.remarks = remarks;
 
   Swal.fire({
     title: `${message} Appointment?`,
@@ -30,11 +42,32 @@ const updateAppointment = (appointment_id, status , message) => {
     confirmButtonText: `Yes, ${message} it!`
   }).then((result) => {
     if (result.isConfirmed) {
-      appointmentData.updateAppointment(data);
+      if(status == 4){
+        remarksModal.value = true;
+      }else{
+        appointmentData.updateAppointment(data);
+      }
     }
   })
 
  
+}
+
+const sendAppointmentRemarks = () => {
+  remarksModal.value = false;
+  Swal.fire({
+    title: ` Send remarks`,
+    text: "Please make sure the details correct",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: `Yes, Send it!`
+  }).then((result) => {
+    if (result.isConfirmed) {
+       appointmentData.updateAppointment(data);
+    }
+  })
 }
 
 const getStatusClass = (status) => {
@@ -108,4 +141,29 @@ const getStatusClass = (status) => {
         </div>
     </div>
     </div>
+
+     <!-- MODAL -->
+     <div class="add-staff" v-if="remarksModal">
+        <div class="form-container">
+            <div class="staff-form">
+                <div class="form-input">
+                    <h2 v-if="!updateStaff"><i class="fa-solid fa-bell"></i> Send Remarks</h2>
+                
+                <form @submit.prevent="sendAppointmentRemarks">
+               
+                <div class="form-group">
+                    <label for="name">(Reason for re-scheduling send to client)</label>
+                    <textarea class="form-control" v-model="remarks" autocomplete="off" required></textarea>
+                    <span  class="text-danger"></span>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-danger" @click="closeDialog">Cancel</button>
+              </form>
+            </div>
+            </div>
+        </div>
+     
+    </div>
+    <!-- MODAL -->
 </template>

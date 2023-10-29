@@ -87,3 +87,7 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.ftco-footer-widget ul li{
+  list-style: none !important;
+}

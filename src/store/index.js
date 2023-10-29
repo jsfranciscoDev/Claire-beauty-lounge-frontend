@@ -34,7 +34,8 @@ export const store = defineStore({
     staff_dropdown: null,
     otp_id: null,
     service_category_dropdown: {},
-    staff_services:{}
+    staff_services:{},
+    selected_date_appointment:{}
   }),
   actions: {
     async login(payload) {
@@ -383,6 +384,14 @@ export const store = defineStore({
       });
       }
       return response;
+    },
+    async fetchallAppointments(date,page) {  
+        try {
+          const response = await service.fetchallAppointments(date,page);
+            this.selected_date_appointment = response.data.appointment;
+        } catch (error) {
+        
+        }
     },
   },
 });

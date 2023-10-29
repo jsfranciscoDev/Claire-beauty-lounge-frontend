@@ -13,6 +13,7 @@
     "axios": "^1.5.0",
     "crypto-js": "^4.1.1",
     "file-saver": "^2.0.5",
+    "maska": "^2.1.10",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.43",
     "pinia": "^2.1.6",

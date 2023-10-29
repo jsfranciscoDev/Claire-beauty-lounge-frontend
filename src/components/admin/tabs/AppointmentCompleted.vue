@@ -57,7 +57,7 @@ const getStatusClass = (status) => {
 
 <template>
      <div class="row">
-        <div class="table-container" style="width: 100%;">
+        <div class="table-container mt-2" style="width: 100%;">
          
         <div class="table-responsive bg-white">   
               <table class="table mb-0">
