@@ -3,7 +3,6 @@
 import { reactive, ref, onMounted, onBeforeMount, watch  } from "vue";
 import { store } from "../../store/service";
 import Swal from 'sweetalert2';
-import { TheMask } from 'vue-the-mask';
 
 const service = store();
 
@@ -90,6 +89,7 @@ onMounted(() => {
 onBeforeMount(() => {
  service.getServices();
  service.getServiceCategoryDropdown();
+ service.getServicesProductDropdown();
 });
  
 const formatPrice =(price) =>{
