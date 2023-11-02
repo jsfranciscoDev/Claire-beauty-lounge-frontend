@@ -1,6 +1,7 @@
 // router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../components/Home.vue';
+import ManageProfile from '../components/UsersManageProfile.vue'
 import Services from '../components/Services.vue';
 import Staff from '../components/Staff.vue';
 import Login from '../components/Login.vue';
@@ -15,8 +16,9 @@ import AdminInventory from '../components/admin/Inventory.vue';
 import Booking from '../components/Book.vue';
 import Appointments from '../components/admin/Appointment.vue';
 import Notifications from '../components/admin/Notifications.vue';
-import ForgotPassword from '../components/ForgotPassword.vue'
-
+import ForgotPassword from '../components/ForgotPassword.vue';
+import Reviews from '../components/Reviews.vue';
+import SendReviews from '../components/SendReviews.vue';
 
 
 import { createPinia } from 'pinia';
@@ -34,6 +36,9 @@ const routes = [
   { path: '/staff', component: Staff },
   { path: '/login', component: Login },
   { path: '/forgot-password', component: ForgotPassword },
+  { path: '/manage-profile', component: ManageProfile },
+  { path: '/send-reviews', component: SendReviews },
+  { path: '/reviews', component: Reviews },
   { path: '/book', component: Booking,
     beforeEnter: (to, from, next) => {
       const auth = sessionStorage.getItem('session');

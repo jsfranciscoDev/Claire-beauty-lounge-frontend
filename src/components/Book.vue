@@ -11,6 +11,7 @@ const accountCreated = ref(false);
 const selectedServices = ref('');
 const selectedStaff = ref('');
 const verification = ref(false);
+const isVisible = ref(false);
 const countdownMinutes = 3;
 const countdownTime = ref(countdownMinutes * 60);
 let countdownInterval;
@@ -134,6 +135,7 @@ const validateDate = () => {
   } else {
     showAppointments.value = false;
     userData.fetchallAppointments(Appointment.date);
+    isVisible.value = true;
   }
 }
 const showAppointments = ref(true);
@@ -225,8 +227,8 @@ const calculateEstimatedEndTime = (startDateTime, estimatedHours) => {
     <div class="row vh-100">
       <div class="col-md-6 pl-0">
         <div class="appointment-container" :style="{ opacity: userData.user_appointment?.detail === 'Cancelled' ? 0.5 : 1 }" v-if="showAppointments">
-          <div class="appoimtment-selection-header">
-            <span  @click="toggleView">View Appointments</span>
+          <div class="appoimtment-selection-header" v-if="isVisible">
+            <span @click="toggleView">View Appointments</span>
           </div>
           <div class="card" v-if="userData.user_appointment">
             <div class="header">
@@ -262,7 +264,7 @@ const calculateEstimatedEndTime = (startDateTime, estimatedHours) => {
 
         </div>
         <div class="appointment-container" v-else>
-          <div class="appoimtment-selection-header">
+          <div class="appoimtment-selection-header" v-if="isVisible">
             <span  @click="toggleView">View Schedule</span>
           </div>
          

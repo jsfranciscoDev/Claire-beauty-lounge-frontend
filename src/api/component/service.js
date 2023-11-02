@@ -119,5 +119,12 @@ export default {
                 }
             });
     },
+    getReviews(date,page){
+        return axios.post(`${baseURL}api/get-all-reviews?page=${page}` , {date: date} , {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                }
+        });
+    },
     
 }

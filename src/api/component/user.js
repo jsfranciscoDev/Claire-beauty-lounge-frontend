@@ -117,4 +117,11 @@ export default {
                 }
             });
     },
+    sendUserReviews(payload){
+        return axios.post(`${baseURL}api/send-feedback`, {payload}, {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                }
+            });
+    },
 }

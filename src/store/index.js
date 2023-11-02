@@ -6,6 +6,7 @@ import { defineStore } from 'pinia';
 import CryptoJS from 'crypto-js';
 import Swal from 'sweetalert2';
 
+
 export const store = defineStore({
   id: 'store',
   state: () => ({
@@ -35,7 +36,8 @@ export const store = defineStore({
     otp_id: null,
     service_category_dropdown: {},
     staff_services:{},
-    selected_date_appointment:{}
+    selected_date_appointment:{},
+    reviews:{},
   }),
   actions: {
     async login(payload) {
@@ -92,6 +94,7 @@ export const store = defineStore({
         const response = await user.logout();
           sessionStorage.clear();
           this.role = '';       
+          window.location = '/'
       } catch (error) {
         this.user.error = error.response.data.errors;
       }
@@ -393,5 +396,14 @@ export const store = defineStore({
         
         }
     },
+    async sendUserReviews() {  
+      try {
+          const response = await user.sendUserReviews(this.reviews);
+          return response;
+        } catch (error) {
+        
+        }
+    },
+    
   },
 });

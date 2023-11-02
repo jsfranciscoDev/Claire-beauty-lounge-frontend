@@ -1,4 +1,5 @@
 import service from "../api/component/service.js"
+import user from "../api/component/user.js"
 import { defineStore } from 'pinia';
 import Swal from 'sweetalert2';
 
@@ -11,7 +12,8 @@ export const store = defineStore({
     service_product_dropdown: '',
     service_category: {},
     service_category_details:{},
-    service_category_dropdown:{}
+    service_category_dropdown:{},
+    service_reviews:{}
   }),
   actions: {
     async createServices() {
@@ -189,13 +191,29 @@ export const store = defineStore({
         }
     },
     async getServiceCategoryDropdown() {
+        try {
+          const response = await service.getServiceCategoryDropdown();
+          this.service_category_dropdown = response.data
+        } catch (error) {
+        
+        }
+    },
+    async userRole(payload) {
       try {
-        const response = await service.getServiceCategoryDropdown();
-        this.service_category_dropdown = response.data
+        const response = await user.userRole(payload);
+        return response.data;
       } catch (error) {
-      
+        this.user.error = error.response.data.errors;
       }
-  },
+    },
+    async getReviews() {
+        try {
+          const response = await service.getReviews();
+          this.service_reviews = response.data.reviews
+        } catch (error) {
+        
+        }
+    },
     
   },
 });
