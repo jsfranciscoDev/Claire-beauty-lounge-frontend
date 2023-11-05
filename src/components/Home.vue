@@ -1,5 +1,6 @@
 <script setup>
 import footerSection from "../components/footer.vue";
+import Support from "../components/Support.vue";
 import navBar from "../components/nav.vue";
 </script>
 
@@ -43,6 +44,7 @@ import navBar from "../components/nav.vue";
         </div>
       </div>
     </div>
+    <Support></Support>
   </section>
 
   <section>
