@@ -1,7 +1,7 @@
 <script setup>
 import { store } from "../store/staff";
 import { onMounted, ref } from "vue";
-
+import Support from "../components/Support.vue";
 import footerSection from "../components/footer.vue";
 import navBar from "../components/nav.vue";
 import banner from "../components/banner.vue";
@@ -57,10 +57,10 @@ onMounted(() => {
             }}
           </p>
         </div>
-       
       </div>
     </div>
   </div>
+  <Support></Support>
   <!-- STAFF SECTION END-->
 
   <footerSection></footerSection>

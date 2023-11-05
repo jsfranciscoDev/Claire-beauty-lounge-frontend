@@ -22,7 +22,8 @@ const verification = ref(false);
 const selectedServices = ref('');
 const selectedStaff = ref('');
 
-const countdownMinutes = 3;
+//OTP time
+const countdownMinutes = 10;
 const countdownTime = ref(countdownMinutes * 60);
 let countdownInterval;
 

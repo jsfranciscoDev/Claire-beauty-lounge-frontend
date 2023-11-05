@@ -19,6 +19,7 @@ import Notifications from '../components/admin/Notifications.vue';
 import ForgotPassword from '../components/ForgotPassword.vue';
 import Reviews from '../components/Reviews.vue';
 import SendReviews from '../components/SendReviews.vue';
+import SupportCustomer from '../components/admin/SupportCustomer.vue';
 
 
 import { createPinia } from 'pinia';
@@ -137,6 +138,10 @@ const routes = [
       {
         path: '/admin/notifications',
         component: Notifications,
+      },
+      {
+        path: '/admin/support',
+        component: SupportCustomer,
       }
     ]
   },

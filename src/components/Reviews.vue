@@ -1,86 +1,91 @@
 <template>
-    <navBar />
-    <banner page_header="Reviews" />
-  
-    <div class="row justify-content-center pt-5 pb-5">
-      <div
-        class="col-md-10 heading-section text-center ftco-animate fadeInUp ftco-animated"
-      >
-      </div>
-      
+  <navBar />
+  <banner page_header="Reviews" />
 
-      <div class="reviews-card">
-        <div class="comment" v-for="data in service.service_reviews.data">
-          <div class="comment_header">
-            <div class="comment_header-pic"></div>
-            <h2>{{  data.name }}</h2>
-          </div>
-          <div class="star-rating">
-            <span v-for="index in 5" :key="index" :class="{'filled': index <= data.star_rating}">
-              ★
-            </span>
-          </div>
-          <div class="comment_content">
-            <p>
-              {{  data.feedback }}
-            </p>
-          </div>
-          <div class="comment_footer">
-            <span>{{formatDate(data.created_at)}}</span>
-          </div>
+  <div class="row justify-content-center pt-5 pb-5">
+    <div
+      class="col-md-10 heading-section text-center ftco-animate fadeInUp ftco-animated"
+    ></div>
+
+    <div class="reviews-card">
+      <div class="comment" v-for="data in service.service_reviews.data">
+        <div class="comment_header">
+          <div class="comment_header-pic"></div>
+          <h2>{{ data.name }}</h2>
+        </div>
+        <div class="star-rating">
+          <span
+            v-for="index in 5"
+            :key="index"
+            :class="{ filled: index <= data.star_rating }"
+          >
+            ★
+          </span>
+        </div>
+        <div class="comment_content">
+          <p>
+            {{ data.feedback }}
+          </p>
+        </div>
+        <div class="comment_footer">
+          <span>{{ formatDate(data.created_at) }}</span>
         </div>
       </div>
-         
-   
     </div>
-    
-    <div class="reviews" v-if="role ==='user' ">
-        <button>
-            <router-link to="/send-reviews" style="color: black;">Leave us a review</router-link>
-        </button>
-    </div>
+  </div>
 
-    <footerSection></footerSection>
-  </template>
-  
+  <div class="reviews" v-if="role === 'user'">
+    <button>
+      <router-link to="/send-reviews" style="color: black"
+        >Leave us a review</router-link
+      >
+    </button>
+  </div>
+
+  <Support></Support>
+
+  <footerSection></footerSection>
+</template>
+
 <script setup>
-  import footerSection from "../components/footer.vue";
-  import navBar from "../components/nav.vue";
-  import banner from "../components/banner.vue";
-  import moment from 'moment';
-  import { store } from "../store/service";
-  import { onMounted, ref, reactive } from "vue";
-  
-  const service = store();
-  const role = ref();
-  const formatPrice = (price) => {
-    return `₱${parseFloat(price).toLocaleString("en-US", {
-      minimumFractionDigits: 2,
-    })}`;
-  };
-  
-  const paginate = (page) => {
-    service.getServices(page);
-    service.getReviews();
-  };
-  
-  onMounted(() => {
-    service.getServices();
-    service.getReviews();
-    service.userRole().then(response => {
-        role.value = response;
-    })
-  });
+import footerSection from "../components/footer.vue";
+import navBar from "../components/nav.vue";
+import banner from "../components/banner.vue";
+import moment from "moment";
+import Support from "../components/Support.vue";
+import { store } from "../store/service";
+import { onMounted, ref, reactive } from "vue";
 
-  const formatDate = (dateString) => {
-    return moment(dateString).format('MMMM D YYYY h:mm a');
-  };
-  </script>
-  
+const service = store();
+const role = ref();
+const formatPrice = (price) => {
+  return `₱${parseFloat(price).toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+  })}`;
+};
+
+const paginate = (page) => {
+  service.getServices(page);
+  service.getReviews();
+};
+
+onMounted(() => {
+  service.getServices();
+  service.getReviews();
+  service.userRole().then((response) => {
+    role.value = response;
+  });
+});
+
+const formatDate = (dateString) => {
+  return moment(dateString).format("MMMM D YYYY h:mm a");
+};
+</script>
+
 <style lang="scss" scoped>
 .reviews-card {
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   padding: 50px 65px;
   max-width: 100% !important;
   width: 600px;
@@ -153,12 +158,9 @@
 }
 
 .star-rating span {
-
 }
 
 .star-rating .filled {
   color: gold; /* Set the color for filled stars */
 }
-
 </style>
-  
