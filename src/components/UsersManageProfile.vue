@@ -1,21 +1,21 @@
 <script setup>
 import { reactive, ref, onMounted } from "vue";
-import CryptoJS from 'crypto-js';
+import CryptoJS from "crypto-js";
 import footerSection from "../components/footer.vue";
+import Support from "../components/Support.vue";
 import navBar from "../components/nav.vue";
 import banner from "../components/banner.vue";
 
 import { store } from "../store/index";
 const userData = store();
 
-const role = sessionStorage.getItem('role');
-const roleBytes = CryptoJS.AES.decrypt(role, 'role');
+const role = sessionStorage.getItem("role");
+const roleBytes = CryptoJS.AES.decrypt(role, "role");
 const userRole = roleBytes.toString(CryptoJS.enc.Utf8);
 
 const preview = ref(null);
 
 const backendbaseURL = import.meta.env.VITE_APP_BASE_URL;
-
 
 const previewImage = (event) => {
     const file = event.target.files[0];
@@ -23,182 +23,234 @@ const previewImage = (event) => {
     if (file && (file.type.startsWith('image/png') || file.type.startsWith('image/jpeg'))) {
         preview.value = URL.createObjectURL(file);
 
-        const reader = new FileReader();
-        reader.onload = () => {
-            const base64String = reader.result.split(',')[1];
-            const mimeType = file.type; // Use the actual MIME type of the file
-            const dataURL = `data:${mimeType};base64,${base64String}`;
-            userData.uploadPhoto(dataURL);
-        };
-        reader.readAsDataURL(file);
-    } else {
-        file.value = null;
-        preview.value = null;
-    }
-}
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64String = reader.result.split(",")[1];
+      const mimeType = file.type; // Use the actual MIME type of the file
+      const dataURL = `data:${mimeType};base64,${base64String}`;
+      userData.uploadPhoto(dataURL);
+    };
+    reader.readAsDataURL(file);
+  } else {
+    file.value = null;
+    preview.value = null;
+  }
+};
 
 const handleClick = () => {
-  document.getElementById('my-file').click();
+  document.getElementById("my-file").click();
 };
 
 onMounted(() => {
   userData.fetchUser();
-})
+});
 
-const changePassword = ( ) => {
-    userData.changePassword();
-}
+const changePassword = () => {
+  userData.changePassword();
+};
 
 const updateUserDetails = () => {
-    userData.updateUserDetails();
-}
-
+  userData.updateUserDetails();
+};
 </script>
 
 <template>
+  <navBar />
+  <banner page_header="Manage Profile" />
 
-<navBar />
-<banner page_header="Manage Profile" />
-
-    <div class="container pb-5 pt-5">
-        <div class="admin-component-header">
-    </div>
+  <div class="container pb-5 pt-5">
+    <div class="admin-component-header"></div>
     <div class="table-container">
-        <div class="table-responsive bg-white pb-3 pt-3">   
-            <div class="row">
-                <div class="col-12 col-md-6 col-lg-6">
-                    <h4>Change Password</h4>
-                 
-                    <div class="alert alert-danger d-flex flex-column" role="alert" v-if="userData.user_password.error" >
-                        <span v-html="userData.user_password.error"></span>
-                    </div>
+      <div class="table-responsive bg-white pb-3 pt-3">
+        <div class="row">
+          <div class="col-12 col-md-6 col-lg-6">
+            <h4>Change Password</h4>
 
-                    <div class="mt-1">
-                        <div class="form-group">
-                            <label for="username">Old Password:</label>
-                            <input type="password" class="form-control" v-model="userData.user_password.current_password" placeholder="Enter Old Password">
-                            <span class="text-danger fs-12"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="username">New Password:</label>
-                            <input type="password" class="form-control"  v-model="userData.user_password.new_password" placeholder="Enter New Password">
-                            <span class="text-danger fs-12"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="username">Confirm Password:</label>
-                            <input type="password" class="form-control"  v-model="userData.user_password.password_confirmation" placeholder="Enter Confirm Password">
-                            <span class="text-danger fs-12"></span>
-                        </div>
-                    </div>
-                    <button @click="changePassword()" type="button">Change Password</button>
-                    
-                </div>
-                <div class="col-12 col-md-6 col-lg-6">
-                   
-                    <div class="upload-image h-100">
-                        <div class="form-group">
-                            <div class="p-2">
-                              
-                                <div v-if="backendbaseURL+userData.user_profile">
-                                    <img :src="backendbaseURL+userData.user_profile" class="img-fluid preview-image" />
-                                </div>
-                                <div v-else>
-                                    <img src="/images/profile.png" class="img-fluid preview-image" />
-                                </div>
-                             </div>
-                            <center class="mt-3">
-                                <label for="my-file" class="upload-icon">
-                                    <i class="fa fa-upload" aria-hidden="true"><span class="button">Upload Photo</span></i>
-                                </label>
-                            </center>
-                         
-                            <input type="file"  accept="image/jpeg, image/png" @change="previewImage" class="form-control-file" id="my-file" hidden>
-                        </div>
-                    </div>
-                </div>
+            <div
+              class="alert alert-danger d-flex flex-column"
+              role="alert"
+              v-if="userData.user_password.error"
+            >
+              <span v-html="userData.user_password.error"></span>
             </div>
-        </div>
-    </div>
-    <div class="table-container  mt-1">
-        <div class="table-responsive bg-white pb-3 pt-3">   
-            <div class="row">
-                <div class="col-12 col-md-6 col-lg-6 ">
-                    <h4>User Details</h4>
-                    <div class="mt-2">
-                        <div class="form-group">
-                        <label for="username">Username:</label>
-                        <input type="text" class="form-control" v-model="userData.user_details.email" placeholder="Enter username">
-                        <span class="text-danger fs-12"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="username">Full Name:</label>
-                        <input type="text" class="form-control" v-model="userData.user_details.name" placeholder="Enter Full Name">
-                        <span class="text-danger fs-12"></span>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="username">Contact Number:</label>
-                        <input type="text" class="form-control"  v-model="userData.user_details.contact" placeholder="Enter Number">
-                        <span class="text-danger fs-12"></span>
-                    </div>
-                    </div>
-                   
-                    <button type="button" @click="updateUserDetails">Update</button>
-                </div>
-                <div class="col-12 col-md-6 col-lg-6" v-if="userRole == 'staff'">
-                    <h4>Staff Expertise</h4>
-                    <div class="form-group">
-                        <label for="username">Skills:</label>
-                        <textarea class="form-control" v-model="userData.user_details.expertise" style="resize: none;" rows="3"></textarea>
-                        <span class="text-danger fs-12"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="username">Short Bio:</label>
-                        <textarea class="form-control"  v-model="userData.user_details.bio" style="resize: none;" rows="2"></textarea>
-                        <span class="text-danger fs-12"></span>
-                    </div>
-                  
-                </div>
+            <div class="mt-1">
+              <div class="form-group">
+                <label for="username">Old Password:</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  v-model="userData.user_password.current_password"
+                  placeholder="Enter Old Password"
+                />
+                <span class="text-danger fs-12"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="username">New Password:</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  v-model="userData.user_password.new_password"
+                  placeholder="Enter New Password"
+                />
+                <span class="text-danger fs-12"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="username">Confirm Password:</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  v-model="userData.user_password.password_confirmation"
+                  placeholder="Enter Confirm Password"
+                />
+                <span class="text-danger fs-12"></span>
+              </div>
             </div>
-        </div>
-    </div>
-    </div>
-  
+            <button @click="changePassword()" type="button">
+              Change Password
+            </button>
+          </div>
+          <div class="col-12 col-md-6 col-lg-6">
+            <div class="upload-image h-100">
+              <div class="form-group">
+                <div class="p-2">
+                  <div v-if="backendbaseURL + userData.user_profile">
+                    <img
+                      :src="backendbaseURL + userData.user_profile"
+                      class="img-fluid preview-image"
+                    />
+                  </div>
+                  <div v-else>
+                    <img
+                      src="/images/profile.png"
+                      class="img-fluid preview-image"
+                    />
+                  </div>
+                </div>
+                <center class="mt-3">
+                  <label for="my-file" class="upload-icon">
+                    <i class="fa fa-upload" aria-hidden="true"
+                      ><span class="button">Upload Photo</span></i
+                    >
+                  </label>
+                </center>
 
-    
-    <footerSection></footerSection>
+                <input
+                  type="file"
+                  accept="image/jpeg, image/png"
+                  @change="previewImage"
+                  class="form-control-file"
+                  id="my-file"
+                  hidden
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="table-container mt-1">
+      <div class="table-responsive bg-white pb-3 pt-3">
+        <div class="row">
+          <div class="col-12 col-md-6 col-lg-6">
+            <h4>User Details</h4>
+            <div class="mt-2">
+              <div class="form-group">
+                <label for="username">Username:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="userData.user_details.email"
+                  placeholder="Enter username"
+                />
+                <span class="text-danger fs-12"></span>
+              </div>
+              <div class="form-group">
+                <label for="username">Full Name:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="userData.user_details.name"
+                  placeholder="Enter Full Name"
+                />
+                <span class="text-danger fs-12"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="username">Contact Number:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="userData.user_details.contact"
+                  placeholder="Enter Number"
+                />
+                <span class="text-danger fs-12"></span>
+              </div>
+            </div>
+
+            <button type="button" @click="updateUserDetails">Update</button>
+          </div>
+          <div class="col-12 col-md-6 col-lg-6" v-if="userRole == 'staff'">
+            <h4>Staff Expertise</h4>
+            <div class="form-group">
+              <label for="username">Skills:</label>
+              <textarea
+                class="form-control"
+                v-model="userData.user_details.expertise"
+                style="resize: none"
+                rows="3"
+              ></textarea>
+              <span class="text-danger fs-12"></span>
+            </div>
+            <div class="form-group">
+              <label for="username">Short Bio:</label>
+              <textarea
+                class="form-control"
+                v-model="userData.user_details.bio"
+                style="resize: none"
+                rows="2"
+              ></textarea>
+              <span class="text-danger fs-12"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <Support></Support>
+
+  <footerSection></footerSection>
 </template>
 
-
 <style>
-.upload-icon{
-    background-color: rgb(0, 0, 0);
-    padding: 5px;
-    border-radius: 5px;
+.upload-icon {
+  background-color: rgb(0, 0, 0);
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .upload-icon i {
-    font-size: 15px;
-    color: azure;
+  font-size: 15px;
+  color: azure;
 }
 
-.upload-icon i span{
-    font-size: 14px;
-    margin: 5px;
+.upload-icon i span {
+  font-size: 14px;
+  margin: 5px;
 }
 
-.preview-image{
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    object-fit: cover;
+.preview-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
 }
-.upload-image{
-    display: flex;
-    justify-items: center;
-    align-items: center;
-    flex-direction: column;
+.upload-image {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  flex-direction: column;
 }
 </style>

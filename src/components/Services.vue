@@ -69,6 +69,7 @@
       </div>
     </div>
   </div>
+  <Support></Support>
 
   <footerSection></footerSection>
 </template>
@@ -77,7 +78,7 @@
 import footerSection from "../components/footer.vue";
 import navBar from "../components/nav.vue";
 import banner from "../components/banner.vue";
-
+import Support from "../components/Support.vue";
 import { store } from "../store/service";
 import { onMounted } from "vue";
 

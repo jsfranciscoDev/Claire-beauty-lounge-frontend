@@ -45,37 +45,53 @@
         </button>
     </div>
 
-    <footerSection></footerSection>
-  </template>
-  
+  <div class="reviews" v-if="role === 'user'">
+    <button>
+      <router-link to="/send-reviews" style="color: black"
+        >Leave us a review</router-link
+      >
+    </button>
+  </div>
+
+  <Support></Support>
+
+  <footerSection></footerSection>
+</template>
+
 <script setup>
-  import footerSection from "../components/footer.vue";
-  import navBar from "../components/nav.vue";
-  import banner from "../components/banner.vue";
-  import moment from 'moment';
-  import { store } from "../store/service";
-  import { onMounted, ref, reactive } from "vue";
-  
-  const service = store();
-  const role = ref();
-  const formatPrice = (price) => {
-    return `₱${parseFloat(price).toLocaleString("en-US", {
-      minimumFractionDigits: 2,
-    })}`;
-  };
-  
-  const paginate = (page) => {
-    service.getServices(page);
-    service.getReviews();
-  };
-  
-  onMounted(() => {
-    service.getServices();
-    service.getReviews();
-    service.userRole().then(response => {
-        role.value = response;
-    })
+import footerSection from "../components/footer.vue";
+import navBar from "../components/nav.vue";
+import banner from "../components/banner.vue";
+import moment from "moment";
+import Support from "../components/Support.vue";
+import { store } from "../store/service";
+import { onMounted, ref, reactive } from "vue";
+
+const service = store();
+const role = ref();
+const formatPrice = (price) => {
+  return `₱${parseFloat(price).toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+  })}`;
+};
+
+const paginate = (page) => {
+  service.getServices(page);
+  service.getReviews();
+};
+
+onMounted(() => {
+  service.getServices();
+  service.getReviews();
+  service.userRole().then((response) => {
+    role.value = response;
   });
+});
+
+const formatDate = (dateString) => {
+  return moment(dateString).format("MMMM D YYYY h:mm a");
+};
+</script>
 
   const formatDate = (dateString) => {
     return moment(dateString).format('MMMM D YYYY h:mm a');
@@ -87,7 +103,7 @@
 <style lang="scss" scoped>
 .reviews-card {
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   padding: 50px 65px;
   max-width: 100% !important;
   width: 600px;
@@ -172,6 +188,4 @@
 .star-rating .filled {
   color: gold; /* Set the color for filled stars */
 }
-
 </style>
-  

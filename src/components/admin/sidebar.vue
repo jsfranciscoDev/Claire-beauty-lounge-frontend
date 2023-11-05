@@ -59,6 +59,9 @@ if(staff_role){
                <i class="fa fa-users nav_icon" ><span><router-link to="/admin/staff" class="sidebar-link">Staff</router-link></span></i>
             </li>
             <li>
+                <i class="fa fa-bed"><span><router-link to="/admin/support" class="sidebar-link">Customer Support</router-link></span></i>
+            </li>
+            <li>
                <i class="fa fa-cog"><span ><router-link to="/admin/manage-account" class="sidebar-link">Manage Account</router-link></span></i>
             </li>
          
@@ -87,7 +90,9 @@ if(staff_role){
             <li>
                 <i class="fa fa-clock"><span><router-link to="/admin/daily-time-record" class="sidebar-link">Daily Time Record</router-link></span></i>
             </li>
-         
+            <li v-if="StaffAcessRole == 'System Administrator'">
+                <i class="fa fa-bed"><span><router-link to="/admin/support" class="sidebar-link">Customer Support</router-link></span></i>
+            </li>
             <li>
                <i class="fa fa-cog"><span ><router-link to="/admin/manage-account" class="sidebar-link">Manage Account</router-link></span></i>
             </li>
