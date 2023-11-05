@@ -116,8 +116,7 @@ const sendReviews = () => {
     <div class="table-container">
         <div class="table-responsive bg-white pb-3 pt-3">   
             <div class="row">
-                <div class="col-12 col-md-6 col-lg-6">
-                    
+                <div class="col-12 col-md-12 col-lg-12">
                     <h6>Give us feedback</h6>
                     <p>What do you think about our services.</p>
                     <div class="star-rating">
@@ -136,12 +135,12 @@ const sendReviews = () => {
                     <button @click="sendReviews()" type="button">Send Reviews</button>
                     
                 </div>
-                <div class="col-12 col-md-6 col-lg-6">
+                <!-- <div class="col-12 col-md-6 col-lg-6">
                    
                     <div class="upload-image h-100">
                         <div class="form-group">
                             <div class="p-2">
-                                  <!-- Image preview -->
+                                 
                                 <div v-if="preview">
                                     <img :src="preview" class="img-fluid preview-image-review" />
                                 </div>
@@ -159,7 +158,7 @@ const sendReviews = () => {
                             <input type="file"  accept="image/jpeg, image/png" @change="previewImage" class="form-control-file" id="my-file" hidden>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

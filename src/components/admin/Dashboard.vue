@@ -3,7 +3,7 @@ import moment from 'moment-timezone';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import CryptoJS from 'crypto-js';
 import axios from 'axios';
-
+import Swal from 'sweetalert2';
 
 import { store } from "../../store/index";
 const userData = store();
@@ -12,9 +12,10 @@ const role = sessionStorage.getItem('role');
 const roleBytes = CryptoJS.AES.decrypt(role, 'role');
 const userRole = roleBytes.toString(CryptoJS.enc.Utf8);
 
+const public_ip = import.meta.env.VITE_APP_IP_LOCATION;
+
+
 const backendbaseURL = import.meta.env.VITE_APP_BASE_URL;
-
-
 
 // const currentTime = ref();
 const currentDate = ref();
@@ -49,21 +50,23 @@ const fetchCurrentTime = async () => {
 // });
 
 const staffUserTimein = (action) => {
-    userData.timeIn( userData.user_details.id, currentTime.value, currentDate.value, action)
-    navigator.geolocation.getCurrentPosition((position) => {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-        console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-    }, (error) => {
-        console.error(error);
-    });
-
-    fetch('https://api.ipify.org')
-    .then(response => response.text())
-    .then(data => {
-        console.log(data); // This will log your public IP address
-    })
-    .catch(error => console.error('Error:', error));
+  
+    let ip_address = axios.get('https://ipgeolocation.abstractapi.com/v1/?api_key=f8ca39f72abd48219bc034ad05d1773e')
+          .then(response => {
+              console.log(response.data.ip_address);
+              if(response.data.ip_address == public_ip){
+                userData.timeIn( userData.user_details.id, currentTime.value, currentDate.value, action)
+              }else{
+                Swal.fire({
+                    title: `Invalid ${action}`,
+                    text: "Your current location is unable to synchronize with the server's time according to the system administrator.",
+                    icon: 'warning',
+                });
+              }
+          })
+          .catch(error => {
+              console.log(error);
+          });
 }
 
 onBeforeUnmount(() => {

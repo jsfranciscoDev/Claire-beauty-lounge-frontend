@@ -2,7 +2,7 @@
     <navBar />
     <banner page_header="Reviews" />
   
-    <div class="row justify-content-center pt-5 pb-5">
+    <div class="row justify-content-center pt-5 ">
       <div
         class="col-md-10 heading-section text-center ftco-animate fadeInUp ftco-animated"
       >
@@ -11,8 +11,13 @@
 
       <div class="reviews-card">
         <div class="comment" v-for="data in service.service_reviews.data">
+        
           <div class="comment_header">
-            <div class="comment_header-pic"></div>
+            <div class="comment_header-pic">
+              <img :src="backendbaseURL+data.profile" class="img-fluid preview-image"  v-if="backendbaseURL+data.profile" />
+              <img src="/images/profile.png" class="img-fluid preview-image" v-else/>
+            </div>
+           
             <h2>{{  data.name }}</h2>
           </div>
           <div class="star-rating">
@@ -34,7 +39,7 @@
    
     </div>
     
-    <div class="reviews" v-if="role ==='user' ">
+    <div class="reviews pb-5" v-if="role ==='user' ">
         <button>
             <router-link to="/send-reviews" style="color: black;">Leave us a review</router-link>
         </button>
@@ -75,7 +80,9 @@
   const formatDate = (dateString) => {
     return moment(dateString).format('MMMM D YYYY h:mm a');
   };
-  </script>
+
+  const backendbaseURL = import.meta.env.VITE_APP_BASE_URL;
+</script>
   
 <style lang="scss" scoped>
 .reviews-card {
@@ -147,13 +154,19 @@
     }
   }
 }
-
+.comment_header-pic{
+  img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+}
 .star-rating {
   font-size: 24px;
 }
 
 .star-rating span {
-
+  cursor: none !important;
 }
 
 .star-rating .filled {
