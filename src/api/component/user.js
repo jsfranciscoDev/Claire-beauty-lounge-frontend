@@ -193,4 +193,15 @@ export default {
       }
     );
   },
+  validateAccount(payload) {
+    return axios.post(
+      `${baseURL}api/validate-account`,
+       {phone: payload} ,
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      }
+    );
+  },
 };

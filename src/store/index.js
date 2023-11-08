@@ -404,6 +404,13 @@ export const store = defineStore({
         
         }
     },
-    
+    async validateAccount(phone) {  
+      try {
+          const response = await user.validateAccount(phone);
+          return response;
+        } catch (error) {
+        
+        }
+    },
   },
 });

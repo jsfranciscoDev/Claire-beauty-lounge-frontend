@@ -11,7 +11,6 @@
 
       <div class="reviews-card">
         <div class="comment" v-for="data in service.service_reviews.data">
-        
           <div class="comment_header">
             <div class="comment_header-pic">
               <img :src="backendbaseURL+data.profile" class="img-fluid preview-image"  v-if="backendbaseURL+data.profile" />
@@ -34,7 +33,19 @@
             <span>{{formatDate(data.created_at)}}</span>
           </div>
         </div>
+        <div v-if="service.service_reviews.total > 5" class="table-pagination">  
+        <div>
+            <button @click="paginate(service.service_reviews.current_page - 1)" v-if="service.service_reviews.prev_page_url" ><i class="fa fa-angle-left"></i></button>
+            <button @click="paginate(service.service_reviews.current_page + 1)" v-if="service.service_reviews.next_page_url" ><i class="fa fa-angle-right"></i></button>
+        </div>
+        <div >
+            <span> Page {{ service.service_reviews.current_page  }} - {{ service.service_reviews.last_page }} </span>
+        </div>
+        
       </div>
+      </div>
+
+     
          
    
     </div>
@@ -44,14 +55,6 @@
             <router-link to="/send-reviews" style="color: black;">Leave us a review</router-link>
         </button>
     </div>
-
-  <div class="reviews" v-if="role === 'user'">
-    <button>
-      <router-link to="/send-reviews" style="color: black"
-        >Leave us a review</router-link
-      >
-    </button>
-  </div>
 
   <Support></Support>
 
@@ -67,6 +70,8 @@ import Support from "../components/Support.vue";
 import { store } from "../store/service";
 import { onMounted, ref, reactive } from "vue";
 
+const backendbaseURL = import.meta.env.VITE_APP_BASE_URL;
+
 const service = store();
 const role = ref();
 const formatPrice = (price) => {
@@ -76,8 +81,7 @@ const formatPrice = (price) => {
 };
 
 const paginate = (page) => {
-  service.getServices(page);
-  service.getReviews();
+  service.getReviews(page);
 };
 
 onMounted(() => {
@@ -92,13 +96,6 @@ const formatDate = (dateString) => {
   return moment(dateString).format("MMMM D YYYY h:mm a");
 };
 </script>
-
-  const formatDate = (dateString) => {
-    return moment(dateString).format('MMMM D YYYY h:mm a');
-  };
-
-  const backendbaseURL = import.meta.env.VITE_APP_BASE_URL;
-</script>
   
 <style lang="scss" scoped>
 .reviews-card {
@@ -108,6 +105,8 @@ const formatDate = (dateString) => {
   max-width: 100% !important;
   width: 600px;
   border-radius: 10px;
+  flex-wrap: wrap;
+  flex: 2;
   //background-color: goldenrod;
 
   h1 {
@@ -117,7 +116,7 @@ const formatDate = (dateString) => {
     margin-bottom: 15px;
   }
   .comment {
-    background-color: #2c2b3f;
+    background-color: #e4e4e4;
     display: flex;
     flex-direction: column;
     padding: 35px;
@@ -137,14 +136,14 @@ const formatDate = (dateString) => {
       h2 {
         font-size: 18px;
         font-weight: bold;
-        color: white;
+        color: #8c8aa7;
         margin-bottom: 0px;
         margin-left: 10px;
       }
     }
     &_content {
       font-size: 16px;
-      color: white;
+      color: #8c8aa7;
     }
     &_footer {
       display: flex;

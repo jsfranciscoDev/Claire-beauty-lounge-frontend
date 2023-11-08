@@ -3,6 +3,7 @@ import { reactive, ref, onMounted, onBeforeMount, computed  } from "vue";
 import { store } from "../store/index";
 import { useRouter } from 'vue-router';
 import navBar from '../components/nav.vue'
+import Swal from 'sweetalert2';
 
 const userData = store();
 
@@ -68,7 +69,18 @@ const sendOtp = () => {
 
 const registerAccount = async (event) => {
   event.preventDefault();
-  sendOtp();
+  userData.validateAccount(user.contact).then(response => {
+    if(response.data.status == 'success'){
+      sendOtp();
+    }else{
+      Swal.fire({
+        title: 'Invalid Phone Number',
+        text: response.data.message,
+        icon: 'warning',
+      })
+    }
+  });
+ 
   clearErrorMessage();
 };
 
@@ -160,7 +172,7 @@ const passwordType = computed(() => showPassword.value ? 'text' : 'password');
                 <form @submit.prevent="registerAccount">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" v-model="user.email" placeholder="Enter your username">
+                    <input type="email" class="form-control" v-model="user.email" placeholder="Enter your username">
                     <span v-if="userData.user.error" v-html="userData.user.error.email" class="text-danger fs-12"></span>
                 </div>
                 <div class="form-group">

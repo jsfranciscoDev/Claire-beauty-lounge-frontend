@@ -14,7 +14,7 @@ const userRole = roleBytes.toString(CryptoJS.enc.Utf8);
 
 const public_ip = import.meta.env.VITE_APP_IP_LOCATION;
 
-
+const apiKey = import.meta.env.VITE_APP_LOCATION_API_KEY;
 const backendbaseURL = import.meta.env.VITE_APP_BASE_URL;
 
 // const currentTime = ref();
@@ -51,7 +51,7 @@ const fetchCurrentTime = async () => {
 
 const staffUserTimein = (action) => {
   
-    let ip_address = axios.get('https://ipgeolocation.abstractapi.com/v1/?api_key=f8ca39f72abd48219bc034ad05d1773e')
+    let ip_address = axios.get(`https://ipgeolocation.abstractapi.com/v1/?api_key=${apiKey}`)
           .then(response => {
               console.log(response.data.ip_address);
               if(response.data.ip_address == public_ip){

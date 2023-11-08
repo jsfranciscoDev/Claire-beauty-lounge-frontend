@@ -206,9 +206,9 @@ export const store = defineStore({
         this.user.error = error.response.data.errors;
       }
     },
-    async getReviews() {
+    async getReviews(page) {
         try {
-          const response = await service.getReviews();
+          const response = await service.getReviews(page);
           this.service_reviews = response.data.reviews
         } catch (error) {
         
