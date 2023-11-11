@@ -53,7 +53,7 @@ const staffUserTimein = (action) => {
   
     let ip_address = axios.get(`https://ipgeolocation.abstractapi.com/v1/?api_key=${apiKey}`)
           .then(response => {
-              console.log(response.data.ip_address);
+              console.log(response);
               if(response.data.ip_address == public_ip){
                 userData.timeIn( userData.user_details.id, currentTime.value, currentDate.value, action)
               }else{

@@ -103,10 +103,9 @@ const formatDate = (dateString) => {
   flex-direction: column;
   padding: 50px 65px;
   max-width: 100% !important;
-  width: 600px;
+  width: 1200px;
   border-radius: 10px;
-  flex-wrap: wrap;
-  flex: 2;
+
   //background-color: goldenrod;
 
   h1 {

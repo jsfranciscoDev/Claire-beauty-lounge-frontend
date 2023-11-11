@@ -80,6 +80,9 @@ const sendReviews = () => {
                             text: e.data.message,
                             icon: 'success',
                         })
+
+                        userData.reviews.comment = '';
+                        selected.value = 0;
                     }
                 });
             }

@@ -104,6 +104,8 @@ onMounted(() => {
                     <th scope="col">Purchase Date</th>
                     <th scope="col">Expiration Date</th>
                     <th scope="col">Supplier Information</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Role</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
@@ -118,6 +120,8 @@ onMounted(() => {
                     <td>{{ data.purchase_dates }}</td>
                     <td>{{ data.expiration_date }}</td>
                     <td>{{ data.supplier_information }}</td>
+                    <td>{{ data.username }}</td>
+                    <td>{{ data.role }}</td>
                     <td> 
                         <span @click="updateProduct(data)"><i class="fa-solid fa-edit"></i></span>
                         <span @click="removeProduct(data.id)"><i class="fa-solid fa-trash"></i></span>
