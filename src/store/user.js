@@ -66,6 +66,7 @@ export const userStore = defineStore({
       let payload = {
         password: this.user_password.password,
         confirm_password: this.user_password.confirm_password,
+        username: this.user_password.email,
         user_id: user_id,
       };
       try {
