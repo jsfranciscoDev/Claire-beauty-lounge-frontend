@@ -71,7 +71,7 @@ export default {
             });
     },
     removeAttachedProducts(id){
-        return axios.delete(`${baseURL}api/remove-service-items/${id}`,{
+        return axios.post(`${baseURL}api/remove-service-items`,{id},{
             headers: {
                 'Authorization': `Bearer ${storedToken}`
                 }

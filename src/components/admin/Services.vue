@@ -124,12 +124,25 @@ const removeItem = (index) => {
 }
 
 const addServicesProducts = () =>{
-    service.attachProductsOnService(selectedService.value, ServicesItems).then(response => {
-        if(response.data.status == 'success'){
-            closeDialog();
+
+    ServicesItems.forEach(response => {
+        console.log(response);
+        if(response.quantity === 0){
+            addServicesProductsDialog.value = false
+            Swal.fire(
+                'Error',
+                'Please update the quantity',
+                'warning'
+            )
         }else{
-            closeDialog();
-        }  
+            service.attachProductsOnService(selectedService.value, ServicesItems).then(response => {
+                if(response.data.status == 'success'){
+                    closeDialog();
+                }else{
+                    closeDialog();
+                }  
+            });
+        }
     });
 }
 
