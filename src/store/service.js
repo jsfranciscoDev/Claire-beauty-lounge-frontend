@@ -40,9 +40,9 @@ export const store = defineStore({
          
         }
     },
-    async getServices(page) {
+    async getServices(page,searchfilter) {
       try {
-        const response = await service.getServices(page);
+        const response = await service.getServices(page,searchfilter);
           if(response.data.message == 'success'){
               this.services_details = response.data.services;
           }
@@ -150,9 +150,9 @@ export const store = defineStore({
        
       }
   },
-  async getServicesCategory(page) {
+  async getServicesCategory(page, searchFilter) {
     try {
-      const response = await service.getServicesCategory(page);
+      const response = await service.getServicesCategory(page, searchFilter);
         if(response.data.message == 'success'){
             this.service_category_details = response.data.services;
         }

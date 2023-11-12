@@ -3,9 +3,10 @@
 import { reactive, ref, onMounted, onBeforeMount, watch  } from "vue";
 import { store } from "../../store/service";
 import Swal from 'sweetalert2';
-
+import SearchBar from "../SearchBar.vue";
 const service = store();
 
+const searchData = ref('');
 
 const inputText = ref('');
 
@@ -41,7 +42,7 @@ const resetFields = () => {
 }
 
 const paginate = (page) => {
-    service.getServices(page);
+    service.getServices(page, searchData.value);
 }
 
 const deleteServices = (id) => {
@@ -80,6 +81,10 @@ const submitUpdate = () => {
     service.updateServices();
     closeDialog();
 }
+
+const SearchFilter = (searchQuery) => {
+    service.getServices(1,searchQuery);
+};
 
 
 onMounted(() => {
@@ -180,7 +185,9 @@ const formatTime = function(event) {
 
 <template>
     <div class="admin-component-header">
-        <h2  style="visibility: hidden;"><i class="fa fa-bed"></i> Manage Services</h2>
+        <div class="search-bar-fields">
+            <SearchBar placeholder="Search Service Name" v-model="searchData" @enterPressed="SearchFilter" @searchIconClicked="SearchFilter" @clearIconClicked="SearchFilter" class="mr-2" />
+        </div>
         <button type="button" @click="formDialog = true"><i class="fa-solid fa-plus"></i>Add</button>
     </div>
 
@@ -196,6 +203,8 @@ const formatTime = function(event) {
                     <th scope="col">Package Included</th>
                     <th scope="col">Estimated Hours</th>
                     <th scope="col">Total Price</th>
+                    <th scope="col">Added By</th>
+                    <th scope="col">Position</th>
                     <th scope="col" class="actions">Action</th>
                   </tr>
                 </thead>
@@ -216,6 +225,8 @@ const formatTime = function(event) {
                     <td> 
                         {{ formatPrice(data.price + data.total_product_price ) }}
                     </td>
+                    <td>{{ data.username }}</td>
+                    <td>{{ data.role }}</td>
                     <td class="actions d-flex flex-column" style="border: none;"> 
                         <span @click="updateServices(data)">Edit Services</span>
                         <span @click="deleteServices(data.id)">Delete Services</span>
@@ -432,6 +443,10 @@ const formatTime = function(event) {
     align-items: center;
 }
 
+.search-bar-fields{
+    display: flex;
+}
+
 .admin-component-header h2{
     font-weight: bold;
     font-size: 20px;
@@ -499,12 +514,13 @@ const formatTime = function(event) {
 }
 
 .table-container .table th, .table td{
-    border: 1px solid #dee2e6;
+    border: none !important;
 }
 
 .table-responsive td{
     padding: 5px;
 }
+
 .add-items-service{
     color: black;
     cursor: pointer;

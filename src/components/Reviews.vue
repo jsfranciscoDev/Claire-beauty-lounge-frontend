@@ -50,12 +50,6 @@
    
     </div>
     
-    <div class="reviews pb-5" v-if="role ==='user' ">
-        <button>
-            <router-link to="/send-reviews" style="color: black;">Leave us a review</router-link>
-        </button>
-    </div>
-
   <Support></Support>
 
   <footerSection></footerSection>

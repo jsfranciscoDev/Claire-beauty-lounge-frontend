@@ -10,8 +10,8 @@ export default {
                 }
             });
     },
-    getProducts(page){
-        return axios.get(`${baseURL}api/get-products?page=${page}`, {
+    getProducts(page, searchFilter){
+        return axios.post(`${baseURL}api/get-products?page=${page}`, {search: searchFilter}, {
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }

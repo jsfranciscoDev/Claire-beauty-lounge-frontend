@@ -104,6 +104,8 @@ const getStatusClass = (status) => {
                     <th scope="col" >Service</th>
                     <th scope="col" >Staff</th>
                     <th scope="col" >Status</th>
+                    <th scope="col" >Proccess By</th>
+                    <th scope="col" >Position</th>
                     <th scope="col" >Action</th>
                   </tr>
                 </thead>
@@ -117,7 +119,8 @@ const getStatusClass = (status) => {
                     <td>{{ data?.service }}</td>
                     <td>{{ data?.staff_name }}</td>
                     <td :class="getStatusClass(data.detail)"><b>{{ data?.detail }}</b></td>
-                  
+                    <td>{{ data?.process_by_role }}</td>
+                    <td>{{ data?.process_by_role }}</td>
                     <td class="table-actions d-flex flex-column"> 
                       <span v-if="!['Approved', 'Cancelled', 'Reschedule','Completed'].includes(data.detail)" @click="updateAppointment(data.appointment_id, 4, 'Reschedule')">Reschedule</span>
                       <span v-if="!['Approved', 'Cancelled', 'Reschedule','Completed'].includes(data.detail)" @click="updateAppointment(data.appointment_id, 2, 'Declined')">Declined</span>

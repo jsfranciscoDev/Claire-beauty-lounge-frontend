@@ -2,15 +2,15 @@
 import { ref, onMounted } from "vue";
 import { store } from "../../store/product";
 import Swal from 'sweetalert2';
+import SearchBar from "../SearchBar.vue";
 
 const product = store();
 
 const storedToken = sessionStorage.getItem('token');
 
-
 const formDialog = ref(false)
 const Update = ref(false);
-
+const searchData = ref('');
 
 const addProductItem = () => {
     product.createProduct().then(response => {
@@ -33,8 +33,12 @@ const resetFields = () => {
 }
 
 const paginate = (page) => {
-    product.getProducts(page);
+    product.getProducts(page, searchData.value);
 }
+
+const SearchFilter = (searchQuery) => {
+    product.getProducts(1,searchQuery);
+};
 
 const removeProduct = (id) => {
     Swal.fire({
@@ -88,10 +92,16 @@ onMounted(() => {
 <template>
      <div class="admin-component-header">
         <h2><i class="fa fa-linode"></i> Manage Product</h2>
+     </div>
+     <div class="admin-component-header">
+        <div class="search-bar-fields">
+            <SearchBar placeholder="Search Product Name" v-model="searchData" @enterPressed="SearchFilter" @searchIconClicked="SearchFilter" @clearIconClicked="SearchFilter" class="mr-2" />
+        </div>
         <button type="button" @click="formDialog = true"><i class="fa-solid fa-plus"></i>Add</button>
     </div>
 
     <div class="table-container">
+      
         <div class="table-responsive bg-white">   
               <table class="table mb-0">
                 <thead>

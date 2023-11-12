@@ -3,9 +3,10 @@
 import { reactive, ref, onMounted, onBeforeMount  } from "vue";
 import { store } from "../../store/service";
 import Swal from 'sweetalert2';
+import SearchBar from "../SearchBar.vue";
+
 const service = store();
-
-
+const searchData = ref('');
 
 const formDialog = ref(false)
 const Update = ref(false);
@@ -33,7 +34,7 @@ const resetFields = () => {
 }
 
 const paginate = (page) => {
-    service.getServicesCategory(page);
+    service.getServicesCategory(page,searchData.value);
 }
 
 const removdeServiceCategory = (id) => {
@@ -71,6 +72,11 @@ const submitUpdate = () => {
 }
 
 
+const SearchFilter = (searchQuery) => {
+    service.getServicesCategory(1,searchQuery);
+};
+
+
 onMounted(() => {
     service.getServices();
 });
@@ -83,7 +89,9 @@ onBeforeMount(() => {
 
 <template>
     <div class="admin-component-header">
-        <h2  style="visibility: hidden;"><i class="fa fa-bed"></i> Manage Services</h2>
+        <div class="search-bar-fields">
+            <SearchBar placeholder="Search Service Category Name" v-model="searchData" @enterPressed="SearchFilter" @searchIconClicked="SearchFilter" @clearIconClicked="SearchFilter" class="mr-2" />
+        </div>
         <button type="button" @click="formDialog = true"><i class="fa-solid fa-plus"></i>Add</button>
     </div>
 
@@ -93,6 +101,8 @@ onBeforeMount(() => {
                 <thead>
                   <tr>
                     <th scope="col">Service Category Name</th>
+                    <th scope="col">Added By</th>
+                    <th scope="col">Position</th>
                     <th scope="col">Action</th>
 
                   </tr>
@@ -101,6 +111,8 @@ onBeforeMount(() => {
                   <tr>
                  
                     <td>{{ data.name }}</td>
+                    <td>{{ data.username }}</td>
+                    <td>{{ data.role }}</td>
                     <td> 
                         <span @click="updateServicesCategory(data)"><i class="fa-solid fa-edit"></i></span>
                         <span @click="removdeServiceCategory(data.id)"><i class="fa-solid fa-trash"></i></span>
@@ -276,10 +288,19 @@ onBeforeMount(() => {
 }
 
 .table-responsive{
+    border-radius: 5px !important;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
     /* padding: 2rem; */
     /* padding: 15px;
     border-radius: 10px; */
     /* box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; */
+}
+
+.table-responsive th{
+    font-size: 9px !important;
+    text-wrap: nowrap;
+    text-transform: uppercase;
+   
 }
 
 .table-container .table th, .table td{
@@ -288,6 +309,7 @@ onBeforeMount(() => {
 
 .table-responsive td{
     padding: 5px;
+    font-size: 12px !important;
 }
 .add-items-service{
     color: black;

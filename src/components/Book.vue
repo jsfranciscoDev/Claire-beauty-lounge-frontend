@@ -256,8 +256,9 @@ const calculateEstimatedEndTime = (startDateTime, estimatedHours) => {
                 {{ userData.user_appointment?.remarks }}
               </p>
             </div>
-            <div class="actions">
+            <div class="actions mt-3">
               <button
+                v-if="userData.user_appointment.detail != 'Completed'"
                 class="track"
                 type="button"
                 @click="
@@ -270,6 +271,9 @@ const calculateEstimatedEndTime = (startDateTime, estimatedHours) => {
                 :disabled="userData.user_appointment.detail == 'Cancelled'"
               >
                 Cancel
+              </button>
+              <button v-else>
+                <router-link to="/send-reviews" style="color: black; text-wrap: nowrap;">Leave us a review</router-link>
               </button>
             </div>
           </div>

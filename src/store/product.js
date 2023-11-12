@@ -37,9 +37,9 @@ export const store = defineStore({
          
         }
     },
-    async getProducts(page) {
+    async getProducts(page, searchFilter) {
       try {
-        const response = await product.getProducts(page);
+        const response = await product.getProducts(page, searchFilter);
     
           if(response.data.message == 'success'){
               this.product_details = response.data.products;

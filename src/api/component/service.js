@@ -10,8 +10,8 @@ export default {
                 }
             });
     },
-    getServices(page){
-        return axios.get(`${baseURL}api/get-services?page=${page}`, {
+    getServices(page,searchfilter){
+        return axios.post(`${baseURL}api/get-services?page=${page}`, {search:searchfilter}, {
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }
@@ -84,8 +84,8 @@ export default {
                 }
             });
     },
-    getServicesCategory(page){
-        return axios.get(`${baseURL}api/get-service-category?page=${page}`, {
+    getServicesCategory(page, searchFilter){
+        return axios.post(`${baseURL}api/get-service-category?page=${page}`, {search: searchFilter}, {
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }

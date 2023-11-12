@@ -17,7 +17,7 @@ const verification = ref(false);
 const user_id = ref();
 const EmailVerification = ref(true);
 const changePassword = ref(false);
-
+const showPhone = ref(true);
 const useUsernameRecovery = ref(true);
 
 const countdownMinutes = 3;
@@ -119,6 +119,7 @@ const isNumber = function(evt) {
 
 const tryAnotherWay = () => {
   useUsernameRecovery.value = !useUsernameRecovery.value;
+  showPhone.value = !showPhone.value;
   userData.user = {}
   if(useUsernameRecovery.value == true){
     userData.user.method = 'username'
@@ -166,9 +167,9 @@ onMounted(() => {
                     <input type="text" class="form-control" v-model="userData.user.phone" placeholder="Enter number" @keypress="isNumber($event)" maxlength="11" requried>
                 </div>
 
-                <span class="try-another" @click="tryAnotherWay()">Try another way</span>
+                <span class="try-another" @click="tryAnotherWay()">  {{ showPhone ? 'Use Phone Number Instead' : 'Use Email Instead' }}</span>
 
-                <button type="submit" class="btn login-btn mb-2" @click="login">Submit</button>
+                <button type="submit" class="btn login-btn mb-2 mt-2" @click="login">Submit</button>
               
               </form>
              
@@ -373,6 +374,8 @@ onMounted(() => {
 
 .try-another{
   cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
 }
 
 /* confirm */

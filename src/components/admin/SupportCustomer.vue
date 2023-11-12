@@ -35,7 +35,6 @@ onMounted(() => {
 <template>
      <div class="admin-component-header">
         <h2><i class="fa fa-linode"></i> Customer Support </h2>
-        <button type="button" @click="formDialog = true"><i class="fa-solid fa-plus"></i>Add</button>
     </div>
 
     <div class="table-container">
