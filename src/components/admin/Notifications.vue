@@ -40,7 +40,7 @@ onMounted(() => {
 
 <template>
     <div class="admin-component-header">
-        <h2><i class="fa fa-cog"></i> Manage Notifications</h2>
+        <h2><i class="fa fa-bell"></i> Manage Notifications</h2>
     </div>
     <div class="table-container">
         <div class="table-responsive bg-white pb-3 pt-3">   

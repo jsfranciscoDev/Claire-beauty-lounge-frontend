@@ -38,31 +38,31 @@ if(staff_role){
             
           <ul id="side-menu" v-if="userRole == 'admin'">
             <li>
-                <i class="fa fa-window-maximize"><span><router-link to="/admin/dashboard" class="sidebar-link">Dashboard</router-link></span></i>
+                <i class="fa fa-tachometer"><span><router-link to="/admin/dashboard" class="sidebar-link">Dashboard</router-link></span></i>
             </li>
             <li>
                 <i class="fa fa-bed"><span><router-link to="/admin/services" class="sidebar-link">Services</router-link></span></i>
             </li>
             <li>
-                <i class="fa fa-bed"><span><router-link to="/admin/appointments" class="sidebar-link">Appointments</router-link></span></i>
+                <i class="fa fa-book"><span><router-link to="/admin/appointments" class="sidebar-link">Appointments</router-link></span></i>
             </li>
             <li>
-                <i class="fa fa-linode"><span><router-link to="/admin/inventory" class="sidebar-link">Inventory</router-link></span></i>
+                <i class="fa fa-list-alt"><span><router-link to="/admin/inventory" class="sidebar-link">Inventory</router-link></span></i>
             </li>
             <li>
               <i class="fa fa-bell"><span><router-link to="/admin/notifications" class="sidebar-link">Notications</router-link></span></i>
             </li>
             <li>
-                <i class="fa fa-clock"><span><router-link to="/admin/daily-time-record" class="sidebar-link">Daily Time Record</router-link></span></i>
+                <i class="fa fa-calendar"><span><router-link to="/admin/daily-time-record" class="sidebar-link">Daily Time Record</router-link></span></i>
             </li>
             <li>
                <i class="fa fa-users nav_icon" ><span><router-link to="/admin/staff" class="sidebar-link">Staff</router-link></span></i>
             </li>
             <li>
-                <i class="fa fa-bed"><span><router-link to="/admin/support" class="sidebar-link">Customer Support</router-link></span></i>
+                <i class="fa fa-phone-square"><span><router-link to="/admin/support" class="sidebar-link">Customer Support</router-link></span></i>
             </li>
             <li>
-               <i class="fa fa-cog"><span ><router-link to="/admin/manage-account" class="sidebar-link">Manage Account</router-link></span></i>
+               <i class="fa fa-user-circle"><span ><router-link to="/admin/manage-account" class="sidebar-link">Manage Account</router-link></span></i>
             </li>
          
             <li>
@@ -73,28 +73,28 @@ if(staff_role){
 
           <ul id="side-menu" v-if="userRole == 'staff'">
             <li>
-                <i class="fa fa-window-maximize"><span><router-link to="/admin/dashboard" class="sidebar-link">Dashboard</router-link></span></i>
+                <i class="fa fa-tachometer"><span><router-link to="/admin/dashboard" class="sidebar-link">Dashboard</router-link></span></i>
             </li>
             <li v-if="StaffAcessRole == 'System Administrator'">
                 <i class="fa fa-bed"><span><router-link to="/admin/services" class="sidebar-link">Services</router-link></span></i>
             </li>
             <li v-if="StaffAcessRole == 'System Administrator'">
-                <i class="fa fa-bed"><span><router-link to="/admin/appointments" class="sidebar-link">Appointments</router-link></span></i>
+                <i class="fa fa-book"><span><router-link to="/admin/appointments" class="sidebar-link">Appointments</router-link></span></i>
             </li>
             <li v-if="StaffAcessRole == 'System Administrator'">
-                <i class="fa fa-linode"><span><router-link to="/admin/inventory" class="sidebar-link">Inventory</router-link></span></i>
+                <i class="fa fa-list-alt"><span><router-link to="/admin/inventory" class="sidebar-link">Inventory</router-link></span></i>
             </li>
             <li v-if="StaffAcessRole == 'System Administrator'">
                 <i class="fa fa-bell"><span><router-link to="/admin/notifications" class="sidebar-link">Notications</router-link></span></i>
             </li>
             <li>
-                <i class="fa fa-clock"><span><router-link to="/admin/daily-time-record" class="sidebar-link">Daily Time Record</router-link></span></i>
+                <i class="fa fa-calendar"><span><router-link to="/admin/daily-time-record" class="sidebar-link">Daily Time Record</router-link></span></i>
             </li>
             <li v-if="StaffAcessRole == 'System Administrator'">
-                <i class="fa fa-bed"><span><router-link to="/admin/support" class="sidebar-link">Customer Support</router-link></span></i>
+                <i class="fa fa-phone-square"><span><router-link to="/admin/support" class="sidebar-link">Customer Support</router-link></span></i>
             </li>
             <li>
-               <i class="fa fa-cog"><span ><router-link to="/admin/manage-account" class="sidebar-link">Manage Account</router-link></span></i>
+               <i class="fa fa-user-circle"><span ><router-link to="/admin/manage-account" class="sidebar-link">Manage Account</router-link></span></i>
             </li>
         
             <li>

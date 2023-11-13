@@ -55,7 +55,7 @@ const updateUserDetails = () => {
 
 <template>
     <div class="admin-component-header">
-        <h2><i class="fa fa-cog"></i> Manage Account</h2>
+        <h2><i class="fa fa-user-circle"></i> Manage Account</h2>
      
     </div>
     <div class="table-container">
