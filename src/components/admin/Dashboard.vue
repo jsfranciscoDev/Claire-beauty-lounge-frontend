@@ -86,7 +86,7 @@ onMounted(() => {
 
 <template>
     <div class="admin-component-header">
-        <h2><i class="fa fa-window-maximize"></i> Daily Time Record</h2>
+        <h2><i class="fa fa-calendar"></i> Daily Time Record</h2>
      
     </div>
     <div class="row">

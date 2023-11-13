@@ -87,7 +87,7 @@ onMounted(() => {
 
 <template>
      <div class="admin-component-header">
-        <h2><i class="fa fa-linode"></i> Manage Product</h2>
+        <h2><i class="fa fa-list-alt"></i> Manage Product</h2>
         <button type="button" @click="formDialog = true"><i class="fa-solid fa-plus"></i>Add</button>
     </div>
 

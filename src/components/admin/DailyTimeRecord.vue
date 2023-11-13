@@ -54,7 +54,7 @@ const userRole = roleBytes.toString(CryptoJS.enc.Utf8);
 
 <template>
      <div class="admin-component-header">
-        <h2><i class="fa fa-clock"></i> Daily Time Record</h2>
+        <h2><i class="fa fa-calendar"></i> Daily Time Record</h2>
         <div>
             <select v-model="selectedMonth" class="select-dropdown"  @change="handleMonthChange">
                 <option disabled value="">Months</option>

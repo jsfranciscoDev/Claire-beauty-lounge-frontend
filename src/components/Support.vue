@@ -65,7 +65,7 @@ const OpenSupport = () => {
         <button type="submit" class="">Send</button>
       </form>
     </div>
-    <button @click="OpenSupport" v-if="!SupportVisible">Ask Question</button>
+    <button @click="OpenSupport" v-if="!SupportVisible">Ask Question <span><i class="fa fa-question-circle"></i></span></button>
     <button @click="OpenSupport" v-else="">Cancel</button>
   </div>
 </template>

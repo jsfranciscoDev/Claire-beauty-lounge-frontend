@@ -51,7 +51,7 @@ const tabs = ref([
 
 <template>
      <div class="admin-component-header">
-        <h2><i class="fa fa-clock"></i> Appointments</h2>
+        <h2><i class="fa fa-book"></i> Appointments</h2>
     </div>
 
     <HeaderTabs :tabs="tabs">

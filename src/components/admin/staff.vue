@@ -106,7 +106,7 @@ const removeServices = (data) => {
 
 <template>
     <div class="admin-component-header">
-        <h2><i class="fa fa-tasks"></i> Manage Staff</h2>
+        <h2><i class="fa fa-users nav_icon"></i> Manage Staff</h2>
         <button type="button" @click="staffDialog = true"><i class="fa-solid fa-plus"></i>Add</button>
     </div>
    
@@ -114,7 +114,6 @@ const removeServices = (data) => {
         <div class="table-responsive bg-white">   
               <table class="table mb-0">
                 <thead>
-                 
                   <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
@@ -136,7 +135,7 @@ const removeServices = (data) => {
                     <td>{{ data.role_description }}</td>
                     <td class="d-flex flex-column">
                         <span v-if=" data.staff_role == 'Services'" @click="assignedService(data.id)" class="service-actions">Assign Services</span>
-                        <span v-if=" data.staff_role == 'Services'" @click="removeServices(data.id)" class="service-actions">Revome Services</span>
+                        <span v-if=" data.staff_role == 'Services'" @click="removeServices(data.id)" class="service-actions">Remove Services</span>
                         <span @click="deleteStaff(data.id)"  class="service-actions">Delete Staff</span>
                     </td>
                   </tr>
