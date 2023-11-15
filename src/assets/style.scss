@@ -69,11 +69,6 @@ h1, h2, h3, h4, h5,
     font-family: $font-tertiary;
 }
 
-button, .button{
-    font-family: $font-tertiary !important;
-}
-
-
 .text-primary {
 	color: $primary!important;
 }
@@ -5193,9 +5188,10 @@ button {
     text-transform: uppercase;
     background-color: #e4d5b7;
     color: #343434;
-    font-weight: bold;
     box-shadow: 0 0.4rem #dfd9d9;
     cursor: pointer;
+    font-family: 'poppins' !important;
+    font-weight: 600 !important;
    }
    
    button:active {

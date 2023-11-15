@@ -214,6 +214,15 @@ const calculateEstimatedEndTime = (startDateTime, estimatedHours) => {
   const endTime = moment(startDateTime).add(moment.duration(estimatedHours));
   return endTime.format("MMMM Do YYYY, h:mm:ss a");
 };
+
+const hasSelectedDateData = () => {
+  let booked = userData.selected_date_appointment.data;
+  if (booked[0]) {
+    return true;
+  } else {
+    return false;
+  }
+};
 </script>
 
 <template>
@@ -289,8 +298,9 @@ const calculateEstimatedEndTime = (startDateTime, estimatedHours) => {
 
         <div
           class="table-container"
-          v-if="userData.selected_date_appointment.data.data"
+          v-if="hasSelectedDateData()"
         >
+        
           <div class="table-responsive bg-white">
             <table class="table mb-0">
               <thead>

@@ -228,10 +228,10 @@ const formatTime = function(event) {
                     <td>{{ data.username }}</td>
                     <td>{{ data.role }}</td>
                     <td class="actions d-flex flex-column" style="border: none;"> 
-                        <span @click="updateServices(data)">Edit Services</span>
-                        <span @click="deleteServices(data.id)">Delete Services</span>
-                        <span @click="addServicesProduct(data.id)">Add Items</span>
-                        <span @click="removeServicesProduct(data.id)">Remove Items</span>
+                        <span @click="updateServices(data)" class="text-info">Edit Services</span>
+                        <span @click="deleteServices(data.id)" class="text-danger">Delete Services</span>
+                        <span @click="addServicesProduct(data.id)" class="text-success">Add Items</span>
+                        <span @click="removeServicesProduct(data.id)" class="text-danger">Remove Items</span>
                     </td>
 
                   </tr>

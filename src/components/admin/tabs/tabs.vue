@@ -39,6 +39,7 @@ const activeTabs = ref(props.tabs[0].value);
             justify-content: center;
             cursor: pointer;
             transition: 0.25s all ease;
+            border-radius: 5px;
 
             &:hover{
                 background-color: beige;
@@ -54,6 +55,12 @@ const activeTabs = ref(props.tabs[0].value);
             
             i{
                 margin: 0px 3px;
+            }
+
+            span{
+                font-size: 12px;
+                font-weight: 600;
+                font-family: 'poppins';
             }
         }
 
