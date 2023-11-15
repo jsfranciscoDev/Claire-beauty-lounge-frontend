@@ -87,7 +87,6 @@ const clearErrorMessage = () => {
 
 
 const submitChangePassword = () => {
-  alert('asd');
     if(userData.user_password.password == userData.user_password.confirm_password){
         userData.user_password.status = ''
         userData.recoveryChangePassword(user_id.value).then(response => {

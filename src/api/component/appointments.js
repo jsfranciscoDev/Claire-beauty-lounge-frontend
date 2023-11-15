@@ -3,8 +3,8 @@ const storedToken = sessionStorage.getItem('token');
 const baseURL = import.meta.env.VITE_APP_BASE_URL;
 
 export default {
-    getAllappointments(page){
-        return axios.get(`${baseURL}api/get-all-appointments?page=${page}`, {
+    getAllappointments(page, date, search){
+        return axios.post(`${baseURL}api/get-all-appointments?page=${page}`, {datefilter: date, search: search} ,{
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="form-group search-bar">
+    <div class="form-group search-bar ml-2">
       <input
         type="input"
         class="form-control"

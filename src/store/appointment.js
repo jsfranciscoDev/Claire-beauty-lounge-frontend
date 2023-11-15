@@ -9,9 +9,9 @@ export const appointment = defineStore({
     data: {},
   }),
   actions: {
-    async getAllappointments(page){
+    async getAllappointments(page,date, search){
         try {
-            const response = await api.getAllappointments(page);
+            const response = await api.getAllappointments(page,date,search);
             this.data = response.data.appointment
           } catch (error) {
             
