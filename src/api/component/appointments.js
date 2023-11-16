@@ -10,9 +10,9 @@ export default {
                 }
             });
     },
-    getStatusgappointments(page,status){
+    getStatusgappointments(page,status,date,search){
 
-        return axios.post(`${baseURL}api/get-status-appointments?page=${page}`, {status},{
+        return axios.post(`${baseURL}api/get-status-appointments?page=${page}`, {status,date,search},{
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }

@@ -83,10 +83,10 @@ export default {
       },
     });
   },
-  sendOtp(mobile_num) {
+  sendOtp(payload) {
     return axios.post(
       `${baseURL}api/get-otp`,
-      { mobile_num },
+      payload,
       {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -197,6 +197,17 @@ export default {
     return axios.post(
       `${baseURL}api/validate-account`,
        {phone: payload} ,
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      }
+    );
+  },
+  sendsupportReply(payload) {
+    return axios.post(
+      `${baseURL}api/send-mail`,
+      payload ,
       {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("token")}`,

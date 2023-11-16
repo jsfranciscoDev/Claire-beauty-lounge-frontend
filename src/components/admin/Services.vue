@@ -452,6 +452,8 @@ const formatTime = function(event) {
     font-size: 20px;
     text-transform: uppercase;
     color: #6F6F6F;
+    font-family: 'poppins';
+    font-weight: 600;
 }
 
 .admin-component-header button{
@@ -473,6 +475,7 @@ const formatTime = function(event) {
     margin: 0px 5px;
     color: #B2BEB5;
     cursor: pointer;
+    
 }
 .table-container .table th, .table td{
     padding: 1rem !important;

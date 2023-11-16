@@ -73,6 +73,17 @@ h1, h2, h3, h4, h5,
 	color: $primary!important;
 }
 
+.navbar-mobile{
+    display: none;
+}
+
+.mobile-header{
+    display: none;
+}
+
+.table-container{
+    margin: 30px !important;
+}
 .hero{
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -5215,6 +5226,8 @@ button {
 
 .staff-cards{
     padding: 0 0 3rem 0;
+    display: flex;
+    justify-content: center;
 
     .cards-image{
         display: flex;
@@ -5222,11 +5235,12 @@ button {
     }
     .cards{
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px;
-        border-radius: 20px;
+        border-radius: 5px;
         max-width: 360px;
         height: auto;
         padding: 2rem;
         margin: 0px 2rem;
+        min-width: 300px;
 
         img{
             width: 150px;
@@ -5323,4 +5337,164 @@ button {
     align-items: center;
     justify-content: space-around;
     width: 100%;
+}
+
+
+$breakpoint-tablet: 998px;
+@media (max-width: $breakpoint-tablet) {
+  .owl-carousel.home-slider .slider-item .slider-text .one-third{
+    opacity: 0.1;
+  }
+  #ftco-navbar{
+    display: none;
+  }
+
+  .hero-wrap.hero-wrap-2 .overlay{
+    display: none;
+  }
+
+  .hero-wrap.hero-wrap-2{
+    height: 200px;
+  }
+
+  .banner-text{
+    display: none;
+  }
+  .support-container{
+    left: 10px !important;
+
+    .form{
+        max-width: 350px !important;
+    }
+  }
+
+  .table-container{
+    max-width: 600px !important;
+    margin: 30px !important;
+    overflow-x: auto !important;
+  }
+
+  .staff-cards {
+    margin: 10px 0px;
+
+    .cards{
+        margin: 20px;
+        width: 100% !important;
+    }
+  }
+ 
+  .banner-text-mobile{
+    position: absolute;
+    top: 120px;
+    left: 30px;
+  }
+
+  .column-one{
+    padding: 30px;
+  }
+  .mobile-header{
+    height: 45px;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    img{
+        max-width: 45px;
+        margin-right: 10px;
+    }
+  }
+  .cbp-spmenu-push div#page-wrapper{
+    margin: 0px;
+  }
+  .sidebar{
+    display: none;
+  }
+
+  .navbar-mobile{
+    height: 105%;
+    position: fixed;
+    width: 100%;
+    background-color: #d9b99b;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: -50px;
+    
+    .navbar-nav-mobile-dashboard{
+        ul{
+            color: #000;
+        }
+
+        li{
+            list-style: none;
+            color: #000 !important;
+            margin: 10px;
+            text-align: center;
+
+            span{
+                color: #000 !important;
+            }
+            a{
+                color: #000 !important;
+            }
+        }
+    }
+    img{
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 30px;
+    }
+
+    .navbar-nav-mobile{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        position: relative;
+
+       
+
+        ul{
+            color: #000;
+        }
+
+        li{
+            list-style: none;
+            color: #000 !important;
+
+            span{
+                color: #000 !important;
+            }
+            a{
+                color: #000 !important;
+            }
+        }
+    }
+  }
+  .dashboard-container-box{
+    flex-direction: column;
+  }
+  .cbp-spmenu-push div#page-wrapper{
+    padding: 30px;
+  }
+
+  .admin-component-header{
+    flex-direction: column;
+
+    div{
+        display: flex;
+        flex-direction: column;
+    }
+  }
+  .table-responsive td{
+    text-wrap: nowrap !important;
+  }
+  .ftco-footer .ftco-footer-widget ul li{
+    text-wrap: wrap;
+  }
 }

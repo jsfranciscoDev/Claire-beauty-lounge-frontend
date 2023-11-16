@@ -14,7 +14,8 @@ export const userStore = defineStore({
     otp_id: null,
     user_password: {},
     support_data: {},
-    support_concern: {}
+    support_concern: {},
+    email:{}
   }),
   actions: {
     async submitRevoceryEmail() {
@@ -100,5 +101,12 @@ export const userStore = defineStore({
         return response;
       } catch (error) {}
     },
+    async sendsupportReply() {
+      try {
+        const response = await user.sendsupportReply(this.email);
+        return response;
+      } catch (error) {}
+    },
+    
   },
 });

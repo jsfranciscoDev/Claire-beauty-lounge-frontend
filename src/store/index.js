@@ -2,6 +2,7 @@ import user from "../api/component/user.js";
 import staff from "../api/component/staff.js"
 import api from "../api/component/appointments.js"
 import service from "../api/component/service.js"
+import product from "../api/component/product.js"
 import { defineStore } from 'pinia';
 import CryptoJS from 'crypto-js';
 import Swal from 'sweetalert2';
@@ -412,5 +413,22 @@ export const store = defineStore({
         
         }
     },
+    async fetchLowStocksProduct() {  
+      try {
+          const response = await product.fetchLowStocksProduct();
+          return response;
+        } catch (error) {
+        
+        }
+    },
+    async fetchExpireStocksProduct() {  
+      try {
+          const response = await product.fetchExpireStocksProduct();
+          return response;
+        } catch (error) {
+        
+        }
+    },
+    
   },
 });

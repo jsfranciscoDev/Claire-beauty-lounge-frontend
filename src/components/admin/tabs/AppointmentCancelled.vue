@@ -3,6 +3,7 @@ import { appointment } from "../../../store/appointment";
 import { onBeforeMount  } from "vue";
 import moment from 'moment';
 import Swal from 'sweetalert2';
+import  daterange  from "../../daterange.vue";
 
 const appointmentData = appointment();
 

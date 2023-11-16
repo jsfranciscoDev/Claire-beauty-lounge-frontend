@@ -51,7 +51,7 @@ const LoginAccount = async (event) => {
 
 const sendOtp = () => {
   verification.value = true
-  userData.sendOtp(user.contact)
+  userData.sendOtp(user)
   countdownInterval = setInterval(() => {
     countdownTime.value -= 1;
     if (countdownTime.value <= 0) {

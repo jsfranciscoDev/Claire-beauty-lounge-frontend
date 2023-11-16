@@ -12,6 +12,12 @@ const role = sessionStorage.getItem('role');
 const roleBytes = CryptoJS.AES.decrypt(role, 'role');
 const userRole = roleBytes.toString(CryptoJS.enc.Utf8);
 
+const productLow = ref();
+const productLowMssg = ref();
+
+const productExp = ref();
+const productExpMssg = ref();
+
 const public_ip = import.meta.env.VITE_APP_IP_LOCATION;
 
 const apiKey = import.meta.env.VITE_APP_LOCATION_API_KEY;
@@ -76,6 +82,23 @@ onBeforeUnmount(() => {
 
 onMounted(() => {
   userData.fetchUser();
+  userData.fetchLowStocksProduct().then(response =>{
+    console.log(response.data);
+    if(response.data.message == 'Low stocks'){
+        productLow.value = response.data.products
+    }else{
+        productLowMssg.value = response.data.message;
+    }
+  });
+  
+  userData.fetchExpireStocksProduct().then(response =>{
+    console.log(response.data);
+    if(response.data.message == 'Products Will expire soon'){
+        productExp.value = response.data.products
+    }else{
+        productExpMssg.value = response.data.message;
+    }
+  });
   userData.getDTR();
   fetchCurrentTime();
   intervalId = setInterval(fetchCurrentTime, 1000);
@@ -85,13 +108,14 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="admin-component-header">
+    <div class="dashboard-container-box">
+        <div class="dashboard-box">
+            <div class="admin-component-header">
         <h2><i class="fa fa-window-maximize"></i> Daily Time Record</h2>
-     
     </div>
     <div class="row">
 
-        <div class="col-12 col-md-4 col-lg-4 time-clock">
+        <div class="time-clock">
             <div class="d-flex justify-content-center align-items-start">
                 <div>
                     <div class="clock">
@@ -109,10 +133,94 @@ onMounted(() => {
             </div>
         </div>
     </div>
+        </div>
+        <div class="dashboard-box">
+            <div class="admin-component-header">
+        <h2><i class="fa fa-box"></i> Low Stocks</h2>
+    </div>
+        <div class="time-clock">
+            <div class="d-flex justify-content-between align-items-center" >
+               
+                <div v-if="productLowMssg === 'No low stocks'">
+                   <h5 class="low-stock-label"> {{ productLowMssg }}</h5>
+                </div>
+                <div v-else>  
+                    <div v-for="data in productLow">
+                        <p class="product-name">{{ data.name }}</p>
+                        <p class="product-qty">{{ data.quantity }}</p>
+                    </div>
+                </div>
+               
+                <div>
+                    <img src="../../assets/images/sgvicons/box.svg" class="img-fluid preview-image" />
+                </div>
+            </div>
+        </div>
+   
+        </div>
+
+        <div class="dashboard-box">
+            <div class="admin-component-header">
+        <h2><i class="fa fa-box"></i> Expiring Stocks</h2>
+    </div>
+        <div class="time-clock">
+            <div class="d-flex justify-content-between align-items-center" >
+               
+               <div v-if="productExpMssg === 'Products Will expire soon'">
+                  <h5 class="low-stock-label"> {{ productExpMssg }}</h5>
+               </div>
+               <div v-else>  
+                   <div v-for="data in productExp">
+                       <p class="product-name">{{ data.name }}</p>
+                       <p class="product-qty">{{ data.expiration_date }}</p>
+                   </div>
+               </div>
+              
+               <div>
+                   <img src="../../assets/images/sgvicons/box.svg" class="img-fluid preview-image" />
+               </div>
+           </div>
+        </div>
+   
+        </div>
+    </div>
 </template>
 
 
 <style>
+.low-stock-label{
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'poppins';
+    color: rgb(155, 230, 44);
+    text-transform: uppercase;
+    text-align: center;
+}
+.product-name{
+    text-transform: uppercase;
+    font-weight: bold;
+    color: black;
+}
+.product-qty{
+    text-transform: uppercase;
+    font-weight: bold;
+    color: red;
+    font-size: 20px;
+}
+.dashboard-container-box{
+    display: flex;
+    width: 100%;
+}
+.dashboard-box{
+   width: 100%;
+   margin: 5px;
+}
+.time-clock{
+    width: 100%;
+}
+.time-clock img{
+    margin-right: 1rem;
+}
 .upload-icon{
     background-color: rgb(0, 0, 0);
     padding: 5px;

@@ -215,6 +215,7 @@ onBeforeMount(() => {
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    margin: 15px;
 }
 
 .staff-form button {

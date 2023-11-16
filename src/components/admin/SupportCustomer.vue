@@ -4,7 +4,8 @@ import { userStore } from "../../store/user";
 import Swal from 'sweetalert2';
 
 const support = userStore();
-
+const replyEmail = ref(false);
+const recipeintemail = ref('');
 
 const closeDialog = () => {
     formDialog.value = false;
@@ -30,6 +31,33 @@ onMounted(() => {
     support.getAllsupport();
 });
 
+const sendEmailReply = (email) =>{
+    replyEmail.value = true
+    recipeintemail.value = email;
+}
+
+const sendreply = () =>{
+    support.email.recipeintemail = recipeintemail.value
+    support.sendsupportReply().then(response => {
+        console.log(response.data);
+        if(response.data.status == "Success"){
+            support.email.reply_msg = ''
+            replyEmail.value = false
+            Swal.fire(
+                'Email Sent!',
+                'The Email sent directly to the client.',
+                'success'
+            )
+        }else{
+            Swal.fire(
+                'Something Went wrong!',
+                'Unable to send an email to the client',
+                'error'
+            )
+        }
+    });
+}   
+
 </script>
 
 <template>
@@ -46,6 +74,7 @@ onMounted(() => {
                     <th scope="col">Email</th>
                     <th scope="col">Message</th>
                     <th scope="col">Date</th>
+                    <th scope="col">Actions</th>
                     
                   </tr>
                 </thead>
@@ -56,7 +85,7 @@ onMounted(() => {
                     <td>{{ data.email }}</td>
                     <td>{{ data.message }}</td>
                     <td>{{ data.created_at }}</td>
-
+                    <td><span class="reply-btn" @click="sendEmailReply(data.email)">Reply Via Email</span></td>
                   </tr>
                 </tbody>
 
@@ -75,81 +104,37 @@ onMounted(() => {
         </div>
     </div>
 
+
       <!-- MODAL -->
-      <div class="add-staff" v-if="formDialog">
+      <div class="add-staff" v-if="replyEmail">
         <div class="form-container">
             <div class="staff-form">
                 <div class="form-input">
-                    <h2 v-if="!Update"><i class="fa-solid fa-plus"></i> Add Item</h2>
-                    <h2 v-else> <i class="fa-solid fa-edit"></i> Update Item</h2>
-                <form @submit.prevent="addProductItem">
-                   
+                    <h2 v-if="!updateStaff"><i class="fa-solid fa-bell"></i> Send Reply</h2>
+                
+                <form @submit.prevent="sendreply">
+               
                 <div class="form-group">
-                    <label for="username">Product Name</label>
-                    <input type="text" class="form-control" v-model="product.product.name" autocomplete="off" required>
-                    <span  class="text-danger fs-12"></span>
-                </div>
-                <div class="form-group" >
-                    <label for="password">Batch Number</label>
-                    <input type="text" class="form-control" v-model="product.product.batch_number" autocomplete="off" @keypress="isNumber($event)" required>
-                    <span  class="text-danger"></span>
-                </div>
-
-                <div class="d-flex">
-                    <div class="form-group w-100 pr-2" >
-                        <label for="confirm_password">Price</label>
-                        <input type="text" class="form-control" v-model="product.product.price" autocomplete="off" @keypress="isNumber($event)" required>
-                        <span  class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group w-100 p2-2">
-                        <label for="name">Quantity</label>
-                        <input type="text" class="form-control" v-model="product.product.quantity" autocomplete="off" @keypress="isNumber($event)" required>
-                        <span  class="text-danger"></span>
-                    </div>
-                </div>
-
-            
-                <div class="form-group">
-                    <label for="name">Supplier Information</label>
-                    <input type="text" class="form-control" v-model="product.product.supplier_information" autocomplete="off" required>
+                    <label for="name">Reply Via Email</label>
+                    <textarea class="form-control" v-model="support.email.reply_msg" autocomplete="off"  rows="6" cols="50" required></textarea>
                     <span  class="text-danger"></span>
                 </div>
                 
-                <div class="d-flex">
-                    <div class="form-group w-100 pr-2">
-                        <label for="name">Purchase Date</label>
-                        <input type="date" class="form-control" v-model="product.product.purchase_dates" autocomplete="off" required>
-                        <span  class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group w-100 pl-2">
-                        <label for="name">Expiration Date</label>
-                        <input type="date" class="form-control" v-model="product.product.expiration_date" autocomplete="off" required>
-                        <span  class="text-danger"></span>
-                    </div>
-                </div>
-              
-                
-                <div v-if="!Update">
-                    <button type="submit" class="btn btn-primary" >Create</button>
-                    <button type="button" class="btn btn-danger" @click="closeDialog">Cancel</button>
-                </div>
-                
-                
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-danger" @click=" replyEmail = false">Cancel</button>
               </form>
-
-              <div v-if="Update">
-                <button class="btn btn-primary"  @click="submitUpdate()">Update</button>
-                <button type="button" class="btn btn-danger" @click="closeDialog">Cancel</button>
-              </div>
-             
-
             </div>
             </div>
         </div>
      
-      </div>
+    </div>
     <!-- MODAL -->
 
 </template>
+
+<style>
+.reply-btn{
+    cursor: pointer;
+    font-weight: bolder;
+}
+</style>

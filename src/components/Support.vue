@@ -65,12 +65,17 @@ const OpenSupport = () => {
         <button type="submit" class="">Send</button>
       </form>
     </div>
-    <button @click="OpenSupport" v-if="!SupportVisible">Ask Question</button>
-    <button @click="OpenSupport" v-else="">Cancel</button>
+    <img src="../assets/images/sgvicons/questionmark.svg" class="support-icon"  @click="OpenSupport" v-if="!SupportVisible" >
+    <img src="../assets/images/sgvicons/close.svg" class="support-icon"  @click="OpenSupport" v-else>
   </div>
 </template>
 
 <style>
+.support-icon{
+  max-width: 50px;
+  background-color: white;
+  border-radius: 50%;
+}
 .support-container {
   position: fixed;
   bottom: 50px;

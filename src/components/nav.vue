@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 
 const user = store();
 const role = ref();
+const mobile = ref();
 
 const logoutUser = () => {
  
@@ -73,5 +74,45 @@ onMounted(() => {
         </div>
       </div>
     </nav>
+
+    <div class="mobile-header">
+      <router-link to="/" class="navbar-brand nav-link">Claire Beauty Lounge</router-link>
+      <img src="../assets/images/sgvicons/hamburger.svg" @click="mobile = true">
+    </div>
+
+    <div class="navbar-mobile" v-if="mobile">
+     
+      <img src="../assets/images/sgvicons/close-white.svg" @click="mobile = false">
+
+          <ul class="navbar-nav-mobile ml-auto">
+            <li class="nav-item" :class="{ 'active': $route.path === '/' }">
+              <router-link to="/" class="nav-link"><span>Home</span></router-link>
+            </li>
+            <li class="nav-item" :class="{ 'active': $route.path === '/staff' }">
+              <router-link to="/staff" class="nav-link"><span>Staff</span></router-link>
+            </li>
+            <li class="nav-item" :class="{ 'active': $route.path === '/book' }" v-if="user.role === 'user'">
+              <router-link to="/book" class="nav-link"><span>Book</span></router-link>
+            </li>
+            <li class="nav-item" :class="{ 'active': $route.path === '/services' }">
+              <router-link to="/services" class="nav-link"><span>Services</span></router-link>
+            </li>
+            <li class="nav-item" :class="{ 'active': $route.path === '/manage-profile' }" v-if="user.role === 'user'">
+              <router-link to="/manage-profile" class="nav-link"><span>Profile</span></router-link>
+            </li>
+            <li class="nav-item" :class="{ 'active': $route.path === '/reviews' }">
+              <router-link to="/reviews" class="nav-link"><span>Reviews</span></router-link>
+            </li>
+            <li class="nav-item" v-if="user.role === 'user'">
+              <a class="nav-link" @click="logoutUser">Logout</a>
+            </li>
+            <li class="nav-item" :class="{ 'active': $route.path === '/admin' }" v-else-if="user.role == 'admin' || user.role == 'staff'">
+              <router-link to="/admin/dashboard" class="nav-link"><span>admin</span></router-link>
+            </li>
+            <li class="nav-item" :class="{ 'active': $route.path === '/admin' }" v-else>
+              <router-link to="/admin" class="nav-link"><span>Login</span></router-link>
+            </li>
+          </ul>
+        </div>
   </template>
   

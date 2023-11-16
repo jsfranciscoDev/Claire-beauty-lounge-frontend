@@ -44,5 +44,19 @@ export default {
                 'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }
             });
-    }
+    },
+    fetchLowStocksProduct(){
+        return axios.get(`${baseURL}api/get-product-lowstocks`,{
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                }
+            });
+    },
+    fetchExpireStocksProduct(){
+        return axios.get(`${baseURL}api/get-product-expire`,{
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                }
+            });
+    },
 }

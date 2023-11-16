@@ -10,7 +10,7 @@
       <p></p>
     </div>
 
-    <div class="table-container mt-5" style="width: 1200px">
+    <div class="table-container mt-5">
       <div class="table-responsive bg-white">
         <table class="table mb-0">
           <thead>

@@ -7,10 +7,12 @@ import axios from 'axios';
 const baseURL = import.meta.env.VITE_APP_BASE_URL;
 
 const user = store();
+const mobile = ref();
 
 const logoutUser = () => {
   user.logout();
 }
+
 const StaffAcessRole = ref(null);
 
 const role = sessionStorage.getItem('role');
@@ -107,6 +109,84 @@ if(staff_role){
         </nav>
       </div>
     </div>
+
+
+    <div class="mobile-header">
+      <router-link to="/" class="navbar-brand nav-link">Claire Beauty Lounge</router-link>
+      <img src="../../assets/images/sgvicons/hamburger.svg" @click="mobile = true">
+    </div>
+
+    <div class="navbar-mobile" v-if="mobile">
+     
+      <img src="../../assets/images/sgvicons/close-white.svg" @click="mobile = false">
+
+      <ul id="side-menu" class="navbar-nav-mobile-dashboard" v-if="userRole == 'admin'">
+            <li @click="mobile = false">
+                <i class="fa fa-window-maximize"><span><router-link to="/admin/dashboard" class="sidebar-link"> Dashboard</router-link></span></i>
+            </li>
+            <li @click="mobile = false">
+                <i class="fa fa-bed"><span><router-link to="/admin/services" class="sidebar-link"> Services</router-link></span></i>
+            </li>
+            <li @click="mobile = false">
+                <i class="fa fa-bed"><span><router-link to="/admin/appointments" class="sidebar-link"> Appointments</router-link></span></i>
+            </li>
+            <li @click="mobile = false">
+                <i class="fa fa-linode"><span><router-link to="/admin/inventory" class="sidebar-link"> Inventory</router-link></span></i>
+            </li>
+            <li @click="mobile = false">
+              <i class="fa fa-bell"><span><router-link to="/admin/notifications" class="sidebar-link"> Notications</router-link></span></i>
+            </li>
+            <li @click="mobile = false">
+                <i class="fa fa-clock"><span><router-link to="/admin/daily-time-record" class="sidebar-link"> Daily Time Record</router-link></span></i>
+            </li>
+            <li @click="mobile = false">
+               <i class="fa fa-users nav_icon" ><span><router-link to="/admin/staff" class="sidebar-link"> Staff</router-link></span></i>
+            </li>
+            <li @click="mobile = false">
+                <i class="fa fa-bed"><span><router-link to="/admin/support" class="sidebar-link"> Customer Support</router-link></span></i>
+            </li>
+            <li @click="mobile = false">
+               <i class="fa fa-cog"><span ><router-link to="/admin/manage-account" class="sidebar-link"> Manage Account</router-link></span></i>
+            </li>
+         
+            <li @click="mobile = false">
+               <i class="fa fa-sign-out"  @click="logoutUser"><span ><router-link to="/" class="sidebar-link"> Logout</router-link></span></i>
+            </li>
+        
+          </ul>
+
+          <ul id="side-menu" class="navbar-nav-mobile-dashboard" v-if="userRole == 'staff'">
+            <li @click="mobile = false">
+                <i class="fa fa-window-maximize"><span><router-link to="/admin/dashboard" class="sidebar-link"> Dashboard</router-link></span></i>
+            </li>
+            <li v-if="StaffAcessRole == 'System Administrator'" @click="mobile = false">
+                <i class="fa fa-bed"><span><router-link to="/admin/services" class="sidebar-link"> Services</router-link></span></i>
+            </li>
+            <li v-if="StaffAcessRole == 'System Administrator'" @click="mobile = false">
+                <i class="fa fa-bed"><span><router-link to="/admin/appointments" class="sidebar-link"> Appointments</router-link></span></i>
+            </li>
+            <li v-if="StaffAcessRole == 'System Administrator'" @click="mobile = false">
+                <i class="fa fa-linode"><span><router-link to="/admin/inventory" class="sidebar-link"> Inventory</router-link></span></i>
+            </li>
+            <li v-if="StaffAcessRole == 'System Administrator'" @click="mobile = false">
+                <i class="fa fa-bell"><span><router-link to="/admin/notifications" class="sidebar-link"> Notications</router-link></span></i>
+            </li>
+            <li @click="mobile = false">
+                <i class="fa fa-clock"><span><router-link to="/admin/daily-time-record" class="sidebar-link"> Daily Time Record</router-link></span></i>
+            </li>
+            <li v-if="StaffAcessRole == 'System Administrator'" @click="mobile = false">
+                <i class="fa fa-bed"><span><router-link to="/admin/support" class="sidebar-link"> Customer Support</router-link></span></i>
+            </li>
+            <li @click="mobile = false">
+               <i class="fa fa-cog"><span ><router-link to="/admin/manage-account" class="sidebar-link"> Manage Account</router-link></span></i>
+            </li>
+        
+            <li @click="mobile = false">
+               <i class="fa fa-sign-out"  @click="logoutUser"><span ><router-link to="/" class="sidebar-link"> Logout</router-link></span></i>
+            </li>
+        
+          </ul>
+        </div>
 </template>
 
 <style>

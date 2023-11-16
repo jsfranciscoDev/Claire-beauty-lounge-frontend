@@ -17,9 +17,9 @@ export const appointment = defineStore({
             
           }
     },
-    async getStatusgappointments(page, status){
+    async getStatusgappointments(page, status,date,search){
       try {
-          const response = await api.getStatusgappointments(page, status);
+          const response = await api.getStatusgappointments(page,status,date,search);
           this.data = response.data.appointment
         } catch (error) {
           
