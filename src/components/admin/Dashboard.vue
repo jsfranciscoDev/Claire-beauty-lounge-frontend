@@ -59,9 +59,12 @@ const staffUserTimein = (action) => {
   
     let ip_address = axios.get(`https://ipgeolocation.abstractapi.com/v1/?api_key=${apiKey}`)
           .then(response => {
-              console.log(response);
               if(response.data.ip_address == public_ip){
-                userData.timeIn( userData.user_details.id, currentTime.value, currentDate.value, action)
+                userData.timeIn( userData.user_details.id, currentTime.value, currentDate.value, action).then(response => {
+                    if(response.data.status == 'success'){
+                        userData.timeInButtonAction = response.data.action
+                    }
+                })
               }else{
                 Swal.fire({
                     title: `Invalid ${action}`,
@@ -71,7 +74,6 @@ const staffUserTimein = (action) => {
               }
           })
           .catch(error => {
-              console.log(error);
           });
 }
 
@@ -83,7 +85,6 @@ onBeforeUnmount(() => {
 onMounted(() => {
   userData.fetchUser();
   userData.fetchLowStocksProduct().then(response =>{
-    console.log(response.data);
     if(response.data.message == 'Low stocks'){
         productLow.value = response.data.products
     }else{
@@ -92,7 +93,6 @@ onMounted(() => {
   });
   
   userData.fetchExpireStocksProduct().then(response =>{
-    console.log(response.data);
     if(response.data.message == 'Products Will expire soon'){
         productExp.value = response.data.products
     }else{

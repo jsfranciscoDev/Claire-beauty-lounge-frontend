@@ -8,7 +8,6 @@ const role = ref();
 
 const SupportSend = () => {
   Support.sendSupport().then(response => {
-      console.log(response);
       if(response.data.message == 'success'){
         Swal.fire({
                 title: "Send Successfully!",

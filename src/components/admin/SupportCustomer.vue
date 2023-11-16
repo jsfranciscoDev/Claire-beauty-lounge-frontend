@@ -42,7 +42,7 @@ const sendreply = () =>{
     replyEmail.value = false
     support.email.recipeintemail = recipeintemail.value
     support.sendsupportReply().then(response => {
-        console.log(response.data);
+
         if(response.data.status == "Success"){
             support.email.reply_msg = ''
             replyEmail.value = false

@@ -136,7 +136,7 @@ const removeServices = (data) => {
                     <td>{{ data.role_description }}</td>
                     <td class="d-flex flex-column">
                         <span v-if=" data.staff_role == 'Services'" @click="assignedService(data.id)" class="service-actions">Assign Services</span>
-                        <span v-if=" data.staff_role == 'Services'" @click="removeServices(data.id)" class="service-actions">Revome Services</span>
+                        <span v-if=" data.staff_role == 'Services'" @click="removeServices(data.id)" class="service-actions">Remove Services</span>
                         <span @click="deleteStaff(data.id)"  class="service-actions">Delete Staff</span>
                     </td>
                   </tr>

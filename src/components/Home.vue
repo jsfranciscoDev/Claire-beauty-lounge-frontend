@@ -57,7 +57,7 @@ import navBar from "../components/nav.vue";
         />
       </div>
       <div class="col-sm-12 col-md-6 col-lg-6 column-one">
-        <h2>Come and book your appointment now.</h2>
+        <h2>Book your appointment here.</h2>
         <p class="mt-2">
           Here we offer best treatment that you might have never experienced
           before.

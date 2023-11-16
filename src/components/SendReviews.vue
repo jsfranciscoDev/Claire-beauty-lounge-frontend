@@ -43,7 +43,7 @@ const previewImage = (event) => {
             const dataURL = `data:${mimeType};base64,${base64String}`;
             userData.reviews.image = dataURL;
         };
-        console.log(userData.reviews.image);
+    
         reader.readAsDataURL(file);
     } else {
         file.value = null;
@@ -73,7 +73,6 @@ const sendReviews = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 userData.sendUserReviews().then(e=>{
-                    console.log(e);
                     if(e.data.status =="success"){
                         Swal.fire({
                             title: e.data.status,

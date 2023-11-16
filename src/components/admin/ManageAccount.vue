@@ -17,7 +17,6 @@ const backendbaseURL = import.meta.env.VITE_APP_BASE_URL;
 
 const previewImage = (event) => {
     const file = event.target.files[0];
-    console.log(file);
     if (file && (file.type.startsWith('image/png') || file.type.startsWith('image/jpeg'))) {
         preview.value = URL.createObjectURL(file);
 

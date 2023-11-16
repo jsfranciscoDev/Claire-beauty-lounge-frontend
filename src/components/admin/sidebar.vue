@@ -40,67 +40,84 @@ if(staff_role){
             
           <ul id="side-menu" v-if="userRole == 'admin'">
             <li>
-                <i class="fa fa-window-maximize"><span><router-link to="/admin/dashboard" class="sidebar-link">Dashboard</router-link></span></i>
+                <img src="../../assets/images/sgvicons/calendar-black.svg"  class="admin-icon"/>
+                <span><router-link to="/admin/dashboard" class="sidebar-link">Dashboard</router-link></span>
             </li>
             <li>
-                <i class="fa fa-bed"><span><router-link to="/admin/services" class="sidebar-link">Services</router-link></span></i>
+                <img src="../../assets/images/sgvicons/service-black.svg" class="admin-icon" />
+                <span><router-link to="/admin/services" class="sidebar-link">Services</router-link></span>
             </li>
             <li>
-                <i class="fa fa-bed"><span><router-link to="/admin/appointments" class="sidebar-link">Appointments</router-link></span></i>
+                <img src="../../assets/images/sgvicons/appointment.svg" class="admin-icon" />
+                <span><router-link to="/admin/appointments" class="sidebar-link">Appointments</router-link></span>
             </li>
             <li>
-                <i class="fa fa-linode"><span><router-link to="/admin/inventory" class="sidebar-link">Inventory</router-link></span></i>
+                <img src="../../assets/images/sgvicons/product.svg" class="admin-icon" />
+                <span><router-link to="/admin/inventory" class="sidebar-link">Inventory</router-link></span>
             </li>
             <li>
-              <i class="fa fa-bell"><span><router-link to="/admin/notifications" class="sidebar-link">Notications</router-link></span></i>
+                <img src="../../assets/images/sgvicons/notification.svg" class="admin-icon" />
+                <span><router-link to="/admin/notifications" class="sidebar-link">Notications</router-link></span>
             </li>
             <li>
-                <i class="fa fa-clock"><span><router-link to="/admin/daily-time-record" class="sidebar-link">Daily Time Record</router-link></span></i>
+                <img src="../../assets/images/sgvicons/clock.svg" class="admin-icon" />
+                <span><router-link to="/admin/daily-time-record" class="sidebar-link">Daily Time Record</router-link></span>
             </li>
             <li>
-               <i class="fa fa-users nav_icon" ><span><router-link to="/admin/staff" class="sidebar-link">Staff</router-link></span></i>
+                <img src="../../assets/images/sgvicons/employee.svg" class="admin-icon" />
+                <span><router-link to="/admin/staff" class="sidebar-link">Staff</router-link></span>
             </li>
             <li>
-                <i class="fa fa-bed"><span><router-link to="/admin/support" class="sidebar-link">Customer Support</router-link></span></i>
+                <img src="../../assets/images/sgvicons/support.svg" class="admin-icon" />
+                <span><router-link to="/admin/support" class="sidebar-link">Customer Support</router-link></span>
             </li>
             <li>
-               <i class="fa fa-cog"><span ><router-link to="/admin/manage-account" class="sidebar-link">Manage Account</router-link></span></i>
+                <img src="../../assets/images/sgvicons/manage.svg" class="admin-icon" />
+               <span ><router-link to="/admin/manage-account" class="sidebar-link">Manage Account</router-link></span>
             </li>
          
             <li>
-               <i class="fa fa-sign-out"  @click="logoutUser"><span ><router-link to="/" class="sidebar-link">Logout</router-link></span></i>
+                <div @click="logoutUser"><img src="../../assets/images/sgvicons/logout.svg" class="admin-icon mr-1 ml-0"><router-link to="/" class="sidebar-link"> Logout</router-link></div>
             </li>
         
           </ul>
 
           <ul id="side-menu" v-if="userRole == 'staff'">
             <li>
-                <i class="fa fa-window-maximize"><span><router-link to="/admin/dashboard" class="sidebar-link">Dashboard</router-link></span></i>
+                <img src="../../assets/images/sgvicons/calendar-black.svg"  class="admin-icon"/>
+                <span><router-link to="/admin/dashboard" class="sidebar-link">Dashboard</router-link></span>
             </li>
             <li v-if="StaffAcessRole == 'System Administrator'">
-                <i class="fa fa-bed"><span><router-link to="/admin/services" class="sidebar-link">Services</router-link></span></i>
+                <img src="../../assets/images/sgvicons/service-black.svg" class="admin-icon" />
+                <span><router-link to="/admin/services" class="sidebar-link">Services</router-link></span>
             </li>
             <li v-if="StaffAcessRole == 'System Administrator'">
-                <i class="fa fa-bed"><span><router-link to="/admin/appointments" class="sidebar-link">Appointments</router-link></span></i>
+                <img src="../../assets/images/sgvicons/appointment.svg" class="admin-icon" />
+                <span><router-link to="/admin/appointments" class="sidebar-link">Appointments</router-link></span>
             </li>
             <li v-if="StaffAcessRole == 'System Administrator'">
-                <i class="fa fa-linode"><span><router-link to="/admin/inventory" class="sidebar-link">Inventory</router-link></span></i>
+                <img src="../../assets/images/sgvicons/product.svg" class="admin-icon" />
+                <span><router-link to="/admin/inventory" class="sidebar-link">Inventory</router-link></span>
             </li>
             <li v-if="StaffAcessRole == 'System Administrator'">
-                <i class="fa fa-bell"><span><router-link to="/admin/notifications" class="sidebar-link">Notications</router-link></span></i>
+                <img src="../../assets/images/sgvicons/notification.svg" class="admin-icon" />
+                <span><router-link to="/admin/notifications" class="sidebar-link">Notications</router-link></span>
             </li>
             <li>
-                <i class="fa fa-clock"><span><router-link to="/admin/daily-time-record" class="sidebar-link">Daily Time Record</router-link></span></i>
+                <img src="../../assets/images/sgvicons/clock.svg" class="admin-icon" />
+                <span><router-link to="/admin/daily-time-record" class="sidebar-link">Daily Time Record</router-link></span>
             </li>
             <li v-if="StaffAcessRole == 'System Administrator'">
-                <i class="fa fa-bed"><span><router-link to="/admin/support" class="sidebar-link">Customer Support</router-link></span></i>
+                <img src="../../assets/images/sgvicons/support.svg" class="admin-icon" />
+                <span><router-link to="/admin/support" class="sidebar-link">Customer Support</router-link></span>
             </li>
             <li>
-               <i class="fa fa-cog"><span ><router-link to="/admin/manage-account" class="sidebar-link">Manage Account</router-link></span></i>
+                <img src="../../assets/images/sgvicons/manage.svg" class="admin-icon" />
+               <span ><router-link to="/admin/manage-account" class="sidebar-link">Manage Account</router-link></span>
             </li>
         
             <li>
-               <i class="fa fa-sign-out"  @click="logoutUser"><span ><router-link to="/" class="sidebar-link">Logout</router-link></span></i>
+                <div @click="logoutUser"><img src="../../assets/images/sgvicons/logout.svg" class="admin-icon mr-2 ml-0"><router-link to="/" class="sidebar-link">Logout</router-link></div>
             </li>
         
           </ul>
@@ -122,67 +139,84 @@ if(staff_role){
 
       <ul id="side-menu" class="navbar-nav-mobile-dashboard" v-if="userRole == 'admin'">
             <li @click="mobile = false">
-                <i class="fa fa-window-maximize"><span><router-link to="/admin/dashboard" class="sidebar-link"> Dashboard</router-link></span></i>
+                <img src="../../assets/images/sgvicons/calendar-black.svg"  class="admin-icon"/>
+                <span><router-link to="/admin/dashboard" class="sidebar-link">Dashboard</router-link></span>
             </li>
             <li @click="mobile = false">
-                <i class="fa fa-bed"><span><router-link to="/admin/services" class="sidebar-link"> Services</router-link></span></i>
+                <img src="../../assets/images/sgvicons/service-black.svg" class="admin-icon" />
+                <span><router-link to="/admin/services" class="sidebar-link">Services</router-link></span>
             </li>
             <li @click="mobile = false">
-                <i class="fa fa-bed"><span><router-link to="/admin/appointments" class="sidebar-link"> Appointments</router-link></span></i>
+                <img src="../../assets/images/sgvicons/appointment.svg" class="admin-icon" />
+                <span><router-link to="/admin/appointments" class="sidebar-link">Appointments</router-link></span>
             </li>
             <li @click="mobile = false">
-                <i class="fa fa-linode"><span><router-link to="/admin/inventory" class="sidebar-link"> Inventory</router-link></span></i>
+                <img src="../../assets/images/sgvicons/product.svg" class="admin-icon" />
+                <span><router-link to="/admin/inventory" class="sidebar-link">Inventory</router-link></span>
             </li>
             <li @click="mobile = false">
-              <i class="fa fa-bell"><span><router-link to="/admin/notifications" class="sidebar-link"> Notications</router-link></span></i>
+                <img src="../../assets/images/sgvicons/notification.svg" class="admin-icon" />
+                <span><router-link to="/admin/notifications" class="sidebar-link">Notications</router-link></span>
             </li>
             <li @click="mobile = false">
-                <i class="fa fa-clock"><span><router-link to="/admin/daily-time-record" class="sidebar-link"> Daily Time Record</router-link></span></i>
+                <img src="../../assets/images/sgvicons/clock.svg" class="admin-icon" />
+                <span><router-link to="/admin/daily-time-record" class="sidebar-link">Daily Time Record</router-link></span>
             </li>
             <li @click="mobile = false">
-               <i class="fa fa-users nav_icon" ><span><router-link to="/admin/staff" class="sidebar-link"> Staff</router-link></span></i>
+                <img src="../../assets/images/sgvicons/employee.svg" class="admin-icon" />
+                <span><router-link to="/admin/staff" class="sidebar-link">Staff</router-link></span>
             </li>
             <li @click="mobile = false">
-                <i class="fa fa-bed"><span><router-link to="/admin/support" class="sidebar-link"> Customer Support</router-link></span></i>
+                <img src="../../assets/images/sgvicons/support.svg" class="admin-icon" />
+                <span><router-link to="/admin/support" class="sidebar-link">Customer Support</router-link></span>
             </li>
             <li @click="mobile = false">
-               <i class="fa fa-cog"><span ><router-link to="/admin/manage-account" class="sidebar-link"> Manage Account</router-link></span></i>
+                <img src="../../assets/images/sgvicons/manage.svg" class="admin-icon" />
+               <span ><router-link to="/admin/manage-account" class="sidebar-link">Manage Account</router-link></span>
             </li>
          
             <li @click="mobile = false">
-               <i class="fa fa-sign-out"  @click="logoutUser"><span ><router-link to="/" class="sidebar-link"> Logout</router-link></span></i>
+                <div @click="logoutUser"><img src="../../assets/images/sgvicons/logout.svg" class="admin-icon mr-2 ml-0"><router-link to="/" class="sidebar-link">Logout</router-link></div>
             </li>
         
           </ul>
 
           <ul id="side-menu" class="navbar-nav-mobile-dashboard" v-if="userRole == 'staff'">
             <li @click="mobile = false">
-                <i class="fa fa-window-maximize"><span><router-link to="/admin/dashboard" class="sidebar-link"> Dashboard</router-link></span></i>
+                <img src="../../assets/images/sgvicons/calendar-black.svg"  class="admin-icon"/>
+                <span><router-link to="/admin/dashboard" class="sidebar-link">Dashboard</router-link></span>
             </li>
             <li v-if="StaffAcessRole == 'System Administrator'" @click="mobile = false">
-                <i class="fa fa-bed"><span><router-link to="/admin/services" class="sidebar-link"> Services</router-link></span></i>
+                <img src="../../assets/images/sgvicons/service-black.svg" class="admin-icon" />
+                <span><router-link to="/admin/services" class="sidebar-link">Services</router-link></span>
             </li>
             <li v-if="StaffAcessRole == 'System Administrator'" @click="mobile = false">
-                <i class="fa fa-bed"><span><router-link to="/admin/appointments" class="sidebar-link"> Appointments</router-link></span></i>
+                <img src="../../assets/images/sgvicons/appointment.svg" class="admin-icon" />
+                <span><router-link to="/admin/appointments" class="sidebar-link">Appointments</router-link></span>
             </li>
             <li v-if="StaffAcessRole == 'System Administrator'" @click="mobile = false">
-                <i class="fa fa-linode"><span><router-link to="/admin/inventory" class="sidebar-link"> Inventory</router-link></span></i>
+                <img src="../../assets/images/sgvicons/product.svg" class="admin-icon" />
+                <span><router-link to="/admin/inventory" class="sidebar-link">Inventory</router-link></span>
             </li>
             <li v-if="StaffAcessRole == 'System Administrator'" @click="mobile = false">
-                <i class="fa fa-bell"><span><router-link to="/admin/notifications" class="sidebar-link"> Notications</router-link></span></i>
+                <img src="../../assets/images/sgvicons/notification.svg" class="admin-icon" />
+                <span><router-link to="/admin/notifications" class="sidebar-link">Notications</router-link></span>
             </li>
             <li @click="mobile = false">
-                <i class="fa fa-clock"><span><router-link to="/admin/daily-time-record" class="sidebar-link"> Daily Time Record</router-link></span></i>
+                <img src="../../assets/images/sgvicons/clock.svg" class="admin-icon" />
+                <span><router-link to="/admin/daily-time-record" class="sidebar-link">Daily Time Record</router-link></span>
             </li>
             <li v-if="StaffAcessRole == 'System Administrator'" @click="mobile = false">
-                <i class="fa fa-bed"><span><router-link to="/admin/support" class="sidebar-link"> Customer Support</router-link></span></i>
+                <img src="../../assets/images/sgvicons/support.svg" class="admin-icon" />
+                <span><router-link to="/admin/support" class="sidebar-link">Customer Support</router-link></span>
             </li>
             <li @click="mobile = false">
-               <i class="fa fa-cog"><span ><router-link to="/admin/manage-account" class="sidebar-link"> Manage Account</router-link></span></i>
+                <img src="../../assets/images/sgvicons/manage.svg" class="admin-icon" />
+               <span ><router-link to="/admin/manage-account" class="sidebar-link">Manage Account</router-link></span>
             </li>
         
             <li @click="mobile = false">
-               <i class="fa fa-sign-out"  @click="logoutUser"><span ><router-link to="/" class="sidebar-link"> Logout</router-link></span></i>
+                <div @click="logoutUser"><img src="../../assets/images/sgvicons/logout.svg" class="admin-icon mr-2 ml-0"><router-link to="/" class="sidebar-link">Logout</router-link></div>
             </li>
         
           </ul>
@@ -200,14 +234,25 @@ if(staff_role){
 .sidebar ul li i{
     font-size: 14px;
     color: black;
+    
 }
 .sidebar ul li span{
     margin: 0px 10px;
     font-size: 12px !important;
+    
 }
-
+.sidebar-link{
+    font-family: 'poppins' !important;
+    text-transform: uppercase;
+}
 .sidebar ul li span .sidebar-link{
     font-size: 16px !important;
+}
+
+.admin-icon {
+    margin-bottom: 5px;
+    margin-left: 2px;
+    max-width: 22px;
 }
 
 </style>

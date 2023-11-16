@@ -131,7 +131,7 @@ const removeItem = (index) => {
 const addServicesProducts = () =>{
 
     ServicesItems.forEach(response => {
-        console.log(response);
+
         if(response.quantity === 0){
             addServicesProductsDialog.value = false
             Swal.fire(

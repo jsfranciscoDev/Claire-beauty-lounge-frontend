@@ -3,7 +3,7 @@
         <div class="dropdown-selected-option" @click="isDropdownVisible = !isDropdownVisible">
             <span v-if="isDateRange">{{ selectedDateRange }} </span>
             <span v-else>{{ mappedSelectedOption }}</span>
-            <img src="../assets/images/sgvicons/calendar-blue.svg" alt="dropdown"> 
+            <img src="../assets/images/sgvicons/calendar-black.svg" alt="dropdown"> 
         </div>
         <div class="options-wrapper" v-if="isDropdownVisible">
             <div class="options" v-for="(option, index) in options" :key="index" @click="toggleOptionSelect(option)">

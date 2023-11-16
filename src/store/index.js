@@ -203,13 +203,14 @@ export const store = defineStore({
                   confirmButtonText: 'OK'
               });
             }else if(response.data.status == 'success'){
-
               Swal.fire({
                   title: response.data.message,
                   icon: 'success',
                   confirmButtonText: 'OK'
               });
+              this.getDTR();
             }
+            return response;
       } catch (error) {
         
       }
