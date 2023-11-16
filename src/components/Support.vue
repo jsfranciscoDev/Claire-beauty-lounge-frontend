@@ -4,6 +4,8 @@ import { userStore } from "../store/user";
 const Support = userStore();
 import Swal from "sweetalert2";
 
+const role = ref();
+
 const SupportSend = () => {
   Support.sendSupport().then(response => {
       console.log(response);
@@ -24,6 +26,7 @@ const SupportVisible = ref(false);
 const OpenSupport = () => {
   SupportVisible.value = !SupportVisible.value;
 };
+
 </script>
 
 <template>

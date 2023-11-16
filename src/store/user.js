@@ -107,6 +107,16 @@ export const userStore = defineStore({
         return response;
       } catch (error) {}
     },
+    async userRole(payload) {
+      try {
+        await user.userRole(payload).then(response => {
+          this.role = response.data
+        });
+    
+      } catch (error) {
+        this.user.error = error.response.data.errors;
+      }
+    },
     
   },
 });

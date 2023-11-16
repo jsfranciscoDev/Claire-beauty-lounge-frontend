@@ -82,7 +82,7 @@ h1, h2, h3, h4, h5,
 }
 
 .table-container{
-    margin: 30px !important;
+   
 }
 .hero{
 	background-size: cover;
@@ -110,6 +110,7 @@ h1, h2, h3, h4, h5,
     img{
         object-fit: cover;
         height: 100% !important;
+        width: 100% !important;
     }
 }
 
@@ -5342,6 +5343,11 @@ button {
 
 $breakpoint-tablet: 998px;
 @media (max-width: $breakpoint-tablet) {
+    
+    .hero-wrap.hero-wrap-2 .slider-text{
+        display: none;
+    }
+
   .owl-carousel.home-slider .slider-item .slider-text .one-third{
     opacity: 0.1;
   }

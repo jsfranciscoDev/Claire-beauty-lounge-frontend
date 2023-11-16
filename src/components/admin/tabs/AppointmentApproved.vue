@@ -70,7 +70,7 @@ const options = ref([
     { label: 'Last 90 Days', value: [subDays(new Date(), 90), new Date()] },
     { label: 'Year to Date', value: [startOfYear(new Date()), new Date()] },
     // { label: 'This Year', value: [startOfYear(new Date()), endOfYear(new Date())] },
-  ]);
+]);
 
 watch(selectedOption, (newValue, oldValue) => {
   dateRange.value = newValue

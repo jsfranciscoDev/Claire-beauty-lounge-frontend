@@ -1,12 +1,20 @@
 <script setup>
 import { appointment } from "../../../store/appointment";
-import { onBeforeMount  } from "vue";
 import moment from 'moment';
 import Swal from 'sweetalert2';
+import { onBeforeMount , ref , reactive , watch} from "vue";
+import { endOfMonth, endOfYear, startOfMonth, startOfYear, subMonths, subDays, startOfDay } from 'date-fns';
+import SearchBar from "../../SearchBar.vue";
+import  daterange  from "../../daterange.vue";
+
 const appointmentData = appointment();
 
+const dateRange = ref(null);
+const searchData = ref('');
+const selectedOption = ref(null);
+
 const paginate = (page) => {
-    appointmentData.getStatusgappointments(page,5);
+    appointmentData.getStatusgappointments(page, 5,dateRange.value, searchData.value);
 }
 
 onBeforeMount(() => {
@@ -48,16 +56,40 @@ const getStatusClass = (status) => {
         case 'Approved':
           return 'text-success'; // Bootstrap class for success color
         case 'Completed':
-          return 'text-success'; // Bootstrap class for primary color
+          return 'text-primary'; // Bootstrap class for primary color
         default:
           return ''; // Default class, if none of the statuses match
       }
 }
+
+const options = ref([
+    { label: 'Today', value: [new Date(), new Date()] },
+    { label: 'Last Week', value: [subDays(startOfDay(new Date()), 6), new Date()] },
+    // { label: 'This Month', value: [startOfMonth(new Date()), endOfMonth(new Date())] },
+    { label: 'Last Month', value: [startOfMonth(subMonths(new Date(), 1)), endOfMonth(subMonths(new Date(), 1))],},
+    { label: 'Last 90 Days', value: [subDays(new Date(), 90), new Date()] },
+    { label: 'Year to Date', value: [startOfYear(new Date()), new Date()] },
+    // { label: 'This Year', value: [startOfYear(new Date()), endOfYear(new Date())] },
+]);
+
+watch(selectedOption, (newValue, oldValue) => {
+  dateRange.value = newValue
+  appointmentData.getStatusgappointments(1,5,dateRange.value, searchData.value);
+});
+
+const SearchFilter = (searchQuery) => {
+  appointmentData.getStatusgappointments(1,5,dateRange.value,searchQuery);
+};
+
 </script>
 
 <template>
+    <div class="d-flex mt-3">
+      <daterange :options="options" v-model="selectedOption"></daterange> 
+      <SearchBar placeholder="Search Client Name" v-model="searchData" @enterPressed="SearchFilter" @searchIconClicked="SearchFilter" @clearIconClicked="SearchFilter" class="mr-2" />
+    </div>
      <div class="row">
-        <div class="table-container mt-2" style="width: 100%;">
+        <div class="table-container" style="width: 100%;">
          
         <div class="table-responsive bg-white">   
               <table class="table mb-0">
@@ -85,9 +117,9 @@ const getStatusClass = (status) => {
                     <td :class="getStatusClass(data.detail)"><b>{{ data?.detail }}</b></td>
                   
                     <td class="table-actions d-flex flex-column"> 
-                      <span v-if="!['Approved', 'Cancelled', 'Reschedule','Completed'].includes(data.detail)" @click="updateAppointment(data.appointment_id, 4, 'Reschedule')">Reschedule</span>
-                      <span v-if="!['Approved', 'Cancelled', 'Reschedule','Completed'].includes(data.detail)" @click="updateAppointment(data.appointment_id, 2, 'Declined')">Declined</span>
-                      <span v-if="!['Approved', 'Cancelled', 'Reschedule','Completed'].includes(data.detail)" @click="updateAppointment(data.appointment_id, 3, 'Approved')">Approved</span>
+                      <span v-if="!['Approved', 'Cancelled', 'Reschedule'].includes(data.detail)" @click="updateAppointment(data.appointment_id, 4, 'Reschedule')">Reschedule</span>
+                      <span v-if="!['Approved', 'Cancelled', 'Reschedule'].includes(data.detail)" @click="updateAppointment(data.appointment_id, 2, 'Declined')">Declined</span>
+                      <span v-if="!['Approved', 'Cancelled', 'Reschedule'].includes(data.detail)" @click="updateAppointment(data.appointment_id, 3, 'Approved')">Approved</span>
                       <span v-if="data.detail === 'Approved' && !['Cancelled', 'Reschedule'].includes(data.detail)" @click="updateAppointment(data.appointment_id, 5, 'Complete')">Complete</span>
                     </td>
 

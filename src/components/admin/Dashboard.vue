@@ -166,7 +166,7 @@ onMounted(() => {
         <div class="time-clock">
             <div class="d-flex justify-content-between align-items-center" >
                
-               <div v-if="productExpMssg === 'Products Will expire soon'">
+               <div v-if="productExpMssg === 'No Products Will expire soon'">
                   <h5 class="low-stock-label"> {{ productExpMssg }}</h5>
                </div>
                <div v-else>  
