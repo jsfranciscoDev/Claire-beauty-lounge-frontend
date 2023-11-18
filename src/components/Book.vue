@@ -5,6 +5,8 @@ import Swal from "sweetalert2";
 import Support from "../components/Support.vue";
 import moment from "moment";
 import navBar from "../components/nav.vue";
+import { useRouter } from 'vue-router';
+const router = useRouter(); 
 
 const userData = store();
 const accountCreated = ref(false);
@@ -123,10 +125,10 @@ const validateDate = () => {
   const currentDate = moment().format("MM/DD/YYYY");
   const appointmentDate = moment.tz(Appointment.date, "Asia/Manila");
 
-  if (appointmentDate.isBefore(currentDate)) {
+  if (appointmentDate.isSameOrBefore(currentDate)) {
     Swal.fire({
       title: "Invalid Date",
-      text: "Please check the details. You cannot book an appointment in the past.",
+      text: "Please check the details. You cannot book an appointment in the within the day or past.",
       icon: "warning",
       confirmButtonText: "OK",
     });
@@ -223,6 +225,10 @@ const hasSelectedDateData = () => {
     return false;
   }
 };
+
+const SendReview = () => {
+  router.push('/send-reviews');
+}
 </script>
 
 <template>
@@ -281,8 +287,8 @@ const hasSelectedDateData = () => {
               >
                 Cancel
               </button>
-              <button v-else>
-                <router-link to="/send-reviews" style="color: black; text-wrap: nowrap;">Leave us a review</router-link>
+              <button v-else-if="userData.user_appointment.review == 0" @click="SendReview()">
+                Leave us a review
               </button>
             </div>
           </div>
@@ -558,10 +564,6 @@ const hasSelectedDateData = () => {
   color: #595b5f;
   font-size: 0.875rem;
   line-height: 1.25rem;
-}
-
-.actions {
-  margin: 0.75rem 1rem;
 }
 
 .history {

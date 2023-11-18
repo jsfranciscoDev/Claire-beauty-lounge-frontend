@@ -71,9 +71,9 @@ export default {
             });
     },
     removeAttachedProducts(id){
-        return axios.post(`${baseURL}api/remove-service-items`,{id},{
+        return axios.post(`${baseURL}api/remove-service-items`, {id} ,{
             headers: {
-                'Authorization': `Bearer ${storedToken}`
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }
             });
     },

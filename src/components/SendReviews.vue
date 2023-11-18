@@ -7,6 +7,9 @@ import banner from "../components/banner.vue";
 import Swal from 'sweetalert2';
 import { store } from "../store/index";
 const userData = store();
+import { useRouter } from 'vue-router';
+
+const router = useRouter(); 
 
 const selected = ref(0);
 
@@ -79,7 +82,7 @@ const sendReviews = () => {
                             text: e.data.message,
                             icon: 'success',
                         })
-
+                        router.push('/reviews');
                         userData.reviews.comment = '';
                         selected.value = 0;
                     }

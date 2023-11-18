@@ -11,7 +11,6 @@ const SupportSend = () => {
       if(response.data.message == 'success'){
         Swal.fire({
                 title: "Send Successfully!",
-                text: response.data.message,
                 icon: "success",
                 confirmButtonText: "OK",
               });

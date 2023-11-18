@@ -174,8 +174,15 @@ const formatTime = function(event) {
   let sanitizedInput = input.replace(/\D/g, '');
 
   if (sanitizedInput.length >= 4) {
+    // Extract hours and minutes
+    let hours = sanitizedInput.substring(0, 2);
+    let minutes = sanitizedInput.substring(2, 4);
+
+    // Ensure the minutes do not exceed 60
+    minutes = Math.min(parseInt(minutes), 60);
+
     // Format as HH:MM
-    sanitizedInput = sanitizedInput.replace(/^(.{2})(.{2})$/, "$1:$2");
+    sanitizedInput = `${hours}:${minutes.toString().padStart(2, '0')}`;
   }
 
   service.services.estimated_hours = sanitizedInput.substring(0, 5);
@@ -482,6 +489,7 @@ const formatTime = function(event) {
 }
 .table-container td, .table-container th{
     font-size: 14px;
+    text-wrap: nowrap !important;
 }
 .table-container .fa-edit:hover {
     color: #00D100;

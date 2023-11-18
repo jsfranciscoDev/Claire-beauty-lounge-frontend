@@ -57,7 +57,7 @@ if(staff_role){
             </li>
             <li>
                 <img src="../../assets/images/sgvicons/notification.svg" class="admin-icon" />
-                <span><router-link to="/admin/notifications" class="sidebar-link">Notications</router-link></span>
+                <span><router-link to="/admin/notifications" class="sidebar-link">Notifications</router-link></span>
             </li>
             <li>
                 <img src="../../assets/images/sgvicons/clock.svg" class="admin-icon" />
@@ -101,7 +101,7 @@ if(staff_role){
             </li>
             <li v-if="StaffAcessRole == 'System Administrator'">
                 <img src="../../assets/images/sgvicons/notification.svg" class="admin-icon" />
-                <span><router-link to="/admin/notifications" class="sidebar-link">Notications</router-link></span>
+                <span><router-link to="/admin/notifications" class="sidebar-link">Notifications</router-link></span>
             </li>
             <li>
                 <img src="../../assets/images/sgvicons/clock.svg" class="admin-icon" />
@@ -156,7 +156,7 @@ if(staff_role){
             </li>
             <li @click="mobile = false">
                 <img src="../../assets/images/sgvicons/notification.svg" class="admin-icon" />
-                <span><router-link to="/admin/notifications" class="sidebar-link">Notications</router-link></span>
+                <span><router-link to="/admin/notifications" class="sidebar-link">Notifications</router-link></span>
             </li>
             <li @click="mobile = false">
                 <img src="../../assets/images/sgvicons/clock.svg" class="admin-icon" />
@@ -200,7 +200,7 @@ if(staff_role){
             </li>
             <li v-if="StaffAcessRole == 'System Administrator'" @click="mobile = false">
                 <img src="../../assets/images/sgvicons/notification.svg" class="admin-icon" />
-                <span><router-link to="/admin/notifications" class="sidebar-link">Notications</router-link></span>
+                <span><router-link to="/admin/notifications" class="sidebar-link">Notifications</router-link></span>
             </li>
             <li @click="mobile = false">
                 <img src="../../assets/images/sgvicons/clock.svg" class="admin-icon" />

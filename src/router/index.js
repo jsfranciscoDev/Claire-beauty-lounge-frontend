@@ -146,8 +146,8 @@ const routes = [
     ]
   },
   {
-    path: '/:catchAll(.*)',
-    redirect: '/',
+    path: '/:pathMatch(.*)*',
+    component: Home,
   }
   
   

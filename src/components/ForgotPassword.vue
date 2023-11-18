@@ -188,11 +188,7 @@ onMounted(() => {
     
                 <!-- <form @submit.prevent="submitChangePassword"> -->
                 <form>
-                <div class="form-group">
-                    <label for="username">Username (Optional)</label>
-                    <input type="email" class="form-control" v-model="userData.user_password.email" placeholder="Enter username">
-                </div>
-
+                  
                 <div class="form-group password">
                     <label for="password">Password</label>
                     <input :type="passwordType" class="form-control" v-model="userData.user_password.password" placeholder="Enter password" required>
