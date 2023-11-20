@@ -17,10 +17,10 @@
             <tr>
               <th scope="col">Service Name</th>
               <th scope="col">Service Category</th>
-              <th scope="col">Expected Price</th>
+              <!-- <th scope="col">Service Price</th> -->
               <th scope="col">Details</th>
               <!-- <th scope="col">Package Included</th> -->
-              <!-- <th scope="col">Total Package Price</th> -->
+              <th scope="col">Total Price</th>
             </tr>
           </thead>
           <tbody
@@ -30,16 +30,16 @@
             <tr>
               <td>{{ data.name }}</td>
               <td>{{ data.category }}</td>
-              <td>{{ formatPrice(data.price) }}</td>
+              <!-- <td>{{ formatPrice(data.price) }}</td> -->
               <td>{{ data.details }}</td>
               <!-- <td>
                       <div v-for="(product,i) in data.products">
                             {{ product.name }} {{ formatPrice(product.price) }} x {{ product.quantity }} pcs. = {{ formatPrice(product.price * product.quantity ) }}
                         </div>
                     </td> -->
-              <!-- <td> 
+              <td> 
                         {{ formatPrice(data.price + data.total_product_price ) }}
-                    </td> -->
+                    </td>
             </tr>
           </tbody>
         </table>

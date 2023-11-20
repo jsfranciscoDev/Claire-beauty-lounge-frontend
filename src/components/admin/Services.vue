@@ -140,14 +140,16 @@ const addServicesProducts = () =>{
                 'warning'
             )
         }else{
-            service.attachProductsOnService(selectedService.value, ServicesItems).then(response => {
-                if(response.data.status == 'success'){
-                    closeDialog();
-                }else{
-                    closeDialog();
-                }  
-            });
+            return
         }
+    });
+
+    service.attachProductsOnService(selectedService.value, ServicesItems).then(response => {
+        if(response.data.status == 'success'){
+            closeDialog();
+        }else{
+            closeDialog();
+        }  
     });
 }
 

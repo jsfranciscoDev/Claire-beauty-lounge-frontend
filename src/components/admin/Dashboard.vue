@@ -23,6 +23,17 @@ const public_ip = import.meta.env.VITE_APP_IP_LOCATION;
 const apiKey = import.meta.env.VITE_APP_LOCATION_API_KEY;
 const backendbaseURL = import.meta.env.VITE_APP_BASE_URL;
 
+
+const StaffAcessRole = ref(null);
+
+const staff_role = sessionStorage.getItem('staff_role');
+if(staff_role){
+  const staffRoleBytes = CryptoJS.AES.decrypt(staff_role, 'staff_role');
+  const StaffRole = staffRoleBytes.toString(CryptoJS.enc.Utf8);
+  StaffAcessRole.value = StaffRole
+}
+
+
 // const currentTime = ref();
 const currentDate = ref();
 
@@ -108,6 +119,7 @@ onMounted(() => {
 </script>
 
 <template>
+    {{ StaffAcessRole }}
     <div class="dashboard-container-box">
         <div class="dashboard-box">
             <div class="admin-component-header">
@@ -134,7 +146,7 @@ onMounted(() => {
         </div>
     </div>
         </div>
-        <div class="dashboard-box">
+        <div class="dashboard-box" v-if="StaffAcessRole !='Services'">
             <div class="admin-component-header">
         <h2><i class="fa fa-box"></i> Low Stocks</h2>
     </div>
@@ -159,7 +171,7 @@ onMounted(() => {
    
         </div>
 
-        <div class="dashboard-box">
+        <div class="dashboard-box" v-if="StaffAcessRole !='Services'">
             <div class="admin-component-header">
         <h2><i class="fa fa-box"></i> Expiring Stocks</h2>
     </div>
