@@ -146,7 +146,7 @@ onMounted(() => {
         </div>
     </div>
         </div>
-        <div class="dashboard-box" v-if="StaffAcessRole !='Services'">
+        <!-- <div class="dashboard-box" v-if="StaffAcessRole !='Services'">
             <div class="admin-component-header">
         <h2><i class="fa fa-box"></i> Low Stocks</h2>
     </div>
@@ -194,7 +194,7 @@ onMounted(() => {
            </div>
         </div>
    
-        </div>
+        </div> -->
     </div>
 </template>
 

@@ -101,7 +101,8 @@ const sendVerification = () => {
   const userOtp = oneTimePassword.value.join('');
   userData.submitUserOtp(userOtp).then(e => {
     if(e == 'verified'){
-      verification.value = false
+      verification.value = false;
+      resgisterAction.value = true;
       userData.register(user);  
       if(userData.registerMessage == 'success'){
         toggleAction();
@@ -132,6 +133,7 @@ const isNumber = function(evt) {
 
 const passwordType = computed(() => showPassword.value ? 'text' : 'password');
 const confirmPasword = computed(() => showconfirmPassword.value ? 'text' : 'password');
+const termsAccepted = ref(false);
 
 </script>
 
@@ -144,7 +146,7 @@ const confirmPasword = computed(() => showconfirmPassword.value ? 'text' : 'pass
       <div class="col-md-6 login-form d-flex align-items-center justify-content-center">
         <div class="row align-items-center justify-content-center" v-if="resgisterAction">
             <div class="form-input">
-           
+        
               <div class="alert alert-danger" role="alert" v-if="userData.user.errorWarning">
                 {{ userData.user.errorWarning }}
               </div>
@@ -216,8 +218,18 @@ const confirmPasword = computed(() => showconfirmPassword.value ? 'text' : 'pass
                     <input type="text" class="form-control" v-model="user.contact" autocomplete="off" @keypress="isNumber($event)" maxlength="11" placeholder="Enter Phone Number" required>
                     <span  class="text-danger"></span>
                 </div>
-
-                <button type="submit" class="btn login-btn mb-2">Sign up</button>
+                <router-link to="/terms-and-conditions" class="text-dark">Terms and Conditions</router-link>
+                <div>
+                  <label for="acceptTerms">
+                    <input
+                      type="checkbox"
+                      id="acceptTerms"
+                      v-model="termsAccepted"
+                    />
+                    Accept Terms and Conditions
+                  </label>
+                </div>
+                <button type="submit" class="btn login-btn mb-2" :disabled="!termsAccepted">Sign up</button>
                 <span class="">Do you already have an account?</span> <span class="register-btn" @click="toggleAction">Sign in here!</span>
                
               </form>

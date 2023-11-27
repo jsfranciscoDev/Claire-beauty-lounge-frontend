@@ -51,10 +51,10 @@ if(staff_role){
                 <img src="../../assets/images/sgvicons/appointment.svg" class="admin-icon" />
                 <span><router-link to="/admin/appointments" class="sidebar-link">Appointments</router-link></span>
             </li>
-            <li>
+            <!-- <li>
                 <img src="../../assets/images/sgvicons/product.svg" class="admin-icon" />
                 <span><router-link to="/admin/inventory" class="sidebar-link">Inventory</router-link></span>
-            </li>
+            </li> -->
             <li>
                 <img src="../../assets/images/sgvicons/notification.svg" class="admin-icon" />
                 <span><router-link to="/admin/notifications" class="sidebar-link">Notifications</router-link></span>
@@ -95,10 +95,10 @@ if(staff_role){
                 <img src="../../assets/images/sgvicons/appointment.svg" class="admin-icon" />
                 <span><router-link to="/admin/appointments" class="sidebar-link">Appointments</router-link></span>
             </li>
-            <li v-if="StaffAcessRole == 'System Administrator'">
+            <!-- <li v-if="StaffAcessRole == 'System Administrator'">
                 <img src="../../assets/images/sgvicons/product.svg" class="admin-icon" />
                 <span><router-link to="/admin/inventory" class="sidebar-link">Inventory</router-link></span>
-            </li>
+            </li> -->
             <li v-if="StaffAcessRole == 'System Administrator'">
                 <img src="../../assets/images/sgvicons/notification.svg" class="admin-icon" />
                 <span><router-link to="/admin/notifications" class="sidebar-link">Notifications</router-link></span>
@@ -150,10 +150,10 @@ if(staff_role){
                 <img src="../../assets/images/sgvicons/appointment.svg" class="admin-icon" />
                 <span><router-link to="/admin/appointments" class="sidebar-link">Appointments</router-link></span>
             </li>
-            <li @click="mobile = false">
+            <!-- <li @click="mobile = false">
                 <img src="../../assets/images/sgvicons/product.svg" class="admin-icon" />
                 <span><router-link to="/admin/inventory" class="sidebar-link">Inventory</router-link></span>
-            </li>
+            </li> -->
             <li @click="mobile = false">
                 <img src="../../assets/images/sgvicons/notification.svg" class="admin-icon" />
                 <span><router-link to="/admin/notifications" class="sidebar-link">Notifications</router-link></span>
@@ -194,10 +194,10 @@ if(staff_role){
                 <img src="../../assets/images/sgvicons/appointment.svg" class="admin-icon" />
                 <span><router-link to="/admin/appointments" class="sidebar-link">Appointments</router-link></span>
             </li>
-            <li v-if="StaffAcessRole == 'System Administrator'" @click="mobile = false">
+            <!-- <li v-if="StaffAcessRole == 'System Administrator'" @click="mobile = false">
                 <img src="../../assets/images/sgvicons/product.svg" class="admin-icon" />
                 <span><router-link to="/admin/inventory" class="sidebar-link">Inventory</router-link></span>
-            </li>
+            </li> -->
             <li v-if="StaffAcessRole == 'System Administrator'" @click="mobile = false">
                 <img src="../../assets/images/sgvicons/notification.svg" class="admin-icon" />
                 <span><router-link to="/admin/notifications" class="sidebar-link">Notifications</router-link></span>

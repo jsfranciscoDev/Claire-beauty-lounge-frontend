@@ -14,9 +14,11 @@ const selectedServices = ref("");
 const selectedStaff = ref("");
 const verification = ref(false);
 const isVisible = ref(false);
-const countdownMinutes = 3;
+const countdownMinutes = 1;
 const countdownTime = ref(countdownMinutes * 60);
 let countdownInterval;
+
+const cancelBooking = ref(false);
 
 const handlerServiceChange = (event) => {
   selectedServices.value = event.target.value;
@@ -43,6 +45,8 @@ const userSendAppointment = () => {
   (Appointment.user_id = userData.user_details.id),
     (Appointment.service_id = selectedServices),
     (Appointment.user_staff = selectedStaff);
+
+    cancelBooking.value = false;
 
   Swal.fire({
     title: "Book an appointment?",
@@ -83,6 +87,7 @@ const userSendAppointment = () => {
                 icon: "success",
                 confirmButtonText: "OK",
               });
+              setInterval(checkCanceltime, 1000);
             }
           });
         }
@@ -96,6 +101,7 @@ const userSendAppointment = () => {
               icon: "success",
               confirmButtonText: "OK",
             });
+            setInterval(checkCanceltime, 1000);
           }
         });
       }
@@ -156,6 +162,7 @@ onBeforeMount(() => {
   userData.getServicesDropdown();
   userData.fetchAppointment();
   userData.getStaffDropdown();
+  setInterval(checkCanceltime, 1000);
 });
 
 const getStatusClass = (status) => {
@@ -229,6 +236,37 @@ const hasSelectedDateData = () => {
 const SendReview = () => {
   router.push('/send-reviews');
 }
+
+function checkCanceltime() {
+  // Your logic for checking cancel time
+  if (userData.user_appointment !== null && userData.user_appointment !== undefined) {
+    const createdAtTime = new Date(userData.user_appointment.created_at).getTime();
+    const currentTime = new Date().getTime();
+    // Calculate the difference in milliseconds
+    const timeDifference = currentTime - createdAtTime;
+
+    // Check if more than 30 minutes have passed
+    if (timeDifference > 30 * 60 * 1000) {
+      // Add your logic for canceling the appointment here
+      cancelBooking.value = true;
+    } 
+  }
+ 
+}
+
+
+// Generate an array of time options from 10 am to 8 pm
+const availableTimes = generateTimeOptions();
+
+function generateTimeOptions() {
+  const times = [];
+  for (let hour = 10; hour <= 20; hour++) {
+    const formattedHour = hour < 10 ? `0${hour}` : `${hour}`;
+    times.push(`${formattedHour}:00`);
+  }
+  return times;
+}
+
 </script>
 
 <template>
@@ -273,7 +311,7 @@ const SendReview = () => {
             </div>
             <div class="actions mt-3">
               <button
-                v-if="userData.user_appointment.detail != 'Completed'"
+                v-if="userData.user_appointment.detail != 'Completed' && cancelBooking"
                 class="track"
                 type="button"
                 @click="
@@ -287,7 +325,7 @@ const SendReview = () => {
               >
                 Cancel
               </button>
-              <button v-else-if="userData.user_appointment.review == 0" @click="SendReview()">
+              <button v-if="userData.user_appointment.detail === 'Completed' && userData.user_appointment.review == 0" @click="SendReview()">
                 Leave us a review
               </button>
             </div>
@@ -448,15 +486,14 @@ const SendReview = () => {
                 @change="validateDate()"
               />
             </div>
+          
             <div class="form-group">
-              <label for="password">Time:</label>
-              <input
-                type="time"
-                class="form-control"
-                v-model="Appointment.time"
-                required
-              />
+              <label for="time">Time:</label>
+              <select v-model="Appointment.time" class="form-control" required>
+                <option v-for="time in availableTimes" :key="time">{{ time }}</option>
+              </select>
             </div>
+
             <button type="submit" class="btn login-btn mb-2" @click="login">
               Submit
             </button>

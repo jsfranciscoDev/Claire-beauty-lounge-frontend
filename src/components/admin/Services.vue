@@ -209,9 +209,9 @@ const formatTime = function(event) {
                     <th scope="col">Service Category</th>
                     <th scope="col">Service Price</th>
                     <th scope="col">Details</th>
-                    <th scope="col">Package Included</th>
+                    <!-- <th scope="col">Package Included</th> -->
                     <th scope="col">Estimated Hours</th>
-                    <th scope="col">Total Price</th>
+                    <!-- <th scope="col">Total Price</th> -->
                     <th scope="col">Added By</th>
                     <th scope="col">Position</th>
                     <th scope="col" class="actions">Action</th>
@@ -225,22 +225,22 @@ const formatTime = function(event) {
                     <td>{{ formatPrice(data.price) }}</td>
                     <td >{{ data.details }} 
                     </td>
-                    <td>
+                    <!-- <td>
                         <div v-for="(product,i) in data.products">
                             {{ product.name }} {{ formatPrice(product.price) }} x {{ product.quantity }} pcs. = {{ formatPrice(product.price * product.quantity ) }}
                         </div>
-                    </td>
+                    </td> -->
                     <td>{{ data.estimated_hours }}</td>
-                    <td> 
+                    <!-- <td> 
                         {{ formatPrice(data.price + data.total_product_price ) }}
-                    </td>
+                    </td> -->
                     <td>{{ data.username }}</td>
                     <td>{{ data.role }}</td>
                     <td class="actions d-flex flex-column" style="border: none;"> 
                         <span @click="updateServices(data)" class="text-info">Edit Services</span>
                         <span @click="deleteServices(data.id)" class="text-danger">Delete Services</span>
-                        <span @click="addServicesProduct(data.id)" class="text-success">Add Items</span>
-                        <span @click="removeServicesProduct(data.id)" class="text-danger">Remove Items</span>
+                        <!-- <span @click="addServicesProduct(data.id)" class="text-success">Add Items</span>
+                        <span @click="removeServicesProduct(data.id)" class="text-danger">Remove Items</span> -->
                     </td>
 
                   </tr>

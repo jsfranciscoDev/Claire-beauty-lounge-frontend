@@ -20,8 +20,8 @@ import ForgotPassword from '../components/ForgotPassword.vue';
 import Reviews from '../components/Reviews.vue';
 import SendReviews from '../components/SendReviews.vue';
 import SupportCustomer from '../components/admin/SupportCustomer.vue';
-
-
+import TermsandConditions from '../components/TermsandConditions.vue';
+import PrivacyPolicy from '../components/PrivacyPolicy.vue';
 import { createPinia } from 'pinia';
 import { store } from "../store/index";
 import CryptoJS from 'crypto-js';
@@ -40,6 +40,8 @@ const routes = [
   { path: '/manage-profile', component: ManageProfile },
   { path: '/send-reviews', component: SendReviews },
   { path: '/reviews', component: Reviews },
+  { path: '/terms-and-conditions', component: TermsandConditions },
+  { path: '/privacy-policy', component: PrivacyPolicy },
   { path: '/book', component: Booking,
     beforeEnter: (to, from, next) => {
       const auth = sessionStorage.getItem('session');
@@ -127,10 +129,10 @@ const routes = [
         path: '/admin/services',
         component: AdminServices,
       },
-      {
-        path: '/admin/inventory',
-        component: AdminInventory,
-      },
+      // {
+      //   path: '/admin/inventory',
+      //   component: AdminInventory,
+      // },
       {
         path: '/admin/appointments',
         component: Appointments,
