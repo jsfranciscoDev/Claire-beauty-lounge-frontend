@@ -6,6 +6,7 @@ import product from "../api/component/product.js"
 import { defineStore } from 'pinia';
 import CryptoJS from 'crypto-js';
 import Swal from 'sweetalert2';
+import appointments from "../api/component/appointments.js";
 
 
 export const store = defineStore({
@@ -261,6 +262,7 @@ export const store = defineStore({
             });
            this.fetchAppointment();
           }
+          return response;
         } catch (error) {
           
         }
@@ -430,6 +432,13 @@ export const store = defineStore({
         
         }
     },
-    
+    async fetchNewAppointment() {  
+      try {
+          const response = await api.fetchNewAppointment();
+          return response;
+        } catch (error) {
+        
+        }
+    },
   },
 });

@@ -12,11 +12,8 @@ const role = sessionStorage.getItem('role');
 const roleBytes = CryptoJS.AES.decrypt(role, 'role');
 const userRole = roleBytes.toString(CryptoJS.enc.Utf8);
 
-const productLow = ref();
-const productLowMssg = ref();
-
-const productExp = ref();
-const productExpMssg = ref();
+const newappointment = ref([]);
+const newappointmentmessage = ref([]);
 
 const public_ip = import.meta.env.VITE_APP_IP_LOCATION;
 
@@ -95,21 +92,18 @@ onBeforeUnmount(() => {
 
 onMounted(() => {
   userData.fetchUser();
-  userData.fetchLowStocksProduct().then(response =>{
-    if(response.data.message == 'Low stocks'){
-        productLow.value = response.data.products
-    }else{
-        productLowMssg.value = response.data.message;
-    }
-  });
   
-  userData.fetchExpireStocksProduct().then(response =>{
-    if(response.data.message == 'Products Will expire soon'){
-        productExp.value = response.data.products
-    }else{
-        productExpMssg.value = response.data.message;
-    }
-  });
+  userData.fetchNewAppointment().then(response => {
+    newappointment.value = response.data.appointments;
+    newappointmentmessage.value = response.data.message;
+  })
+//   userData.fetchExpireStocksProduct().then(response =>{
+//     if(response.data.message == 'Products Will expire soon'){
+//         productExp.value = response.data.products
+//     }else{
+//         productExpMssg.value = response.data.message;
+//     }
+//   });
   userData.getDTR();
   fetchCurrentTime();
   intervalId = setInterval(fetchCurrentTime, 1000);
@@ -146,78 +140,59 @@ onMounted(() => {
         </div>
     </div>
         </div>
-        <!-- <div class="dashboard-box" v-if="StaffAcessRole !='Services'">
+        <div class="dashboard-box" v-if="StaffAcessRole !='Services'">
             <div class="admin-component-header">
-        <h2><i class="fa fa-box"></i> Low Stocks</h2>
+        <h2><i class="fa fa-clock"></i> New Appointment</h2>
     </div>
         <div class="time-clock">
             <div class="d-flex justify-content-between align-items-center" >
-               
-                <div v-if="productLowMssg === 'No low stocks'">
-                   <h5 class="low-stock-label"> {{ productLowMssg }}</h5>
+               <!-- {{ newappointment }} -->
+             
+                <div v-if="newappointmentmessage == 'No New Appointment'" class="appointment-msg">
+                    <p>{{ newappointmentmessage }}</p>
                 </div>
-                <div v-else>  
-                    <div v-for="data in productLow">
-                        <p class="product-name">{{ data.name }}</p>
-                        <p class="product-qty">{{ data.quantity }}</p>
+                
+                <div v-else class="d-flex flex-wrap"> 
+                    <div v-for="data in newappointment" class="appointment-box">
+                        <p >{{ data.name }}</p>
+                        <p >{{ data.services_name }}</p>
+                        <p>{{  moment(data?.date).format('MMMM Do YYYY, h:mm:ss a') }}</p>
+                        <p>Price: ₱ {{ data.price }}</p>
                     </div>
                 </div>
                
-                <div>
-                    <img src="../../assets/images/sgvicons/box.svg" class="img-fluid preview-image" />
-                </div>
             </div>
         </div>
    
         </div>
-
-        <div class="dashboard-box" v-if="StaffAcessRole !='Services'">
-            <div class="admin-component-header">
-        <h2><i class="fa fa-box"></i> Expiring Stocks</h2>
-    </div>
-        <div class="time-clock">
-            <div class="d-flex justify-content-between align-items-center" >
-               
-               <div v-if="productExpMssg === 'No Products Will expire soon'">
-                  <h5 class="low-stock-label"> {{ productExpMssg }}</h5>
-               </div>
-               <div v-else>  
-                   <div v-for="data in productExp">
-                       <p class="product-name">{{ data.name }}</p>
-                       <p class="product-qty">{{ data.expiration_date }}</p>
-                   </div>
-               </div>
-              
-               <div>
-                   <img src="../../assets/images/sgvicons/box.svg" class="img-fluid preview-image" />
-               </div>
-           </div>
-        </div>
-   
-        </div> -->
     </div>
 </template>
 
 
 <style>
-.low-stock-label{
+.appointment-msg{
+    padding: 48px;
+    text-align: center;
+    width: 100%;
+}
+.appointment-msg p{
     font-size: 24px;
     font-weight: bold;
-    font-family: 'poppins';
-    color: rgb(155, 230, 44);
-    text-transform: uppercase;
-    text-align: center;
 }
-.product-name{
-    text-transform: uppercase;
+
+.appointment-box{
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #eed9c4;
+    margin: 15px;
+    text-align: center;
+
+}
+
+.appointment-box p{
+    font-size: 12px;
     font-weight: bold;
     color: black;
-}
-.product-qty{
-    text-transform: uppercase;
-    font-weight: bold;
-    color: red;
-    font-size: 20px;
 }
 .dashboard-container-box{
     display: flex;

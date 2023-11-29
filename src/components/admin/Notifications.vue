@@ -19,7 +19,7 @@ const isNumber = function(evt) {
 const sendNotificationData = () => {
     Swal.fire({
     title: '',
-    text: "Are you sure do you want to update the sms notification?",
+    text: "Are you sure do you want to update the notification?",
     icon: 'info',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -46,26 +46,13 @@ onMounted(() => {
         <div class="table-responsive bg-white pb-3 pt-3">   
             <div class="row">
                 <div class="col-12 col-md-6 col-lg-6">
-                    <span><b>Set the minimum quantity, mobile number and email to receive a notification if the product is low in stock.</b></span>
+                    <span><b>Set the email you want to receieved a notification of appointments updates.</b></span>
                  
                     <div class="alert alert-danger d-flex flex-column" role="alert" v-if="product.error" >
                         <span v-html="product.error"></span>
                     </div>
 
                     <div class="mt-1">
-                        <div class="form-group">
-                           
-                            <label >Set Item Quantity:</label>
-                            <input type="text" class="form-control" v-model="product.notification_details.quantity" placeholder="Quantity" autocomplete="off"  @keypress="isNumber($event)" required>
-                            <span class="text-danger fs-12"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label >Contact Number:</label>
-                            <input type="text" class="form-control"  v-model="product.notification_details.phone_number" placeholder="Phone Number" autocomplete="off" @keypress="isNumber($event)" maxlength="11" required>
-                            <span class="text-danger fs-12"></span>
-                        </div>
-
                         <div class="form-group">
                             <label >Email:</label>
                             <input type="email" class="form-control"  v-model="product.notification_details.email" placeholder="Email" autocomplete="off" required>

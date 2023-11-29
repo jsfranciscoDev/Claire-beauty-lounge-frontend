@@ -18,11 +18,18 @@ export default {
                 }
             });
     },
-    updateAppointment(data){;
+    updateAppointment(data){
         return axios.post(`${baseURL}api/update-status-appointment`, data,{
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem('token')}`
                 }
             });
     },
+    fetchNewAppointment(){
+        return axios.get(`${baseURL}api/get-new-appointment`,{
+            headers: {
+                    'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                }
+            });
+    }
 }

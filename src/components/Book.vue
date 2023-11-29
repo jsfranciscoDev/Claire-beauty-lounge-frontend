@@ -18,6 +18,8 @@ const countdownMinutes = 1;
 const countdownTime = ref(countdownMinutes * 60);
 let countdownInterval;
 
+const loaded = ref(false);
+
 const cancelBooking = ref(false);
 
 const handlerServiceChange = (event) => {
@@ -42,6 +44,7 @@ const Appointment = reactive({
 });
 
 const userSendAppointment = () => {
+  loaded.value = true;
   (Appointment.user_id = userData.user_details.id),
     (Appointment.service_id = selectedServices),
     (Appointment.user_staff = selectedStaff);
@@ -75,6 +78,7 @@ const userSendAppointment = () => {
           }).then((result) => {
             if (result.isConfirmed) {
               showAppointments.value = true;
+              loaded.value = false;
             }
           });
         } else {
@@ -88,6 +92,7 @@ const userSendAppointment = () => {
                 confirmButtonText: "OK",
               });
               setInterval(checkCanceltime, 1000);
+              loaded.value = false;
             }
           });
         }
@@ -102,6 +107,7 @@ const userSendAppointment = () => {
               confirmButtonText: "OK",
             });
             setInterval(checkCanceltime, 1000);
+            loaded.value = false;
           }
         });
       }
@@ -195,6 +201,7 @@ const sendVerification = () => {
 };
 
 const updateAppointment = (appointment_id, status, message) => {
+  loaded.value = true;
   let data = {
     id: appointment_id,
     status: status,
@@ -210,7 +217,9 @@ const updateAppointment = (appointment_id, status, message) => {
     confirmButtonText: `Yes, ${message} it!`,
   }).then((result) => {
     if (result.isConfirmed) {
-      userData.updateAppointment(data);
+      userData.updateAppointment(data).then(e => {
+        loaded.value = false;
+      });
     }
   });
 };
@@ -452,7 +461,7 @@ function generateTimeOptions() {
                   v-for="data in userData.service_dropdown"
                   :value="data.id"
                 >
-                  {{ data.name }}
+                  {{ data.name +" - ₱"+ data.price }}
                 </option>
               </select>
             </div>
@@ -501,6 +510,9 @@ function generateTimeOptions() {
         </div>
       </div>
     </div>
+  </div>
+  <div class="loader" v-if="loaded">Loading
+      <span></span>
   </div>
   <support></support>
 </template>
