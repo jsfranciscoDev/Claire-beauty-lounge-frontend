@@ -18,6 +18,7 @@ const data = reactive({
 
 const dateRange = ref(null);
 const searchData = ref('');
+const loaded = ref(false);
 
 const paginate = (page) => {
     appointmentData.getAllappointments(page, dateRange.value, searchData.value);
@@ -51,7 +52,9 @@ const updateAppointment = (appointment_id, status , message) => {
       if(status == 4){
         remarksModal.value = true;
       }else{
-        appointmentData.updateAppointment(data);
+        appointmentData.updateAppointment(data).then(e =>{
+          
+        });
       }
     }
   })
@@ -60,6 +63,7 @@ const updateAppointment = (appointment_id, status , message) => {
 }
 
 const sendAppointmentRemarks = () => {
+  loaded.value = true;
   remarksModal.value = false;
   Swal.fire({
     title: ` Send remarks`,
@@ -71,7 +75,9 @@ const sendAppointmentRemarks = () => {
     confirmButtonText: `Yes, Send it!`
   }).then((result) => {
     if (result.isConfirmed) {
-       appointmentData.updateAppointment(data);
+       appointmentData.updateAppointment(data).then(e => {
+        loaded.value = false;
+       });
     }
   })
 }
@@ -120,6 +126,10 @@ const SearchFilter = (searchQuery) => {
 </script>
 
 <template>
+    <div class="loader" v-if="loaded">Loading
+        <span></span>
+    </div>
+
     <div class="d-flex">
       <daterange :options="options" v-model="selectedOption"></daterange> 
       <SearchBar placeholder="Search Client Name" v-model="searchData" @enterPressed="SearchFilter" @searchIconClicked="SearchFilter" @clearIconClicked="SearchFilter" class="mr-2" />

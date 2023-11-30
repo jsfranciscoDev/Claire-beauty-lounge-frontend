@@ -152,7 +152,7 @@ const sendreply = () =>{
   transform: translate(-50%, -50%);
   width: 150px;
   height: 150px;
-  background: transparent;
+  background: white;
   border: 3px solid rgba(0, 102, 255, 0.1);
   border-radius: 50%;
   text-align: center;
@@ -164,6 +164,7 @@ const sendreply = () =>{
   text-transform: uppercase;
   text-shadow: 0 0 10px #eed9c4;
   box-shadow: 0 0 20px rgba(0, 0, 0, .15);
+  z-index: 999;
 }
 
 .loader::before {

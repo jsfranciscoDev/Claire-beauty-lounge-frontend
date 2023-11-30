@@ -12,6 +12,7 @@ const appointmentData = appointment();
 const dateRange = ref(null);
 const searchData = ref('');
 const selectedOption = ref(null);
+const loaded = ref(false);
 
 const paginate = (page) => {
     appointmentData.getStatusgappointments(page, 4,dateRange.value, searchData.value);
@@ -22,6 +23,7 @@ onBeforeMount(() => {
 });
 
 const updateAppointment = (appointment_id, status , message) => {
+  loaded.value = true;
   let data = {
     id: appointment_id,
     status: status
@@ -37,7 +39,9 @@ const updateAppointment = (appointment_id, status , message) => {
     confirmButtonText: `Yes, ${message} it!`
   }).then((result) => {
     if (result.isConfirmed) {
-      appointmentData.updateAppointment(data);
+      appointmentData.updateAppointment(data).then(e =>{
+        loaded.value = false;
+      });
     }
   })
 
@@ -84,6 +88,11 @@ const SearchFilter = (searchQuery) => {
 </script>
 
 <template>
+
+    <div class="loader" v-if="loaded">Loading
+        <span></span>
+    </div>
+
     <div class="d-flex mt-3">
       <daterange :options="options" v-model="selectedOption"></daterange> 
       <SearchBar placeholder="Search Client Name" v-model="searchData" @enterPressed="SearchFilter" @searchIconClicked="SearchFilter" @clearIconClicked="SearchFilter" class="mr-2" />
@@ -139,4 +148,6 @@ const SearchFilter = (searchQuery) => {
         </div>
     </div>
     </div>
+
+  
 </template>

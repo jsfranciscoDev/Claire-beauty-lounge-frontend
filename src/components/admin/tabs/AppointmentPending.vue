@@ -12,6 +12,16 @@ const appointmentData = appointment();
 const dateRange = ref(null);
 const searchData = ref('');
 const selectedOption = ref(null);
+const loaded = ref(false);
+
+const remarks = ref('');
+const remarksModal = ref(false);
+const data = reactive({
+    id: null,
+    status: null,
+    remarks: null
+})
+
 
 const paginate = (page) => {
     appointmentData.getStatusgappointments(page, 1,dateRange.value, searchData.value);
@@ -22,10 +32,14 @@ onBeforeMount(() => {
 });
 
 const updateAppointment = (appointment_id, status , message) => {
-  let data = {
-    id: appointment_id,
-    status: status
-  }
+  data.id = appointment_id;
+  data.status = status;
+  data.remarks = remarks;
+
+  // let data = {
+  //   id: appointment_id,
+  //   status: status
+  // }
 
   Swal.fire({
     title: `${message} Appointment?`,
@@ -37,11 +51,38 @@ const updateAppointment = (appointment_id, status , message) => {
     confirmButtonText: `Yes, ${message} it!`
   }).then((result) => {
     if (result.isConfirmed) {
-      appointmentData.updateAppointment(data);
+      if(status == 4){
+        remarksModal.value = true;
+      }else{
+        appointmentData.updateAppointment(data).then(e =>{
+        
+        });
+      }
     }
   })
 
  
+}
+
+
+const sendAppointmentRemarks = () => {
+  loaded.value = true;
+  remarksModal.value = false;
+  Swal.fire({
+    title: ` Send remarks`,
+    text: "Please make sure the details correct",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: `Yes, Send it!`
+  }).then((result) => {
+    if (result.isConfirmed) {
+       appointmentData.updateAppointment(data).then(e => {
+        loaded.value = false;
+       });
+    }
+  })
 }
 
 const getStatusClass = (status) => {
@@ -84,6 +125,11 @@ const SearchFilter = (searchQuery) => {
 </script>
 
 <template>
+
+    <div class="loader" v-if="loaded">Loading
+        <span></span>
+    </div>
+
     <div class="d-flex mt-3">
       <daterange :options="options" v-model="selectedOption"></daterange> 
       <SearchBar placeholder="Search Client Name" v-model="searchData" @enterPressed="SearchFilter" @searchIconClicked="SearchFilter" @clearIconClicked="SearchFilter" class="mr-2" />
@@ -139,4 +185,29 @@ const SearchFilter = (searchQuery) => {
         </div>
     </div>
     </div>
+
+     <!-- MODAL -->
+     <div class="add-staff" v-if="remarksModal">
+        <div class="form-container">
+            <div class="staff-form">
+                <div class="form-input">
+                    <h2 v-if="!updateStaff"><i class="fa-solid fa-bell"></i> Send Remarks</h2>
+                
+                <form @submit.prevent="sendAppointmentRemarks">
+               
+                <div class="form-group">
+                    <label for="name">(Reason for re-scheduling send to client)</label>
+                    <textarea class="form-control" v-model="remarks" autocomplete="off" required></textarea>
+                    <span  class="text-danger"></span>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-danger" @click="closeDialog">Cancel</button>
+              </form>
+            </div>
+            </div>
+        </div>
+     
+    </div>
+    <!-- MODAL -->
 </template>
