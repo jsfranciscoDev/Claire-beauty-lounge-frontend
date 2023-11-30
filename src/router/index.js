@@ -22,6 +22,7 @@ import SendReviews from '../components/SendReviews.vue';
 import SupportCustomer from '../components/admin/SupportCustomer.vue';
 import TermsandConditions from '../components/TermsandConditions.vue';
 import PrivacyPolicy from '../components/PrivacyPolicy.vue';
+import Scheduler from '../components/scheduler.vue';
 import { createPinia } from 'pinia';
 import { store } from "../store/index";
 import CryptoJS from 'crypto-js';
@@ -42,6 +43,7 @@ const routes = [
   { path: '/reviews', component: Reviews },
   { path: '/terms-and-conditions', component: TermsandConditions },
   { path: '/privacy-policy', component: PrivacyPolicy },
+  { path: '/schedule', component: Scheduler },
   { path: '/book', component: Booking,
     beforeEnter: (to, from, next) => {
       const auth = sessionStorage.getItem('session');

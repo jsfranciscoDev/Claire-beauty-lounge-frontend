@@ -49,7 +49,7 @@ const updateAppointment = (appointment_id, status , message) => {
     confirmButtonText: `Yes, ${message} it!`
   }).then((result) => {
     if (result.isConfirmed) {
-      if(status == 4){
+      if(status == 4 || status == 2){
         remarksModal.value = true;
       }else{
         appointmentData.updateAppointment(data).then(e =>{

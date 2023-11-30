@@ -40,6 +40,7 @@ export const store = defineStore({
     staff_services:{},
     selected_date_appointment:{},
     reviews:{},
+    scheduler_data: {},
   }),
   actions: {
     async login(payload) {
@@ -237,8 +238,8 @@ export const store = defineStore({
           const response = await service.sendAppointment(payload);
             if(response.data.status == 'success'){
               this.fetchAppointment();
-              return response;
             }
+            return response;
         } catch (error) {
         
         }
@@ -247,6 +248,17 @@ export const store = defineStore({
         try {
           const response = await service.fetchAppointment();
             this.user_appointment = response.data.appointment;
+        } catch (error) {
+        
+        }
+    },
+    async fetchSchedulerAllAppointments() {  
+        try {
+          const response = await service.fetchSchedulerAllAppointments();
+        
+          this.scheduler_data = response.data;
+          console.log(this.scheduler_data);
+          return response;
         } catch (error) {
         
         }

@@ -52,6 +52,13 @@ export default {
                 }
             });
     },
+    fetchSchedulerAllAppointments(){
+        return axios.get(`${baseURL}api/get-scheduler-all-appointment` ,{
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                }
+            });
+    },
     getServicesProductDropdown(){
         return axios.get(`${baseURL}api/get-products-dropdown`, {
             headers: {
